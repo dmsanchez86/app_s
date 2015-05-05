@@ -1,0 +1,10 @@
+.toggle-menu{ background: url("../img/right.png"); background-size: cover; height: 17px; }
+.options-menu{ position: absolute; display: none; width: 100%; background-color: rgb(237, 46, 61); padding: 0 0 .15em;border-top: thin solid white; }
+.options-menu ul{ list-style: none; margin: 0; padding: 0; }
+.options-menu ul li{ text-align: center; padding: .4em 0;}
+.options-menu ul li:hover{background: white; }
+.options-menu ul li:hover a{ color: rgb(237, 46, 61)!important; }
+.options-menu ul li a{ padding: .5em 0!important; width: 100%!important; color: white!important; text-shadow: 0 0 1px white!important; text-transform: uppercase!important; font-weight: bold!important; margin: 0!important; padding: 0; display: inline!important; border: none; }
+.options-menu ul li:hover a:after{ content: '  →'; color: rgb(237, 46, 61); }
+
+.users{ padding: .5em 0;}

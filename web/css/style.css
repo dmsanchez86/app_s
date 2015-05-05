@@ -1,0 +1,86 @@
+img {
+	max-width: 100%;
+}
+.tu-telefono {
+	color: #666666;
+}
+.center-nav {
+    height: 10px;
+    margin: 0 auto;
+    width: 45%;
+    font-size: 16px;
+}
+.center-nav a {
+    color: #000;
+}
+
+.center-nav a:hover {
+    background: none !important;
+}
+.color-colum {
+	background: #D2D3D5 !important;
+}
+.color-colum-min {
+	background: #F2F2F2 !important;
+	height: 340px;
+}
+.row.clearfix.color-red-line {
+    background: #ED2E3D;
+    height: 10px;
+}
+
+.image-extend {
+    position: absolute;
+}
+.colum-index-2 {
+	height: 150px;
+}
+
+.dispoible-select select {
+    background: #ED2E3D;
+    border: none;
+    color: #fff;
+    font-size: 16px;      
+    padding: 5px 50px;
+}
+
+.dispoible-icono {
+    text-align: right;
+}
+
+.culumn-disponible {
+    margin-top: 95px;
+}
+
+.culumn-capturas {
+    margin-top: 43px;
+}
+
+body {
+	font-size: 16px !important;
+	font-family: "Arial" !important;
+}
+
+.information-general {
+    text-align: justify;
+    padding: 30px 60px;
+}
+
+.text-title {
+    color: #666666;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.download {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.column-anuncios {
+    padding: 30px 50px;
+}
+
+.title-min {
+    font-weight: bold;
+}

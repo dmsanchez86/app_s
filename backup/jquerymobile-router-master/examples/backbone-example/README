@@ -1,0 +1,12 @@
+This example shows a typical usage of parameters in the hash part of the url
+in order to render a detail page in jQuery Mobile.
+
+Backbone's hash router is replaced by jquerymobile-router.
+
+---------------------------------------------------------------------------------
+
+Esempio di rendering di un dettaglio tramite una pagina jQuery Mobile dedicata
+ed il passaggio di parametri nella parte hash dell'url.
+
+Come hash router è utilizzato il jquerymobile-router.
+
