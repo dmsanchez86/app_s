@@ -65,22 +65,20 @@ function callHookInit() {
         include_once(ROOT . DS . 'library' . DS . 'php-activerecord-master' . DS . 'ActiveRecord.php' );
     }
 
-   \Slim\Slim::registerAutoloader();
-    $app = new \Slim\Slim(array(
-        'templates.path' => TEMPLATE_PATH,
-         'view' => new RainTplView()
-    ));
+       \Slim\Slim::registerAutoloader();
+        $app = new \Slim\Slim(array(
+            'templates.path' => TEMPLATE_PATH,
+             'view' => new RainTplView()
+        ));
 
-    ActiveRecord\Config::initialize(function($cfg){
-         $cfg->set_model_directory(ROOT . DS . 'application' . DS . 'Models/' );
-         $cfg->set_connections(array(
-             'development' => 'mysql://liderdesarrollo@0.0.0.0/subastrs_root'));
-             //'development' => 'mysql://subastrs_root:18005021aa11@localhost/subastrs_aplication'));
-     });
+        ActiveRecord\Config::initialize(function($cfg){
+             $cfg->set_model_directory(ROOT . DS . 'application' . DS . 'Models/' );
+             $cfg->set_connections(array(
+                 'development' => 'mysql://subastrs_root:18005021@72.29.87.162/subastrs_aplication'));
+         });
 
-    include_once(ROOT . DS . 'application' . DS . 'Models' . DS .'Usuario.php');
-
-    require_once(ROOT . DS . 'application' . DS . 'views' . DS .'views.php');
+        include_once(ROOT . DS . 'application' . DS . 'Models' . DS .'Usuario.php');
+        require_once(ROOT . DS . 'application' . DS . 'views' . DS .'views.php');
 
     }
 

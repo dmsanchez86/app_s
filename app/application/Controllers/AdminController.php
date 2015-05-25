@@ -6,6 +6,112 @@ class AdminController{
 	# CRUD Usuarios
 	
 	# Registrar usuarios
+
+    function save_type(){
+        $name = $_POST['name'];
+        $des = $_POST['des'];
+        
+        $user = clase_carga::create(array(
+                'id'            =>null,
+                'nombre'        =>$name,
+                'slug'          =>$name,
+                'descripcion'   =>$des,
+                'metadata'      =>'{}'
+            ));
+            
+        $response = array(
+            					'message' => "se registro correctamente el tipo de carga",
+            					'status' => "1"
+            				 );
+        echo json_encode($response);
+    }
+    
+    function save_unit(){
+        $name = $_POST['name'];
+        
+        $user = unidad_medida::create(array(
+                'id'            =>null,
+                'nombre'        =>$name,
+                'SIM'          =>$name
+            ));
+            
+        $response = array(
+            					'message' => "se registro correctamente el tipo de unidad de medida",
+            					'status' => "1"
+            				 );
+        echo json_encode($response);
+    }
+    
+    function delete_type($app,$id){
+        $query = clase_carga::find($id);
+        $result  = $query->delete();
+        
+        if($result)
+            echo "OK";
+	    else
+	        echo "NOT";
+    }
+    
+    function delete_unit($app,$id){
+        $query = unidad_medida::find($id);
+        $result  = $query->delete();
+        
+        if($result)
+            echo "OK";
+	    else
+	        echo "NOT";
+    }
+    
+    function LoadUnitsMeasure(){
+        $query = unidad_medida::all(array('conditions' => array('1 = 1')));
+               
+        if(count($query)>0){
+        
+          $data = array();
+          foreach($query as $tipos){
+            $data[] = $tipos->attributes();
+          }
+        
+          $response = array(
+                'status' => "OK",
+                'data' => $data
+               );
+          
+        }else{
+            $response = array(
+                  'status' => "NOT_FOUND"
+                 );
+        } 
+        
+        echo json_encode($response);
+    }
+
+    function  LoadTypesCharge($app){
+    
+        $query = clase_carga::all(array('conditions' => array('1 = 1')));
+               
+        if(count($query)>0){
+        
+          $data = array();
+          foreach($query as $tipos){
+            $data[] = $tipos->attributes();
+          }
+        
+          $response = array(
+                'status' => "OK",
+                'data' => $data
+               );
+          
+        }else{
+            $response = array(
+                  'status' => "NOT_FOUND"
+                 );
+        } 
+        
+        echo json_encode($response);
+    
+    }
+
 	function registerNewUser(){
 	    $nombre = $_POST['nombre'];
         $apellido = $_POST['apellido'];
@@ -102,69 +208,48 @@ class AdminController{
 		
 		if($filter == "all"){
 		    $query = Usuario::all();
-
-            $data = array();
-            foreach($query as $usuario){
-                $data[] = $usuario->attributes();
-            }
 		}else if($filter == "activos"){
 		    $query = Usuario::find('all',array('conditions'=>'estado_registro NOT IN(4,6)'));
-
-            $data = array();
-            foreach($query as $usuario){
-                $data[] = $usuario->attributes();
-            }
 		}else if($filter == "inactivos"){
 		    $query = Usuario::find('all',array('conditions'=>'estado_registro = 4'));
-
-            $data = array();
-            foreach($query as $usuario){
-                $data[] = $usuario->attributes();
-            }
 		}else if($filter == "pendientes"){
 		    $query = Usuario::find('all',array('conditions'=>'estado_registro = 5'));
-
-            $data = array();
-            foreach($query as $usuario){
-                $data[] = $usuario->attributes();
-            }
 		}else if($filter == "inactivos_admin"){
 		    $query = Usuario::find('all',array('conditions'=>'estado_registro = 6'));
-
-            $data = array();
-            foreach($query as $usuario){
-                $data[] = $usuario->attributes();
-            }
 		}else if($filter == "administradores"){
 		    $query = Usuario::find('all',array('conditions'=>'rol_id = 1'));
-
-            $data = array();
-            foreach($query as $usuario){
-                $data[] = $usuario->attributes();
-            }
 		}else if($filter == "transportistas"){
 		    $query = Usuario::find('all',array('conditions'=>'rol_id = 3'));
-
-            $data = array();
-            foreach($query as $usuario){
-                $data[] = $usuario->attributes();
-            }
 		}else if($filter == "empresas"){
 		    $query = Usuario::find('all',array('conditions'=>'rol_id = 2'));
-
-            $data = array();
-            foreach($query as $usuario){
-                $data[] = $usuario->attributes();
-            }
 		}else if($filter == "busqueda"){
 		    $d = $_POST['datos'];
 		    $query = Usuario::find('all',array('conditions'=>'nombre LIKE "%'.$d.'%" OR apellido LIKE "%'.$d.'%" OR correo_electronico LIKE "%'.$d.'%" OR cedula LIKE "%'.$d.'%"'));
-
-            $data = array();
-            foreach($query as $usuario){
-                $data[] = $usuario->attributes();
-            }
 		}
+		
+        $data = array();
+        foreach($query as $usuario){
+            
+            if($usuario->fecha_nacimiento==null){
+               $fnac = "0000-00-00";
+            }else{
+                $fnac = $usuario->fecha_nacimiento->format('Y-m-d');
+            }
+            
+            
+            $attribute = $usuario->attributes();
+            $data[] = array(
+                            'id' => $attribute["id"],
+                            'rol_id' => $attribute["rol_id"],
+                            'nombre' => $attribute["nombre"],
+                            'correo_electronico' => $attribute["correo_electronico"],
+                            'telefono' => $attribute["telefono"],
+                            'cedula' => $attribute["cedula"],
+                            'fecha_nacimiento' => $fnac,
+                            'estado_registro' => $attribute["estado_registro"]
+                        );
+        }
+            
 		echo json_encode($data);
 	}
 	
@@ -186,6 +271,16 @@ class AdminController{
         $data = array();
         foreach($query as $historial){
             $data[] = $historial->attributes();
+        }
+        echo json_encode($data);
+    }	
+    
+	# historial del usuario
+    function All_User($app){
+        $query = Usuario::find('all',  array('conditions' => "1=1") );
+        $data = array();
+        foreach($query as $user){
+            $data[] = $user->attributes();
         }
         echo json_encode($data);
     }	

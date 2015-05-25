@@ -46,6 +46,34 @@ SUBASTRA.clearAllSession =function(){
   
 };
 
+
+SUBASTRA.LoadNav = function(thispage){
+
+  thispage.find(".navar_type[nav-type]").hide();
+
+  if(thispage.find(".navar_type").exists()){
+    
+
+    var myrole = SUBASTRA.getCookie("rol_id");
+    var $myid = SUBASTRA.getCookie("myid");
+
+
+    thispage.find(".navar_type[nav-type=" + myrole + "]").show();
+
+    console.log(".navar_type[nav-type=" + myrole + "]");
+
+      setTimeout(function(){
+          thispage.find(".navar_type[nav-type=" + myrole + "]").find(".ulink_action").unbind("click").click(function(e){
+            e.preventDefault();   
+              var m_id = $(this).attr("bind");
+              $.mobile.changePage( m_id + "?iduser="+ $myid );
+          });
+      }, 1000);
+
+  }
+
+};
+
 SUBASTRA.validateSession = function(referrer){
 
 referrer.find("div[data-role=content]").hide();
@@ -82,6 +110,27 @@ if(cookieSessionId =="" && cookieRolePermisions =="" ){
       referrer.find(".loader-wrapper-page .message[type=1]").hide();
       referrer.find(".loader-wrapper-page .message[type=2]").hide();
       referrer.find(".loader-wrapper-page .message[type=3]").hide();
+
+      var $myrol  = SUBASTRA.getCookie("rol_id");
+      var $userId  = SUBASTRA.getCookie("myid");
+      
+      if($myrol=="3"){   
+        $.mobile.changePage( "#page-profile" + "?referrer=login&iduser="+$userId, {
+                  transition: "slide",
+                  reverse: false
+                });
+      }else if($myrol=="2"){
+        $.mobile.changePage( "#page-profile" + "?referrer=login&iduser="+$userId, {
+                  transition: "slide",
+                  reverse: false
+                });
+      }else if($myrol=="1"){
+        $.mobile.changePage( "#page-admin-menu" + "?referrer=login&iduser="+$userId, {
+                  transition: "slide",
+                  reverse: false
+                });
+      }
+
       referrer.find("div[data-role=content]").hide();
     }else if(referrername == "page-register"){
       referrer.find(".loader-wrapper-page .message[type=4]").show();
@@ -145,6 +194,139 @@ SUBASTRA.deleteAndClearCookies=function(name){
       document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;' + pathCurrent + ';';
   }
 };
+
+SUBASTRA.listenTime = function(id){
+  
+  return setInterval(function(){ 
+        
+    	$.ajax({
+    		type: "POST",
+    		url: webserviceURL + "/subasta/socket_servicetime",
+    		data: {
+    			_id: id
+    		},
+    		success: function (dataCheck) {
+    		    var response = JSON.parse(dataCheck);
+        		//console.log(response);
+        		/*if(response.status=="FINISH"){
+        		    console.log("finish");
+        		}else if(response.status=="ACTIVE"){
+        		    console.log("active");
+        		}*/
+        		
+    		}
+      	});
+        
+        
+  }, 500);
+
+};
+
+SUBASTRA.listen = function(id){
+  
+  var i = 0;
+  return setInterval(function(){ 
+    
+  	$.ajax({
+			type: "POST",
+			url: webserviceURL + "/subasta/socket_service",
+			data: {
+				_id: id,	
+				_metadata: $(".submit-price-participant").attr("metadata")	
+			},
+			success: function (dataCheck) {
+			  var response = JSON.parse(dataCheck);
+			  
+			  if(response.status=="INITIALIZING"){
+			     console.log("inicio");
+			  }else if(response.status=="OK_STATUS"){
+			     console.log("no hay nada que sincronizar");
+			  }else if(response.status=="REFRESH_STATUS"){
+			      
+			      $(".panel-participants-loader").show();
+			      
+			      setTimeout(function(){ 
+			        
+	            	var participants = JSON.parse(response.data.participants);
+      					
+      					$(".table.table-participants").empty();
+      					
+      					var newsort = participants.sort(function(a,b) { return parseFloat(a.amount) - parseFloat(b.amount) } );
+      
+      					newsort.forEach(function(obx,ix){
+      						$(".table.table-participants").append(tmpl("row_participants", obx));
+      					});
+      					
+      					$(".header-3.price-rule").text(newsort[0].amount);
+      					$(".submit-price-participant").attr("metadata",response.data.participants);
+      					$(".panel-participants-loader").hide();	        
+			        
+			      }, 500);
+  					
+			  }
+			 
+			}
+  	});
+			
+  }, 500);
+  
+}
+
+SUBASTRA.clearTimer = function(){
+  clearInterval(interval);
+  clearInterval(newtime);
+}
+
+SUBASTRA.setTime = function(type,date_to,container){
+
+  var str = moment(date_to).countdown().toString();
+
+  if(str=="1 second"){
+    clearInterval(newtime);
+    clearInterval(interval);
+
+     $.ajax({
+         type: "POST",
+         url: webserviceURL + "/subasta/setWinner",
+         data: null,
+         success: function (dataCheck) {
+           console.log(dataCheck);
+        }
+    });
+
+  }else{
+    $(container).html(str);
+    newtime = window.setTimeout("SUBASTRA.setTime('" + type + "','" + date_to + "','" + container + "');", 1000);    
+  }
+
+}
+
+
+SUBASTRA.setTimeDeprecated = function(type,date_to,container){
+    
+    //like 
+    //new Date(Date.parse("2005-07-08T00:00:00")).toString()
+    //new Date().toString()
+    now = new Date();
+    y2k = new Date(Date.parse(date_to));
+    days = (y2k - now) / 1000 / 60 / 60 / 24;
+    daysRound = Math.floor(days);
+    hours = (y2k - now) / 1000 / 60 / 60 - (24 * daysRound);
+    hoursRound = Math.floor(hours);
+    minutes = (y2k - now) / 1000 /60 - (24 * 60 * daysRound) - (60 * hoursRound);
+    minutesRound = Math.floor(minutes);
+    seconds = (y2k - now) / 1000 - (24 * 60 * 60 * daysRound) - (60 * 60 * hoursRound) - (60 * minutesRound);
+    secondsRound = Math.round(seconds);
+    sec = (secondsRound == 1) ? " segundo" : " segundos";
+    min = (minutesRound == 1) ? " minuto" : " minutos, ";
+    hr = (hoursRound == 1) ? " hora" : " horas, ";
+    dy = (daysRound == 1)  ? " día" : " d&iacute;as, "
+    //$(".time-rest span").text("Tiempo Restante :" + daysRound  + dy + hoursRound + hr + minutesRound + min + secondsRound + sec);
+    $(container).html("" + daysRound  + dy + hoursRound + hr + " " +  minutesRound + min + " " +secondsRound + sec);
+ 
+    newtime = window.setTimeout("SUBASTRA.setTime('" + type + "','" + date_to + "','" + container + "');", 1000);
+
+}
 
 //corrije un bug donde cuando se invoca el datepicker no les da estilos
 SUBASTRA.fixDateOnCreateSubasta = function(){
@@ -229,6 +411,9 @@ SUBASTRA.fixDateOnCreateSubasta = function(){
 
 };
 
+
+jQuery.fn.exists = function(){return this.length;};
+
 function getFormattedDate(date){
   var year = date.getFullYear();
   var month = (1 + date.getMonth()).toString();
@@ -271,3 +456,5 @@ function getFormattedDate(date){
     return data ? fn( data ) : fn;
   };
 })();
+
+

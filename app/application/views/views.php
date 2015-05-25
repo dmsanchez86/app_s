@@ -2,13 +2,27 @@
 include_once(ROOT . DS . 'application' . DS . "Controllers" . DS . "UserController.php");
 include_once(ROOT . DS . 'application' . DS . "Controllers" . DS . "AdminController.php");
 include_once(ROOT . DS . 'application' . DS . "Controllers" . DS . "SubastaController.php");
+include_once(ROOT . DS . 'application' . DS . "Controllers" . DS . "ReferedController.php");
+include_once(ROOT . DS . 'application' . DS . "Controllers" . DS . "PagosController.php");
 
 $app->post(
     '/create/subasta','SubastaController:CreateSubasta'
 )->setParams(array($app));
 
 $app->post(
+    '/edit/subasta','SubastaController:EditSubasta'
+)->setParams(array($app));
+
+$app->post(
     '/subasta/list','SubastaController:ListSubasta'
+)->setParams(array($app));
+
+$app->post(
+    '/subasta/listtransporter','SubastaController:ListSubastaTransporter'
+)->setParams(array($app));
+
+$app->post(
+    '/subasta/setWinner','SubastaController:SetWinnerSubasta'
 )->setParams(array($app));
 
 /************************************************/
@@ -21,6 +35,10 @@ $app->post(
 )->setParams(array($app));
 
 $app->post(
+    '/reffered/getDataReffered','ReferedController:getReferedData'
+)->setParams(array($app));
+
+$app->post(
     '/bind/ciudades/:id','SubastaController:BindCiudades'
 )->setParams(array($app));
 
@@ -30,6 +48,14 @@ $app->get(
 
 $app->get(
     '/bind/ciudades/:id','SubastaController:BindCiudades'
+)->setParams(array($app));
+
+$app->get(
+    '/cron','SubastaController:Cron'
+)->setParams(array($app));
+
+$app->get(
+    '/hora','SubastaController:demo'
 )->setParams(array($app));
 /************************************************/
 /************************************************/
@@ -50,10 +76,30 @@ $app->post(
     '/filter/subasta/volume','SubastaController:FilterSubastaByvolume'
 )->setParams(array($app));
 
+$app->post(
+    '/subasta/socket_service','SubastaController:SocketService'
+)->setParams(array($app));
+
+$app->post(
+    '/subasta/socket_servicetime','SubastaController:SocketServiceTime'
+)->setParams(array($app));
+
 /************************************************/
 /************************************************/
 $app->post(
     '/subasta/find','SubastaController:FindSubasta'
+)->setParams(array($app));
+
+$app->post(
+    '/subasta/find2','SubastaController:FindSubastaPerParticipants'
+)->setParams(array($app));
+
+$app->post(
+    '/subasta/participe','SubastaController:Participe'
+)->setParams(array($app));
+
+$app->post(
+    '/subasta/refresh','SubastaController:Refresh'
 )->setParams(array($app));
 
 $app->post(
@@ -110,12 +156,46 @@ $app->post(
 $app->post(
     '/deactivate/user/:id','Controller:deactivateUser'
 )->setParams(array($app));
+
 $app->post(
     '/deactivate/user_admin/:id','Controller:deactivateUserAdmin'
 )->setParams(array($app));
 
 $app->post(
+    '/reactivate/user_admin/:id','Controller:ReactivateUserAdmin'
+)->setParams(array($app));
+
+$app->post(
+    '/reffered/generate','ReferedController:generateRefferedLink'
+)->setParams(array($app));
+
+$app->post(
     '/active/user/','Controller:activeUser'
+)->setParams(array($app));
+
+$app->post(
+    '/LoadTypesCharge','AdminController:LoadTypesCharge'
+)->setParams(array($app));
+
+$app->post(
+    '/LoadUnitsMeasure','AdminController:LoadUnitsMeasure'
+)->setParams(array($app));
+
+
+$app->post(
+    '/saveType','AdminController:save_type'
+)->setParams(array($app));
+
+$app->post(
+    '/saveUnit','AdminController:save_unit'
+)->setParams(array($app));
+
+$app->post(
+    '/deleteType/:id','AdminController:delete_type'
+)->setParams(array($app));
+
+$app->post(
+    '/deleteUnit/:id','AdminController:delete_unit'
 )->setParams(array($app));
 
 # Acciones del Administrador
@@ -125,6 +205,10 @@ $app->post(
 
 $app->post(
     '/users/:filter','AdminController:allUsers'    
+)->setParams(array($app));
+
+$app->post(
+    '/users','AdminController:All_User'    
 )->setParams(array($app));
 
 $app->post(
@@ -142,6 +226,17 @@ $app->post(
 $app->post(
     '/history/user/:id','AdminController:historyUser'    
 )->setParams(array($app));
+
+$app->get(
+    '/demo1',
+    function () use ($app) {
+        $datos = '{"desactivated":[4],"acti":[4]}';
+        $new = json_decode($datos);
+        $new->desactivated[] = 7;
+        
+        echo json_encode($new);
+    }   
+)->setParams(array($app));
 # Fin acciones Administrador
 
 /********************************/
@@ -150,6 +245,58 @@ $app->get(
     function () use ($app) {
         $result = "hoolaaaa";
         $app->render('register', array('title' => 'Sahara'));
+    }
+);
+
+$app->post(
+    '/pagos','PagosController:RealizarPagoConfiguracion'    
+)->setParams(array($app));
+
+$app->post(
+    '/loadCreditPerUser','PagosController:LoadCreditPerUser'    
+)->setParams(array($app));
+
+$app->post(
+    '/LoadAmmountVal','PagosController:LoadAmmountVal'    
+)->setParams(array($app));
+
+$app->get(
+    '/prueba_mail',
+    function () use ($app) { 
+        //buscar el valor del credito
+        $datos_email = plantilla_email::find(8);
+        $mensaje = $datos_email->contenido_html;
+        
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+        $to = "gaviria4502@hotmail.com";
+        $subject = "Prueba";
+        $txt = $mensaje;
+
+        mail($to, $subject, $txt, $headers);
+
+    }
+);
+
+$app->get(
+    '/page-config-coins',
+    function () use ($app) { 
+        $creditos = configuracion_creditos::find(1);
+        $valor_credito = $creditos->precio_por_credito;
+        echo $valor_credito;
+        
+    }
+);
+
+$app->get(
+    '/page-config-coins-mod',
+    function () use ($app) {
+        $precio=$_GET['nprecio'];
+        $mod_precio = configuracion_creditos::find(1);
+        $mod_precio->precio_por_credito=$precio;
+        $mod_precio->save();
+        echo "Precio de credito actualizado";
     }
 );
 

@@ -7,7 +7,8 @@ class Controller{
           $email = $_POST["email"];
           $pass = $_POST["pass"]; 
           $role = $_POST["role"]; 
-          
+          $type = $_POST["type"]; 
+
 		  $response = null;
 		
 		  $query = Usuario::all(array('conditions' => array('correo_electronico = ? ', $email)));
@@ -21,14 +22,35 @@ class Controller{
 		  }else{
 			  
 			$hashnumber = bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
-            $user = Usuario::create(array(
-                           'id' => NULL, 
-                           'correo_electronico' =>$email,
-                           'contrasenia' 		=> $pass,
-                           'estado_registro' 	=> 1,
-                           'rol_id' 			=> $role,
-                           'hashverified' 		=> $hashnumber
-                           ));
+
+			if($type=="2"){
+
+				$ref_id = $_POST["ref_id"];
+
+	            $user = Usuario::create(array(
+	                           'id' => NULL, 
+	                           'correo_electronico' =>$email,
+	                           'contrasenia' 		=> $pass,
+	                           'estado_registro' 	=> 1,
+	                           'rol_id' 			=> $role,
+	                           'hashverified' 		=> $hashnumber,
+	                           'id_referido' 		=> $ref_id,
+	                           'metadata' 			=> '{"desactivated":[],"reactivated":[]}',
+	                           ));
+
+			}else{
+				
+				$user = Usuario::create(array(
+	                           'id' => NULL, 
+	                           'correo_electronico' =>$email,
+	                           'contrasenia' 		=> $pass,
+	                           'estado_registro' 	=> 1,
+	                           'rol_id' 			=> $role,
+	                           'hashverified' 		=> $hashnumber,
+	                           'metadata' 			=> '{"desactivated":[],"reactivated":[]}',
+	                           ));
+
+			}
 
             $response = array(
 								'message' => "se le han enviado instrucciones al correo $email",
@@ -211,6 +233,16 @@ class Controller{
 		
 		$usuario["vehiculos"] = $vehiculos;
 		
+		$fnac = $user->fecha_nacimiento;
+		
+		if($fnac==null){
+		    $fnac = "0000-00-00";
+		}else{
+		    $fnac = $user->fecha_nacimiento->format('Y-m-d');
+		}
+		$usuario["fecha_nacimiento"] = $fnac;
+		
+		
 		echo json_encode($usuario);
 		
 	}
@@ -243,7 +275,9 @@ class Controller{
 		$nit = $_POST["nit"];
 		$date = $_POST["date"];
 		$cc_user = $_POST["cc_user"];
+		$estado_registro = $_POST["estado_registro"];
 		$cooperativa = $_POST["cooperativa"];
+		$role = $_POST["role"];
 		$metadata = json_decode($_POST["vehicles"]);
 		$response = null;
 		
@@ -273,21 +307,43 @@ class Controller{
 			
 		}
 		
-		$user = Usuario::find($id);
-			$user->nombre = $name;
-			$user->apellido = $apellido;
-			$user->correo_electronico = $username;
-			$user->telefono = $phone;
-			$user->cedula = $cc_user;
-			$user->nit = $nit;
-			$user->fecha_nacimiento = $date;
-			$user->estado_registro = 5;
-			$user->cooperativa = $cooperativa;
-		$user->save();
+		if($estado_registro==3){
+		    $user = Usuario::find($id);
+    			$user->nombre = $name;
+    			$user->apellido = $apellido;
+    			$user->correo_electronico = $username;
+    			$user->telefono = $phone;
+    			$user->cedula = $cc_user;
+    			$user->nit = $nit;
+    			$user->fecha_nacimiento = $date;
+    			$user->estado_registro = 3;
+    			$user->cooperativa = $cooperativa;
+    		$user->save();    
+    	
+    	    $register_status = 3;
+    	
+		}else if($estado_registro==2){
+		    $user = Usuario::find($id);
+    			$user->nombre = $name;
+    			$user->apellido = $apellido;
+    			$user->correo_electronico = $username;
+    			$user->telefono = $phone;
+    			$user->cedula = $cc_user;
+    			$user->nit = $nit;
+    			$user->fecha_nacimiento = $date;
+    			$user->estado_registro = 5;
+    			$user->cooperativa = $cooperativa;
+    		$user->save();
+    		
+    		$register_status = 5;
+		}
+		
 		
 		$response = array(
 							'message' => 'OK',
-							'info' => 'Se acualizo correctamente'
+							'info' => 'Se acualizo correctamente',
+							'register_status' => $register_status,
+							'role' => $role
 						);
 		
 		echo json_encode($response);
@@ -365,7 +421,7 @@ class Controller{
                            'id_tipo_vehiculo'   => '',
                            'fecha_nacimiento'   => $fecha,
                            'estado_registro'    => 2,
-                           'metadata'           => '',
+                           'metadata'           => '{"desactivated":[],"reactivated":[]}',
                            'fecha_creacion'     => 'now()',
                            'id_canal'           => '',
                            'ultimo_acceso'      => '',
@@ -419,7 +475,7 @@ class Controller{
                            'id_tipo_vehiculo'   => '',
                            'fecha_nacimiento'   => $fecha,
                            'estado_registro'    => 2,
-                           'metadata'           => '',
+                           'metadata'           => '{"desactivated":[],"reactivated":[]}',
                            'fecha_creacion'     => 'now()',
                            'id_canal'           => '',
                            'ultimo_acceso'      => '',
@@ -509,14 +565,136 @@ class Controller{
 	}
 	
 	function deactivateUserAdmin($app,$id){
+		
+		$_message_admin = $_POST["_message_admin"];
+		$id_user_creator = $_POST["id_user_creator"];
+		
 		$data = Usuario::find($id);
+		$metadata = $data->metadata;
+		
+		$decode_data = json_decode($metadata);
+
+		$alert_desactivate = array(
+									'message' => $_message_admin,
+									'date' => date("Y-m-d"),
+									'hour' => date('H:i')
+								   );
+
+		$decode_data->desactivated[] = $alert_desactivate;
+
+		$data->metadata = json_encode($decode_data);
+
 		$data->estado_registro = 6;
+
 		if($data->save()){
-			echo "si";
+	
+	        $headers = "MIME-Version: 1.0\r\n";
+	        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";        
+	        $email_desactivado_user = plantilla_email::find(5);  
+
+	        $model_user = Usuario::find($id);
+	        $user_nombre = $model_user->nombre;
+	        $useremail = $model_user->correo_electronico;
+
+	        $mensaje = str_replace(
+	            array("##NOMBRE##","#MENSAJE#"),
+	            array(
+	                      $user_nombre, 
+	                      $_message_admin
+	                  ),
+	            $email_desactivado_user->contenido_html
+	        );
+	        $estado = mail($useremail, 'SUBASTRA / Te Acaban de Desactivar', $mensaje,$headers);
+
+
+	        $metadata = array(
+					"user_agent" => $_SERVER['HTTP_USER_AGENT'],				
+					"message" => $_message_admin,				
+					"message_to_user" => $id,			
+					"type" => "DESACTIVATE_USER",			
+				    'hour' => date('H:i'),
+			);
+
+	        $historial=historial_acciones::create(array(
+				   'id' => NULL, 
+				   'metadata' => json_encode($metadata),
+				   'id_tipo_historial' => 2,
+				   'fecha' => NULL,
+				   'us_id' => $id_user_creator
+	        ));
+
+	       echo "si";
+
 		}else{
 			echo "no";
 		}
 	}
+
+
+
+	function ReactivateUserAdmin($app,$id){
+		
+		$id_user_creator = $_POST["id_user_creator"];
+		$data = Usuario::find($id);
+		$metadata = $data->metadata;
+		
+		$decode_data = json_decode($metadata);
+
+		$alert_reactivate = array(
+									'message' => "reactivated",
+									'date' => date("Y-m-d"),
+									'hour' => date('H:i')
+								   );
+
+		$decode_data->reactivated[] = $alert_reactivate;
+
+		$data->metadata = json_encode($decode_data);
+
+		$data->estado_registro = 3;
+
+		if($data->save()){
+	
+	        $headers = "MIME-Version: 1.0\r\n";
+	        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";        
+	        $email_reactivado_user = plantilla_email::find(9);  
+
+	        $model_user = Usuario::find($id);
+	        $user_nombre = $model_user->nombre;
+	        $useremail = $model_user->correo_electronico;
+
+	        $mensaje = str_replace(
+	            array("##NOMBRE##"),
+	            array(
+	                      $user_nombre
+	                  ),
+	            $email_reactivado_user->contenido_html
+	        );
+	        $estado = mail($useremail, 'SUBASTRA / Te Acaban de Reactivar', $mensaje,$headers);
+
+	        $metadata = array(
+					"user_agent" => $_SERVER['HTTP_USER_AGENT'],				
+					"message" => "reactivate",				
+					"message_to_user" => $id,			
+					"type" => "REACTIVATE_USER",			
+				    'hour' => date('H:i'),
+			);
+
+	        $historial=historial_acciones::create(array(
+				   'id' => NULL, 
+				   'metadata' => json_encode($metadata),
+				   'id_tipo_historial' => 3,
+				   'fecha' => NULL,
+				   'us_id' => $id_user_creator
+	        ));
+
+	       echo "si";
+
+		}else{
+			echo "no";
+		}
+	}
+
+
 	
 	function activeUser(){
 		$email = $_POST['email'];

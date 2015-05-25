@@ -1,9 +1,0 @@
-[31-Jan-2015 23:09:03 America/New_York] PHP Fatal error:  Uncaught exception 'RuntimeException' with message 'There are no GIT repositories in /home/gestionaloap/public_html/reponow.git/' in /home/gestionaloap/public_html/gitlist/src/GitList/Git/Client.php:42
-Stack trace:
-#0 /home/gestionaloap/public_html/gitlist/src/GitList/Util/Routing.php(122): GitList\Git\Client->getRepositories(Array)
-#1 /home/gestionaloap/public_html/gitlist/src/GitList/Controller/MainController.php(48): GitList\Util\Routing->getRepositoryRegex()
-#2 /home/gestionaloap/public_html/gitlist/vendor/silex/silex/src/Silex/Application.php(492): GitList\Controller\MainController->connect(Object(GitList\Application))
-#3 /home/gestionaloap/public_html/gitlist/boot.php(7): Silex\Application->mount('', Object(GitList\Controller\MainController))
-#4 /home/gestionaloap/public_html/gitlist/index.php(28): require('/home/gestional...')
-#5 {main}
-  thrown in /home/gestionaloap/public_html/gitlist/src/GitList/Git/Client.php on line 42
