@@ -9,7 +9,8 @@ class clase_carga extends ActiveRecord\Model{
  
    # explicit connection name since we always want our test db with this model
    static $connection = 'development';
+	
+ 
 }
 
 ?>
-

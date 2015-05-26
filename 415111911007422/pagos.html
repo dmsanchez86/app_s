@@ -1,0 +1,45 @@
+<html>
+    <head>
+       
+       
+       <script type="text/javascript" src="js/actions.js"></script> 
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+       <script type="text/javascript">
+            
+            $(document).ready(function(){
+                //validar ingreso de numeros en campo valor, sin decimales
+                $('#valor').keyup(function (){
+                    this.value = (this.value + '').replace(/[^0-9]/g, '');
+                });
+                //enviar datos de valor ingresado
+                $(".enviar").click(function(){
+                    if($("#valor").val()!=''){
+                        var idUser = SUBASTRA.getCookie("myid");
+                        var webserviceURL = "http://subastra-liderdesarrollo.c9.io/app/index.php/pagos";    
+                        var valor_registrado = $("#valor").val();
+                    	$.ajax({
+                			type: "POST",
+                			url: webserviceURL,
+                			data: {
+                				user:idUser,
+                				valor:valor_registrado
+                			},
+                			success: function (dataCheck) {
+                			    console.log(dataCheck);
+                			}
+                    	});
+                    }
+                });
+                	
+            });
+            
+       </script>
+       
+         
+    </head>
+    
+    <body>
+          <input placeholder="valor" type="text" name="valor" id="valor"/>  <input type="button" value="enviar" class="enviar">
+    </body>
+    
+</html>

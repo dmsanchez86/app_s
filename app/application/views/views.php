@@ -57,6 +57,7 @@ $app->get(
 $app->get(
     '/hora','SubastaController:demo'
 )->setParams(array($app));
+
 /************************************************/
 /************************************************/
 
@@ -237,8 +238,8 @@ $app->get(
         echo json_encode($new);
     }   
 )->setParams(array($app));
-# Fin acciones Administrador
 
+# Fin acciones Administrador
 /********************************/
 $app->get(
     '/registro',
@@ -260,9 +261,7 @@ $app->post(
     '/LoadAmmountVal','PagosController:LoadAmmountVal'    
 )->setParams(array($app));
 
-$app->get(
-    '/prueba_mail',
-    function () use ($app) { 
+$app->get('/prueba_mail', function () use ($app) { 
         //buscar el valor del credito
         $datos_email = plantilla_email::find(8);
         $mensaje = $datos_email->contenido_html;
@@ -275,23 +274,17 @@ $app->get(
         $txt = $mensaje;
 
         mail($to, $subject, $txt, $headers);
-
     }
 );
 
-$app->get(
-    '/page-config-coins',
-    function () use ($app) { 
+$app->get('/page-config-coins', function () use ($app) { 
         $creditos = configuracion_creditos::find(1);
         $valor_credito = $creditos->precio_por_credito;
         echo $valor_credito;
-        
     }
 );
 
-$app->get(
-    '/page-config-coins-mod',
-    function () use ($app) {
+$app->get('/page-config-coins-mod',function () use ($app) {
         $precio=$_GET['nprecio'];
         $mod_precio = configuracion_creditos::find(1);
         $mod_precio->precio_por_credito=$precio;
@@ -300,17 +293,13 @@ $app->get(
     }
 );
 
-$app->post(
-    '/post',
-    function () {
+$app->post('/post', function () {
         echo 'This is a POST route';
     }
 );
 
 // PUT route
-$app->put(
-    '/put',
-    function () {
+$app->put('/put', function () {
         echo 'This is a PUT route';
     }
 );
@@ -321,14 +310,10 @@ $app->patch('/patch', function () {
 });
 
 // DELETE route
-$app->delete(
-    '/delete',
-    function () {
+$app->delete('/delete', function () {
         echo 'This is a DELETE route';
     }
 );
-
-
 
 $app->run();
 

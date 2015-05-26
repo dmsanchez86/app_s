@@ -3,10 +3,8 @@
 class AdminController{
 	
 	# Métodos por parte del administrador
-	# CRUD Usuarios
-	
-	# Registrar usuarios
 
+    // guardar un tipo de carga
     function save_type(){
         $name = $_POST['name'];
         $des = $_POST['des'];
@@ -26,6 +24,37 @@ class AdminController{
         echo json_encode($response);
     }
     
+    function LoadTypesCharge($app){
+        $query = clase_carga::all(array('conditions' => array('1 = 1')));
+               
+        if(count($query)>0){
+          $data = array();
+          foreach($query as $tipos){
+            $data[] = $tipos->attributes();
+          }
+          $response = array(
+                'status' => "OK",
+                'data' => $data
+               );
+        }else{
+            $response = array(
+                  'status' => "NOT_FOUND"
+                 );
+        } 
+        echo json_encode($response);
+    }
+    
+    function delete_type($app,$id){
+        $query = clase_carga::find($id);
+        $result  = $query->delete();
+        
+        if($result)
+            echo "OK";
+	    else
+	        echo "NOT";
+    }
+    
+    // GCRUD unidad de medida
     function save_unit(){
         $name = $_POST['name'];
         
@@ -40,16 +69,6 @@ class AdminController{
             					'status' => "1"
             				 );
         echo json_encode($response);
-    }
-    
-    function delete_type($app,$id){
-        $query = clase_carga::find($id);
-        $result  = $query->delete();
-        
-        if($result)
-            echo "OK";
-	    else
-	        echo "NOT";
     }
     
     function delete_unit($app,$id){
@@ -86,32 +105,7 @@ class AdminController{
         echo json_encode($response);
     }
 
-    function  LoadTypesCharge($app){
-    
-        $query = clase_carga::all(array('conditions' => array('1 = 1')));
-               
-        if(count($query)>0){
-        
-          $data = array();
-          foreach($query as $tipos){
-            $data[] = $tipos->attributes();
-          }
-        
-          $response = array(
-                'status' => "OK",
-                'data' => $data
-               );
-          
-        }else{
-            $response = array(
-                  'status' => "NOT_FOUND"
-                 );
-        } 
-        
-        echo json_encode($response);
-    
-    }
-
+    // Usuarios
 	function registerNewUser(){
 	    $nombre = $_POST['nombre'];
         $apellido = $_POST['apellido'];
@@ -306,6 +300,5 @@ class AdminController{
         echo json_encode($response);
         
     }
-    
 }
 ?>
