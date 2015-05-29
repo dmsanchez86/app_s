@@ -263,13 +263,13 @@ class SubastaController{
 	        $model_ciudad_recoleccion = ciudad::find($subasta_current_item["ciudad_recoleccion_carga"]);
 	        $model_ciudad_entrega = ciudad::find($subasta_current_item["ciudad_entrega_carga"]);
 	   
-    	        $model_ciudad_recoleccion_ = $model_ciudad_recoleccion->attributes();
-    	        $model_ciudad_entrega_ = $model_ciudad_entrega->attributes();
+	        $model_ciudad_recoleccion_ = $model_ciudad_recoleccion->attributes();
+	        $model_ciudad_entrega_ = $model_ciudad_entrega->attributes();
 	        
 	        $ciudad_entrega_carga = $model_ciudad_entrega->nombre;
 	        $ciudad_recoleccion_carga = $model_ciudad_recoleccion->nombre;
 	        
-	        $date1 = new DateTime($subasta_item->fecha_inicio_subasta->format('Y-m-d'));
+	        /*$date1 = new DateTime($subasta_item->fecha_inicio_subasta->format('Y-m-d'));
 			$date2 = new DateTime(date('Y-m-d'));
 			$interval = $date1->diff($date2);
 			
@@ -292,7 +292,7 @@ class SubastaController{
     		  $e_stado = "CORRIENDO";   
     		}else{
     		  $e_stado = "PROGRAMADA";     
-    		}
+    		}*/
     		
 	        $subasta_each[] = array(
 	                            'id' => $subasta_item->id,
@@ -304,10 +304,10 @@ class SubastaController{
 	                            'ciudad_recoleccion_carga'=> $ciudad_recoleccion_carga,
 	                            'fecha_inicio_subasta'=> $subasta_item->fecha_inicio_subasta->format('Y-m-d'),
 	                            'hora_inicio_subasta'=> $subasta_item->hora_inicio_subasta,
-	                            'difference_days'=> $interval->d,
-	                            'difference_hours'=> $difference,
-	                            'now'=> $atime,
-	                            'estado'=> $e_stado
+	                            //'difference_days'=> $interval->d,
+	                            //'difference_hours'=> $difference,
+	                            //'now'=> $atime,
+	                            'estado'=> $subasta_item->estado
 	                           );
 	    }
 	    
@@ -339,11 +339,10 @@ class SubastaController{
 	        
 	        
 	        
-	        //hora de inicio y hora actual
-	        $dtime = $subasta_item->hora_inicio_subasta;
-			$atime = date('H:i');
+	        /*
+	         $dtime = $subasta_item->hora_inicio_subasta;
+			 $atime = date('H:i');
 			
-				
 				
 			 $date1 = new DateTime($subasta_item->fecha_inicio_subasta->format('Y-m-d'));
 			 $date2 = new DateTime(date('Y-m-d'));
@@ -367,6 +366,7 @@ class SubastaController{
     		}else{
     		  $e_stado = "PROGRAMADA";     
     		}
+    		*/
 					
 	        $subasta_each[] = array(
 	                            'id' => $subasta_item->id,
@@ -378,11 +378,7 @@ class SubastaController{
 	                            'ciudad_recoleccion_carga'=> $ciudad_recoleccion_carga,
 	                            'fecha_inicio_subasta'=> $subasta_item->fecha_inicio_subasta->format('Y-m-d'),
 	                            'hora_inicio_subasta'=> $subasta_item->hora_inicio_subasta,
-	                            'difference'=> $difference,
-	                            '_difference'=> $interval,
-	                            'difference_days'=> $interval->days,
-	                            'now' => $atime,
-	                            'estado'=> $e_stado
+	                            'estado'=> $subasta_item->estado
 	                           );
 	    }
 	    
@@ -487,7 +483,9 @@ class SubastaController{
 	                            'ciudad_recoleccion_carga'=> $subasta->ciudad_recoleccion_carga,	      
 	                            'ciudad_entrega_carga'=> $subasta->ciudad_entrega_carga,
 	                            'departamento_recoleccion' => $depto_ciudad_recoleccion->id,
-	                            'departamento_entrega' => $depto_ciudad_entrega->id
+	                            'departamento_entrega' => $depto_ciudad_entrega->id,
+	                            'estado' => $subasta->estado,
+	                            'participants'=> $subasta->participants
 	                   );
 	    
 	    echo json_encode($newdata);
@@ -562,7 +560,8 @@ class SubastaController{
 	                           	'fecha_inicio_subasta'=> $subasta->fecha_inicio_subasta->format('Y-m-d'),	        
 	                            'hora_inicio_subasta'=> $subasta->hora_inicio_subasta,	        
 	                            'fecha_fin_subasta'=> $subasta->fecha_fin_subasta->format('Y-m-d'),	        
-	                            'hora_fin_subasta'=> $subasta->hora_fin_subasta	
+	                            'hora_fin_subasta'=> $subasta->hora_fin_subasta,	
+	                            'estado' => $subasta->estado	
 	                   );
 	    
 	    echo json_encode($newdata);

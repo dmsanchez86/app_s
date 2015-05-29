@@ -5,6 +5,8 @@
     	<title>Subastra</title>
     	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     
+    	
+    	<script src="http://cdn.socket.io/socket.io-1.2.0.js"></script>
     	<!-- se importa fonts awesome plugin para los iconos -->
     	<link rel="stylesheet" href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" />
     
@@ -63,6 +65,9 @@
 		<script type="text/javascript" src="js/libs/countdown.js"></script>
 		<script type="text/javascript" src="js/libs/moment-countdown.js"></script>
 		<!--time -->
+		
+		
+		
     </head>
 <body>
     <!--
@@ -554,7 +559,14 @@
     					<li><a class="ulink_action subastra-icon-home" bind="#page-profile" href="#">&nbsp;</a></li>
     					<li><a class="ulink_action subastra-icon-hammer-add" bind="#page-create-subasta" href="">&nbsp;</a></li>
     					<li><a class="ulink_action subastra-list-icon" bind="#page-list-subasta" href="">&nbsp;</a></li>
-    					<li><a class="ulink_action subastra-icon-world" bind="#page-notifications" href="#">&nbsp;</a></li>
+    					<li><a class="ulink_action n-ico" bind="#page-notifications" href="#">
+    						
+    						<div class="s">
+    							<img src="img/world.png">
+    							<span class="number">9</span>
+    						</div>
+    						
+    					</a></li>
     					<li><a class="ulink_action settings-ico" bind="#options-page" href="#">&nbsp;</a></li>
     				</ul>
     			</div><!-- /navbar -->
@@ -564,7 +576,14 @@
     				<ul>
     					<li><a class="ulink_action subastra-icon-home" bind="#page-profile" href="">&nbsp;</a></li>
     					<li><a class="ulink_action subastra-list-icon" bind="#page-list-subasta-participe" href="#">&nbsp;</a></li>
-    					<li><a class="ulink_action subastra-icon-world" bind="#page-notifications" href="#">&nbsp;</a></li>
+    					<li><a class="ulink_action n-ico" bind="#page-notifications" href="#">
+    						
+    						<div class="s">
+    							<img src="img/world.png">
+    							<span class="number">9</span>
+    						</div>
+    						
+    					</a></li>
     					<li><a class="ulink_action settings-ico" bind="#options-page" href="#">&nbsp;</a></li>
     				</ul>
     			</div><!-- /navbar -->
@@ -582,14 +601,15 @@
 			<h1>Historial</h1>
 			<a href="#login-page" class="icon-options">&nbsp;</a>
 		</div>
-		<div data-role="content">
+		<div data-role="content" id="content_history">
 			
-			<ul class="simpleList" id="history-list" react-type>	
+			<ul class="simpleList" id="history-list" react-type style="overflow:hidden; transition:all .3s cubic-bezier(0, -0.75, 0.93, 1.34)">	
 				<div class="message info">
 					<i class="fa fa-clock-o"></i>
 					<p>Cargando..</p>
 				</div>
 			</ul>
+			<a href="#" data-role="button" data-theme="c" class="more">Mostrar Más</a> 
 			<a href="#" data-role="button" data-rel="back" data-theme="c">Cancel</a>    
 		</div>
 	</div>
@@ -1888,7 +1908,7 @@
                 </li>
               </ul>
             </div>
-            <div class="content-each-subasta" id="list-subasta">el silencio es oro</div>
+            <div class="content-each-subasta" id="list-subasta"></div>
         </div>
 		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> 
 			<div data-role="navbar">
@@ -3017,10 +3037,11 @@
     -->
     <div data-role="page" id="page-califik" data-theme='b'>
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
-			<a href="#page-admin-user" class="icon-home back_link">&nbsp;</a>
-			<h1>CALIFICACIÓN</h1>
-			<a href="#" class="icon-options option_link">&nbsp;</a>
+			<!--<a href="page.html" class="icon-home">&nbsp;</a>-->
+			<h1>&nbsp;</h1>
+			<!--<a href="#options-page" class="icon-options">&nbsp;</a>-->
 		</div>
+		
 		<div class="loader-wrapper-page" style="display:block">
 			<div class="message error" type="1" style="display:none">
 				<i class="fa fa-clock-o"></i>
@@ -3036,40 +3057,203 @@
 			</div>
 			<div class="message warning" type="4" style="display:none">
 				<i class="fa fa-clock-o"></i>
-			<p>Ya iniciaste Sesion Intenta Regresar al panel Principal <a href="#" class="option_home">volver</a></p>
+				<p>Ya iniciaste Sesion Intenta Regresar al panel Principal <a href="#" class="option_home">volver</a></p>
 			</div>
         </div>
-		<div data-role="content" style="display:none">  
-			<div class="content-full">
-	            <div class="block-one-message">para garantizar la mejor funcionalidad de nuestro sistema nos gustarias que hicieras la siguiente calificacion:</div>
-	            <div class="content-calificacion">
-					<div class="row-cal">
-		            	<div class="question">Como Calificas el servicio de la subasta?</div>	
-		            	<div class="cal">
-		            		<div class="star"><input class="text-input" type="text"></div>
-		            		<div class="progress">&nbsp;</div>
-		            	</div>	
-		            </div>
-		            <div class="row-cal">
-		            	<div class="question">La subasta se ejecuto correctamente</div>	
-		            	<div class="cal">
-		            		<div class="star"><input class="text-input" type="text"></div>
-		            		<div class="progress">&nbsp;</div>	
-		            	</div>	
-		            </div>
-		            <div class="row-cal">
-		            	<div class="question">se realizo una conciliacion con los trabajadores</div>	
-		            	<div class="cal">
-		            		<div class="star"><input class="text-input" type="text"></div>
-		            		<div class="progress">&nbsp;</div>	
-		            	</div>	
-		            </div>
-	            </div>
-	            <div class="submit-btn"><input type="button" value="Enviar" /></div>
+
+		<div data-role="content" style="display:block;">   
+			
+				<div class="r_row_1">     
+				<div class="image-row_">      
+					<img src="img/metro-user.png" class="metro-refered">     
+				</div>     
+				<div class="content-row_">      
+					PREGUNTAS    
+				</div>     
+				<div class="block_contentt">      					
+					<div class="list-view-content-html list-item-calificacion list-tiipo-carga">
+						<ul data-role="listview">
+
+						</ul>	
+					</div>
+				</div>    
+			</div>
+
+			<div class="r_row_1">     
+				<div class="image-row_">      
+					<img src="img/metro-user.png" class="metro-refered">     
+				</div>     
+				<div class="content-row_">      
+					AGREGAR PREGUNTA DE CALIFICACIÓN  
+				</div>     
+				<div class="block_contentt">      					
+					
+					<form class="add-btn" id="form_add_pregunta">
+						<div class="section-add-chargue-1" style="border-radius: 0">
+							<textarea class="description" id="des_calificacion" name="des_calificacion" placeholder="DESCRIPCION"></textarea>
+						</div>
+						<div class="section-add-chargue-3">
+							<input type="submit" name="name" id="btn_add_itemcalifica" class="enviar_input" value="AGREGAR" />
+						</div>
+					</form>
+
+				</div>    
+			</div>
+
+
+		</div>
+
+		<div data-role="popup" data-transition="flip" id="pop-up-delete-item-califica" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all pop-up-warning-empty-filter">
+			<div data-role="header" data-theme="a" class="ui-corner-top">
+			  <h1>Esta Seguro de borrar esta pregunta?</h1>
+			</div>
+			<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+			
+				<div class="load-pane" style="display:none">
+					<img src="img/spin2loader.gif" class="loader2">
+				</div>
+			
+			  <fieldset class="ui-grid-a panel-mensaje-creditos">
+				<div class="ui-block-a">
+					<a data-rel="back" data-value="cancel" class="btn_sbmit cancel_btn" data-role="button" data-theme="c" style="background-color: rgba(237, 46, 61, 1)">Cancelar</button></a
+					>
+				</div>
+				<div class="ui-block-b">
+					<a class="btn_sbmit ok_btn" data-value="ok" data-role="button" data-theme="c" style="background-color: rgba(237, 46, 61, 1)">Aceptar</button></a>	   
+				</div>
+				</fieldset>   
+			</div>
+		</div>
+		
+		<div data-role="popup" data-transition="flip" id="pop-up-message_preg" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all pop-up-warning-empty-filter">
+			<div data-role="header" data-theme="a" class="ui-corner-top">
+			  <h1>Se Agrego correctamente la pregunta</h1>
+			</div>
+		</div>
+
+		<div class="loader-wrapper-message" style="display:block">
+			<div class="message warning" type="1" style="display:none">
+				<i class="fa fa-warning"></i>
+				<p>No pueden haber campos vacíos</p>
 			</div>
         </div>
-		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> </div>
+
+		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> 
+			<div class="nav-list-links">
+				<a href="#page-register">REGISTRARSE</a>&nbsp;|&nbsp;<a href="#page-dudes">DUDAS</a>
+			</div>
+		</div>
 	</div>
+
+
+	<!--
+		Página para hacer la calificación de usuarios	
+	-->
+	<div data-role="page" id="page-calificion" data-theme='b'>
+		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
+			<!--<a href="page.html" class="icon-home">&nbsp;</a>-->
+			<h1>&nbsp;</h1>
+			<!--<a href="#options-page" class="icon-options">&nbsp;</a>-->
+		</div>
+		
+		<div class="loader-wrapper-page" style="display:block">
+			<div class="message error" type="1" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>No has Iniciado Sesion intenta volver al inicio.</p>
+			</div>
+			<div class="message info" type="2" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>Cargando...</p>
+			</div>
+			<div class="message error" type="3" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>No estas autorizado para ver esta pagina, Lo lamentamos</p>
+			</div>
+			<div class="message warning" type="4" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>Ya iniciaste Sesion Intenta Regresar al panel Principal <a href="#" class="option_home">volver</a></p>
+			</div>
+        </div>
+
+		<div data-role="content" style="display:block;">   
+			
+				<div class="r_row_1">     
+				<div class="image-row_">      
+					<img src="img/metro-user.png" class="metro-refered">     
+				</div>     
+				<div class="content-row_">      
+					CALIFICACIÓN    
+				</div>     
+				<div class="block_contentt">      					
+					<div class="content-full">
+	            <div class="block-one-message">Para garantizar la mejor funcionalidad de nuestro sistema nos gustarias que hicieras la siguiente calificacion:</div>
+		          <form class="add-btn" id="form_add_calificacion">
+		            <div class="content-calificacion">
+						<div class="row-cal">
+			            	
+			            </div>
+		            </div>
+		            <div class="submit-btn"><input type="submit" value="Enviar" /></div>
+		          </form>
+			</div>
+				</div>    
+			</div>
+
+
+		</div>
+		<div data-role="popup" data-transition="flip" id="pop-up-message_calif" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all pop-up-warning-empty-filter">
+			<div data-role="header" data-theme="a" class="ui-corner-top">
+			  <h1>Se Agrego correctamente la calificación</h1>
+			</div>
+		</div>
+
+		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> 
+			<div class="nav-list-links">
+				<a href="#page-register">REGISTRARSE</a>&nbsp;|&nbsp;<a href="#page-dudes">DUDAS</a>
+			</div>
+		</div>
+	</div>
+	<!--
+		Página para hacer la calificación de usuarios	
+	-->
+	<div data-role="page" id="page-subasta-results" data-theme='b'>
+		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
+			<!--<a href="page.html" class="icon-home">&nbsp;</a>-->
+			<h1>&nbsp;</h1>
+			<!--<a href="#options-page" class="icon-options">&nbsp;</a>-->
+		</div>
+		
+		<div class="loader-wrapper-page" style="display:block">
+			<div class="message error" type="1" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>No has Iniciado Sesion intenta volver al inicio.</p>
+			</div>
+			<div class="message info" type="2" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>Cargando...</p>
+			</div>
+			<div class="message error" type="3" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>No estas autorizado para ver esta pagina, Lo lamentamos</p>
+			</div>
+			<div class="message warning" type="4" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>Ya iniciaste Sesion Intenta Regresar al panel Principal <a href="#" class="option_home">volver</a></p>
+			</div>
+        </div>
+
+		<div data-role="content" style="display:block;">   
+			
+
+		</div>
+
+		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> 
+			<div class="nav-list-links">
+				<a href="#page-register">REGISTRARSE</a>&nbsp;|&nbsp;<a href="#page-dudes">DUDAS</a>
+			</div>
+		</div>
+	</div>
+
 
 	<!--
         Nombre de la página: Mostrar todos los usuarios, por parte del administrador
@@ -3266,7 +3450,7 @@
         </div>
     </script>
     <script type="text/html" id="each_subasta">
-		<div class="each-subasta">
+		<div class="each-subasta subs<%= id %>">
             <div class="ui-grid-a">
                 <div class="ui-block-a">
                     <div class="content-date">
@@ -3294,29 +3478,48 @@
                     	<img src="img/cart.png" class="ui-responsive-image">    
                     </div>
                 </div>
-                <div class="state-buttons" style="background:<% if(estado=="PROGRAMADA"){ %> rgb(237, 46, 61); <% }else if(estado=="CORRIENDO"){ %> rgb(99, 170, 81); <% } %>" >
+               
+                <div class="state-buttons" style="background:<% if(estado=="3"){ %> rgb(237, 46, 61); <% }else if(estado=="2"){ %> rgb(99, 170, 81); <% }else if(estado=="1"){ %> rgb(189, 187, 188); <% } %>" >
                     <div class="ui-grid-a">
                         <div class="ui-block-a"><span class="lbl_status">Estado:</span></div>
-                        <div class="ui-block-b"><span class="lbl_status_response"><%= estado %></span></div>
+                        <div class="ui-block-b"><span class="lbl_status_response">
+                        <% if(estado=="3"){ %> PROGRAMADA <% }else if(estado=="2"){ %> CORRIENDO <% }else if(estado=="1"){ %> FINALIZADA <% } %>
+                        </span></div>
                     </div>
-                    <!--
-                    <div class="ui-grid-b">
-                        <div class="ui-block-a"><span>suspendida</span></div>
-                        <div class="ui-block-b"><span>Realizada</span></div>
-                        <div class="ui-block-c"><span class="activo">Pendiente por Notificar</span></div>
-                    </div>
-                    -->
                 </div>
-                <div class="edit-button" style="display:<% if(estado=="PROGRAMADA"){ %> block; <% }else if(estado=="CORRIENDO"){ %> none; <% } %>">
-                    <a class="button-submit" href="#page-edit-subasta?idsubasta=<%= id %>">
-                        EDITAR
-                    </a>
-                </div>
+                
+                <% if(estado=="1"){ %>
+                	
+                	<div class="edit-button">
+                    	<a class="button-submit" href="#page-subasta-results?idsubasta=<%= id %>">
+                        	RESULTADOS
+                    	</a>
+                	</div>
+                
+                <% }else if(estado=="2"){ %>
+                	
+                	<div class="edit-button">
+                    	<a class="button-submit" href="#page-edit-subasta?idsubasta=<%= id %>">
+                        	ESTADO
+                    	</a>
+                	</div>
+                	
+                <% }else if(estado=="3"){ %>
+                	
+                	<div class="edit-button">
+                    	<a class="button-submit" href="#page-edit-subasta?idsubasta=<%= id %>">
+                        	EDITAR
+                    	</a>
+                	</div>
+                	
+                <% } %>
+                
+                
             </div>
         </div>
     </script>
     <script type="text/html" id="each_subasta_participe">
-		<div class="each-subasta">
+		<div class="each-subasta subs<%= id %>">
             <div class="ui-grid-a">
                 <div class="ui-block-a">
                     <div class="content-date">
@@ -3348,17 +3551,25 @@
                     	<img src="img/cart.png" class="ui-responsive-image">   
                     </div>
                 </div>
-                <div class="state-buttons" style="background:<% if(estado=="PROGRAMADA"){ %> rgb(237, 46, 61); <% }else if(estado=="CORRIENDO"){ %> rgb(99, 170, 81); <% } %>" >
+                <div class="state-buttons" style="background:<% if(estado=="3"){ %> rgb(237, 46, 61); <% }else if(estado=="2"){ %> rgb(99, 170, 81); <% }else if(estado=="1"){ %> rgb(189, 187, 188); <% } %>" >
                     <div class="ui-grid-a">
                         <div class="ui-block-a"><span class="lbl_status">Estado:</span></div>
-                        <div class="ui-block-b"><span class="lbl_status_response"><%= estado %></span></div>
+                        <div class="ui-block-b"><span class="lbl_status_response">
+                        <% if(estado=="3"){ %> PROGRAMADA <% }else if(estado=="2"){ %> CORRIENDO <% }else if(estado=="1"){ %> FINALIZADA <% } %>
+                        </span></div>
                     </div>
                 </div>
-                <div class="edit-button" style="display:<% if(estado=="PROGRAMADA"){ %> none; <% }else if(estado=="CORRIENDO"){ %> block; <% } %>">
-                    <a class="button-submit" href="#dialog-details?id=<%= id %>">
-                        OFERTAR YA!!!
-                    </a>
-                </div>
+                
+                <% if(estado=="2"){ %>
+                
+	                <div class="edit-button">
+	                    <a class="button-submit" href="#dialog-details?id=<%= id %>">
+	                        OFERTAR YA!!!
+	                    </a>
+	                </div>
+	                
+                <% } %>
+                
             </div>
         </div>
     </script>
@@ -3378,13 +3589,23 @@
             <div class="detail-subasta">
                 <div class="content-detail-subasta">
                     <div class="time-rest">
-                    <div class="span_title">Tiempo Restante</div>
-                        <span>
-                            Tiempo restante 40 Seg
-                        </span>
-                    </div>
+                    	
+                    	<div class="t_t1">
+                    		<div class="span_title">Tiempo Restante</div>
+                            	<span class="time_s1">
+	                            	Tiempo restante 40 Seg
+	                        	</span>
+                        </div>
+                        
+                        <div class="t_t2" style="display:none">
+                        	<span>
+                        		LA SUBASTA TERMINO
+                        	</span>
+                        </div>
+                        
+                    </diVv>
                     <div class="title-subasta">
-                        <span><%= titulo_opcional %></span>
+                    	<span><%= titulo_opcional %></span>
                     </div>
                     <div class="label" id="email-label">
                         Origen
@@ -3429,6 +3650,7 @@
     	</div>
     </script>
    	<script type="text/html" id="detail_subasta_participe">
+
 	<div class="shadow-hide" style="display:none">
 	    <div class="alert"></div>
 	</div>
@@ -3462,7 +3684,7 @@
                 <div class="absolute-loader-box">&nbsp;</div>
                     <div class="content-box">
                         <p class="header-1">
-                        3min 30seg
+                        Cargando...
                         </p>
                         <p class="header-2">
                             La Subasta más baja
@@ -3478,6 +3700,7 @@
                             <% } %>
                         </p>
                     </div>  
+                    <div class="delay-image" style="display:none">&nbsp;</div>
                 </div>
             </div>
         </div>
@@ -3486,10 +3709,15 @@
 	    <form class="submit-price-participant" metadata='<%= JSON.stringify(participants) %>'>
 	        <div class="header-banner">
 	            <div class="ofert">
-	                <p class="label-price">
-	                    Tu oferta
-	                </p>
-	                <input value="<% if(participants.length==0){  %>$ 0<% }else{ %>$ 99<% } %>" class="put-price" >
+		            <div class="area-p1">
+		            	<p class="label-price">
+		                    Tu oferta
+		                </p>
+		                <input value="<% if(participants.length==0){  %>$ 0<% }else{ %>$ 99<% } %>" class="put-price" >
+		            </div>
+		            <div class="area-p2" style="display:none">
+		            	LA SUBASTA FINALIZO
+		            </div>
 	            </div>
 	        </div>
 	     </form>
@@ -3681,6 +3909,188 @@
 	</script>
 	<script type="text/html" id="template_each_unit">
 		<li><a href="" class="ui-icon-delete unit_measure_link ui-btn ui-btn-icon-right ui-icon-carat-r" data-id="<%= id %>"><%= nombre %></a></li>
+	</script>
+	<script type="text/html" id="template_each_preguntas">
+		<li><a href="" class="ui-icon-delete pregunta_link ui-btn ui-btn-icon-right ui-icon-carat-r" data-id="<%= id %>"><%= descripcion %></a></li>
+	</script>
+	<script type="text/html" id="template_each_calificacion">
+		<div class="item-question">
+			<div class="question" data-id="<%= id %>"><%= descripcion %></div>	
+	    	<div class="cal">
+	    		<div class="star">
+	    			<select>
+	    				<option>1</option>
+	    				<option>2</option>
+	    				<option>3</option>
+	    				<option>4</option>
+	    				<option>5</option>
+	    			</select>
+	    		</div>
+	    		<div class="progress">&nbsp;</div>
+	    	</div>
+	    </div>
+	</script>
+	<script type="text/html" id="template_results_subasta">
+			
+	<div class="container_subasta">
+		<div class="header_s">
+			<h1> - RESULTADOS - </h1>
+		</div>
+		<div class="content-s">
+			
+		<div class="title-sup">DATOS GEOGRAFICOS</div>
+			
+			<div class="rounded-title">
+			
+				<div class="rr_fil">
+					<div class="ti_s">
+						COORDENADA INICIO:
+					</div>
+					<div class="con_s">
+						<%= coordenada_inicial %>
+					</div>
+				</div>
+				
+				<div class="rr_fil">
+					<div class="ti_s">
+						COORDENADA FIN:
+					</div>
+					<div class="con_s">
+						<%= coordenada_final %>
+					</div>
+				</div>
+			
+			</div>
+		
+			<div class="title-sup">DATOS PARA EL TRANSPORTISTA</div>
+		
+			<div class="rounded-title">
+				<div class="rr_fil">
+					<div class="ti_s">
+						FECHA RECOGIDA CARGA	
+					</div>
+					<div class="con_s">
+						<%= fecha_recogida_carga %>
+					</div>
+				</div>
+				<div class="rr_fil">
+					<div class="ti_s">
+						HORA RECOGIDA CARGA	
+					</div>
+					<div class="con_s">
+						<%= hora_recogida_carga %>
+					</div>
+				</div>
+			</div>
+			
+			<div class="rounded-title">
+				
+				<div class="rr_fil">
+					<div class="ti_s">
+						FECHA ENTREGA CARGA	
+					</div>
+					<div class="con_s">
+						<%= fecha_entrega_carga %>
+					</div>
+				</div>
+			
+				<div class="rr_fil">
+					<div class="ti_s">
+						HORA ENTREGA CARGA	
+					</div>
+					<div class="con_s">
+						<%= hora_entrega_carga %>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="title-sup">DATOS DE LA SUBASTA</div>
+			
+			<div class="rounded-title">
+			
+				<div class="rr_fil">
+					<div class="ti_s">
+						FECHA INICIO SUBASTA	
+					</div>
+					<div class="con_s">
+						<%= fecha_inicio_subasta %>
+					</div>
+				</div>
+				
+				<div class="rr_fil">
+					<div class="ti_s">
+						HORA INICIO SUBASTA	
+					</div>
+					<div class="con_s">
+						<%= hora_inicio_subasta %>
+					</div>
+				</div>	
+			
+			</div>
+			
+			<div class="rounded-title">
+			
+				<div class="rr_fil">
+					<div class="ti_s">
+						FECHA FIN SUBASTA	
+					</div>
+					<div class="con_s">
+						<%= fecha_fin_subasta %>
+					</div>
+				</div>
+				
+				<div class="rr_fil">
+					<div class="ti_s">
+						HORA FIN SUBASTA	
+					</div>
+					<div class="con_s">
+						<%= hora_fin_subasta %>
+					</div>
+				</div>
+			
+			</div>
+			
+			<div class="title-sup">PARTICIPANTES</div>
+			
+			<div class="rounded-title">
+			
+			<% if( participants.length == 0 ){ %>
+				<div class="error-empty">
+					NO HUBO PARTICIPANTES
+				</div>
+			<% }else{ %>
+				<% participants.forEach(function(o){ %>
+					
+				<% }); %>
+			<% } %>
+			
+			
+			</div>
+			
+		</div>
+	</div>
+			
+	</script>
+	
+	<script type="text/html" id="items_notification">
+		<ul data-role="listview" data-theme="c" data-dividertheme="d">
+		
+		<% _response.forEach(function(obx){ %>
+            <li>
+				<label style="padding: 15px 0px 0px 0px !important;margin: 0px -22px 0px 0px !important;border-width: 0px 0px 0px 0px !important;height: 23px;float: left;width: 47px;" data-corners="false">
+					
+					<fieldset data-role="controlgroup" style="height:0px !important">
+						<input id="checkbox_<%= obx.id %>" name="checkbox_<%= obx.id %>" class="item_checkbox check_notify" data-id="<%= obx.id %>" type="checkbox" value="false" <% if(obx.visto=="0"){ %> checked <% } %> />
+					</fieldset>	
+					
+				</label>
+					
+                <a href="#" class="detailListText"><b><%= obx.hora %></b> <%= obx.titulo %> </a>
+            </li>
+         <% }); %>
+         
+         </ul>
 	</script>
 	<!-- End plantillas-->
 	

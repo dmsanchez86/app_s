@@ -1541,6 +1541,7 @@ img.loader3 {
     font-weight: bold;
     color: rgb(237, 46, 61);
     text-transform: uppercase;
+      display: inline-block;
 }
 
 .content-calificacion {
@@ -1865,6 +1866,126 @@ span.reffered-name {
   font-weight: bold;
 }
 
+.n-ico {
+    padding: 0;
+    margin: 0;
+}
+
+.n-ico img {
+    width: 47%;
+    float: left;
+    margin-left: 21%;
+    max-width: 52px;
+}
+
+.n-ico .number {
+    width: 10%;
+    float: left;
+    font-size: 33px;
+    font-weight: bold;
+}
+
+.area-p2 {
+  font-weight: bold;
+  color: #fff;
+  line-height: 38px;
+}
+
+.pararanimacion{
+    animation-play-state: paused;
+}
+
+.delay-image {
+  background: url(../img/king.png);
+  height: 142px;
+  background-size: 61%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.t_t2 span {
+  font-size: 23px;
+  text-align: center;
+}
+
+.ti_s {
+    float: left;
+    font-weight: bold;
+    width: 50%;
+    font-size: 20px;
+    color: rgb(237, 46, 61);
+}
+
+.con_s {
+    float: left;        width: 50%;
+    font-size: 20px;
+}
+
+.content-s {
+    overflow: hidden;
+}
+
+.rr_fil {
+    float: left;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: -1px;
+}
+
+.rounded-title {
+  overflow: hidden;
+  float: left;
+  border: 1px solid rgb(237, 46, 61);
+  border-radius: 7px;
+  margin-top: 7px;
+  padding-top: 3px;
+  width: 99%;
+  padding-bottom: 6px;
+}
+.title-sup {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    margin-top: 10px;
+    margin-bottom: -8px;
+    float: left;
+    width: 100%;
+}
+
+.title-sup:before {
+    content: "- ";
+}
+
+.title-sup:after {
+    content: " -";
+}
+
+.error-empty {
+    text-align: center;
+    font-weight: bold;
+    color: rgb(237, 46, 61);
+}
+.check_notify:checked:after {
+  background: rgb(237, 46, 61);
+}
+.check_notify:after {
+  background: rgb(124, 124, 124);
+  position: relative;
+  display: block;
+  left: -1px;
+  border-radius: 11px;
+  top: -1px;
+  width: 12px;
+  height: 12px;
+  border-width: 1px;
+  border-style: solid;
+  /* border-color: #B3B3B3 #dcddde #dcddde #B3B3B3; */
+  content: "";
+  /* background-image: linear-gradient(135deg, #B1B6BE 0%,#FFF 100%); */
+  /* background-repeat: no-repeat; */
+  background-position: center;
+}
 @-webkit-keyframes load8 {
   0% {
     -webkit-transform: rotate(0deg);

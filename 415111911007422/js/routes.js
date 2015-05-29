@@ -16,10 +16,14 @@ var validate = true;
 var geocoder;
 var interval = null;
 var interval_time = null;
-
+	
 var router=new $.mobile.Router({
-  "#login-page": {handler: "loginpage", events: "s" },//pagina principal
-  "#page-register": {handler: "register", events: "s" },
+          /**********************\
+        /**********EVENTOS*********\
+      /**********CADA PAGINA*********\
+    /***********************************/
+  "#login-page": {handler: "loginpage", events: "s" }, //pagina principal
+  "#page-register": {handler: "register", events: "s" }, 
   "#page-profile": {handler: "profile", events: "s" },
   "#dialog-history": {handler: "history_dialog", events: "s" },
   "#creditos-dialog": {handler: "creditos_dialog", events: "s" },
@@ -33,6 +37,7 @@ var router=new $.mobile.Router({
   "#page-history":{handler: "history_user_admin", events:"s"},
   "#page-admin-user":{handler: "page_admin_user", events:"s"},
   "#page-admin-general":{handler: "page_admin_general", events:"s"},
+  "#page-subasta-results":{handler: "page_subasta_results", events:"s"},
   "#page-admin-menu":{handler: "page_admin_menu", events:"s"},
   "#options-page":{handler: "options_page", events:"s"},
   "#dialog-close-sesion":{handler: "close_sesion_action", events:"s"},
@@ -41,6 +46,7 @@ var router=new $.mobile.Router({
   "#dialog-change-pass":{handler: "dialog_change_pass", events:"s"},
   "#dialog-desactivate":{handler:"account_desactivate",events:"s"},
   "#page-notifications":{handler:"dialog_notificaciones",events:"s"},
+  "#page-win":{handler:"page_win",events:"s"},
   "#page-create-subasta":{handler:"page_create_subasta",events:"s"},
   "#dialog-active-account":{handler:"active_account",events:"s"},
   "#page-list-subasta":{handler:"page_list_subasta",events:"s"},
@@ -52,10 +58,116 @@ var router=new $.mobile.Router({
   "#page-list-subasta-participe":{handler:"page_list_subasta_participe",events:"s"},
   "#page-config-coins":{handler:"page_config_coins",events:"s"},
   "#page-califik":{handler:"page_califik",events:"s"},
+  "#page-calificion":{handler:"page_calificion",events:"s"},
   "#page-edit-subasta":{handler:"page_edit_subasta",events:"s"},
   "#dialog-desactivate-per-user":{handler:"dialog_desactivate_per_user",events:"s"},
   "#dialog-reactivate-per-user":{handler:"dialog_reactivate_per_user",events:"s"}
 },{
+    page_subasta_results: function(type,match,ui){
+        
+        try{
+        	SUBASTRA.clearTimer();	
+        }catch(e){
+        	console.log("the socket is not responding correctly");
+        }
+        
+        var params=router.getParams(match[1]);  
+        var id_s = params.idsubasta;
+      
+        $.ajax({
+        	type 	: "POST",
+        	url		: webserviceURL + "/subasta/find",
+        	data	: {
+        	    _id : id_s
+        	},
+        	success: function(response){
+                
+                var response = JSON.parse(response);
+                response.participants = JSON.parse(response.participants);
+                
+                $("#page-subasta-results div[data-role='content']").html(tmpl("template_results_subasta", response));
+                
+                
+        	}
+        });
+    
+    },
+    loginpage: function(type,match,ui){
+        try{
+        	SUBASTRA.clearTimer();	
+        }catch(e){
+        	console.log("the socket is not responding correctly");
+        }
+        //oculto todos los mensajes
+        $(".message").hide();
+	    // reseteo el fomrulario
+        $("#login_container")[0].reset();
+        // Se muestran los links de registro y dudas en el footer
+        $('.nav-list-links').show();
+        var $thispage = $("#login-page");
+        SUBASTRA.validateSession($thispage); // Se valida si ya inicio sesión
+	  /*
+	  	activo el evento submit del formulario lo quito con unbind porque como se vuelve a llamar 				entonces lo ejecuta 2 veces
+	  */
+	  $("#login_container").unbind("submit").submit(function(e){
+          e.preventDefault();
+		  var $username = $(this).find("#name").val();
+		  var $password = $(this).find("#pass").val();
+		  var $message = $(".message-notification[data-message=login]");
+		  $message.find(".message[type]").hide();
+		  	  
+		  if($username === "" || $password  === ""){
+			  $message.find(".message[type=3]").show();
+		  }else{
+			  $message.find(".message[type=99]").show();
+				$.ajax({
+					type: "POST",
+					url: webserviceURL + "/login",
+					data: {
+						email:$username,
+						pass:$password
+					},
+					success: function (dataCheck) {
+						$message.find(".message[type]").hide();
+						var response = JSON.parse(dataCheck);
+						if(response.message=="FAIL"){
+							$message.find(".message[type=1]").show();
+						}else if(response.message=="OK"){
+							var $userId = response.userdata.id;
+							var response_uri = response.redirect_uri;
+							var rol_id = response.userdata.rol_id;
+							var estado_registro = response.userdata.estado_registro;
+							var role_permisions = response.userdata.permisions;
+							
+							if(estado_registro==5){
+								 $.mobile.changePage( "#dialog-auntentication-admin", { role: "dialog" } );
+							}else{
+								SUBASTRA.setCookie("myid",$userId,9999999);
+								SUBASTRA.setCookie("rol_id",rol_id,9999999);
+								SUBASTRA.setCookie("estado_registro",estado_registro,9999999);
+								SUBASTRA.setCookie("role_permisions",role_permisions,9999999);
+								SUBASTRA.setCookie("response_uri",response_uri,9999999);
+								$.mobile.changePage( response_uri + "?referrer=login&iduser="+$userId, {
+								  transition: "flip",
+								  reverse: false
+								});
+							}
+						}else if(response.message=="CREDENTIALS_INCORRECT"){
+							$message.find(".message[type=2]").show();
+						}else if(response.message == "DEACTIVATE"){
+							$message.find(".message[type=6]").show();
+						}else if(response.message == "DEACTIVATE ADMIN"){
+							$message.find(".message[type=7]").show();
+						}
+					}
+				});
+		  }
+	  });
+  },
+    page_win:function(type,match,ui){
+    
+        console.log("hola");
+    },
     unit_measure_page:function(type,match,ui){
         var $thispage = $("#unit-measure-page");
         $('.loader-wrapper-message > div').css('display','none');
@@ -367,11 +479,48 @@ var router=new $.mobile.Router({
             
        }
 
-       $('.enviar_input.sesion_si').click(function(e) {
+       $('.enviar_input.sesion_si').unbind('click').click(function(e) {
           history.back();
        });
+       
+        $.ajax({
+            type: "POST",
+            url: webserviceURL + "/notifications/show",
+            data: {
+              id_: id_
+            },
+            success: function (dataCheck) {
+                var response = JSON.parse(dataCheck);
+   
+                var parseData = {
+                    _response: response    
+                };
+                
+                $('#page-notifications .block-list').html(tmpl("items_notification",parseData));
+                $('#page-notifications .block-list ul').listview();
+                
+                $(".check_notify").unbind("click").click(function(){
+                    
+                   $chequed = $(this).is(":checked");
+                     
+                     $.ajax({
+                        type: "POST",
+                        url: webserviceURL + "/notifications/unread",
+                        data: {
+                          id_ck: $(this).attr("data-id"),
+                          checked: $chequed
+                        },
+                        success: function (dataCheck1) {
+                            console.log(dataCheck1);
+                        }
+                     });
+            
+                });
+                
+            }
+        });
 
-       $(".auth_user").click(function(e) {
+      /* $(".auth_user").unbind('click').click(function(e) {
           e.preventDefault();
           
           var $myid = id_;
@@ -399,7 +548,7 @@ var router=new $.mobile.Router({
               }
           });
 
-       });
+       });*/
 
 
        // empieza los estilos de herman
@@ -722,7 +871,7 @@ var router=new $.mobile.Router({
 		var $message = $(".message-notification[data-message=register-subasta]");
 		
         //activo el evetno click de los checkbox
-        $thispage.find("#checkbox-programar").click(function(){
+        $thispage.find("#checkbox-programar").unbind('click').click(function(){
           if ($(this).is(":checked")) {
                $(".field-row-programar-si").hide();
            }else{
@@ -1554,7 +1703,7 @@ var router=new $.mobile.Router({
 			
 		$message.find(".message[type]").hide();
 			
-		$thispage.find("#edit_subasta_container").submit(function(e){
+		$thispage.find("#edit_subasta_container").unbind('submit').submit(function(e){
 			e.preventDefault();
 			
 			var $estado = null;				
@@ -1732,10 +1881,151 @@ var router=new $.mobile.Router({
     },
 	page_califik:function(type,match,ui){
 		
-		var $thispage = $("#page-califik");
-		$(".message").hide();
-		SUBASTRA.validateSession($thispage);
+	    load_calicaciones();
+	    btn_register_pregunta();
 		
+		$("#form_add_pregunta").unbind('submit').submit(function(e){
+		    e.preventDefault();
+		    if( $('#des_calificacion').val() == ''){
+                alert('Debes ingresar la descripción de la pregunta');
+            }else{
+                var descripcion = $('#des_calificacion').val();
+                $.ajax({
+                    type: "POST",
+                    url: webserviceURL + "/page-califik",
+                    data: { despregunta: descripcion },
+                    success: function (dataCheck) {
+                        $('#pop-up-message_preg').popup('open');
+                        setTimeout(function() {$('#pop-up-message_preg').popup('close');}, 2000);
+                        $('.loader-wrapper-message > div').css('display','none');
+                        $('#des_calificacion').val('');
+                        load_calicaciones();
+                        btn_register_pregunta();
+                    }
+                });
+            }
+		});
+		function btn_register_pregunta(){
+    		setTimeout(function() {
+        		$('.pregunta_link').unbind('click').click(function(e){
+                  var id = $(this).attr('data-id');
+                  $('#pop-up-delete-item-califica').popup('open');
+                  (function(){
+        				var mypopup = $("#pop-up-delete-item-califica");
+        				mypopup.find(".ui-header").css({"color":"white","background":"rgb(237, 46, 61)"}).attr('data-id',id);	
+        				mypopup.css("border","1px solid rgb(237, 46, 61)");			
+        			})();
+        			
+        			$('.btn_sbmit.ok_btn').unbind('click').click(function(){
+        			    var id_ = $("#pop-up-delete-item-califica .ui-header").attr('data-id');
+        			    
+        			    $.ajax({
+                          url: webserviceURL+"/deletePregunta/"+id_,
+                          type: "POST",
+                          data:null,
+                          success: function(res){
+                              $('#pop-up-delete-item-califica').popup('close');
+                              $('.loader-wrapper-message > div').css('display','none');
+                              $('#des_calificacion').val('');
+                              load_calicaciones();
+                              btn_register_pregunta();
+                          }
+                      });
+        			});
+                });
+    		}, 1000);
+		}
+		
+		function load_calicaciones(){
+          $.ajax({
+              type: "POST",
+              url: webserviceURL + "/allItemPreguntas",
+              data: null,
+              success: function (dataCheck) {
+                  
+                  $.mobile.loading( 'hide', {
+                    text: '',
+                    textVisible: true,
+                    theme: 'z',
+                    html: ""
+                  });
+    
+                  var response = JSON.parse(dataCheck);
+                  console.log(response);
+                  var tipos = response.data;
+                  
+                  $(".list-item-calificacion ul").empty();
+    
+                  tipos.forEach(function(ix){
+                    $(".list-item-calificacion ul").append(tmpl("template_each_preguntas", ix));
+                  });
+    
+                    $(".list-item-calificacion ul").trigger('create');    
+                    $(".list-item-calificacion ul").listview('refresh');
+    
+              }
+          });
+      }
+		
+	},
+	page_calificion:function(type,match,ui){
+		load_preguntas();
+		function load_preguntas(){
+            $.ajax({
+              type: "POST",
+              url: webserviceURL + "/allItemPreguntas",
+              data: null,
+              success: function (dataCheck) {
+                  
+                  $.mobile.loading( 'hide', {
+                    text: '',
+                    textVisible: true,
+                    theme: 'z',
+                    html: ""
+                  });
+    
+                  var response = JSON.parse(dataCheck);
+                  console.log(response);
+                  var tipos = response.data;
+                  
+                  $(".list-item-calificacion ul").empty();
+    
+                  tipos.forEach(function(ix){
+                    $(".row-cal").append(tmpl("template_each_calificacion", ix));
+                  });
+    
+                    $(".row-cal").trigger('create');    
+                    $(".row-cal").listview('refresh');
+    
+              }
+            });
+        }
+        
+        $("#form_add_calificacion").unbind('submit').submit(function(e){
+		    e.preventDefault();
+		    var datos_cal = new Array();
+		    var acumulado = 0;
+		    var preguntas = $( ".row-cal .item-question" ).length;
+		    
+		    $( ".row-cal .item-question" ).each(function( index ) {
+                datos_cal[index] = $(".question").eq(index).text()+ " : "+$(".star select").eq(index).val();
+                acumulado += parseFloat($(".star select").eq(index).val());
+            });
+            var promedio = acumulado / preguntas;
+		   
+		   $.ajax({
+                type: "POST",
+                url: webserviceURL + "/page-calificion",
+                data: { datos: JSON.stringify(datos_cal),
+                        promcalifica: promedio},
+                success: function (dataCheck) {
+                    $('#pop-up-message_calif').popup('open');
+                    setTimeout(function() {$('#pop-up-message_calif').popup('close');}, 2000);
+                    $('.loader-wrapper-message > div').css('display','none');
+                    $('#des_calificacion').val('');
+                }
+            });
+		});
 		
 	},
 	page_config_coins:function(type,match,ui){
@@ -1752,7 +2042,7 @@ var router=new $.mobile.Router({
 			}
     	});	
     	
-    	$("#md-pcredito").click(function(){
+    	$("#md-pcredito").unbind('click').click(function(){
     		var nuevo_precio = $(".price_per_credit").val();
     		
     		$("#pop-up-accept-cambio-pcredito").popup("open");
@@ -1765,7 +2055,7 @@ var router=new $.mobile.Router({
 									
 			})();
     		
-    		$(".btn_sbmit.ok_btn").click(function(){
+    		$(".btn_sbmit.ok_btn").unbind('click').click(function(){
 				$.ajax({
 					type: "GET",
 					url: webserviceURL + "/page-config-coins-mod",
@@ -1783,7 +2073,7 @@ var router=new $.mobile.Router({
 					}
 		    	});	
     		});
-    		$(".btn_sbmit.cancel_btn").click(function(){
+    		$(".btn_sbmit.cancel_btn").unbind('click').click(function(){
 				$.mobile.changePage( "#page-config-coins");
     		});
     		
@@ -1805,7 +2095,7 @@ var router=new $.mobile.Router({
 		SUBASTRA.deleteAndClearCookies("estado_registro");
 		SUBASTRA.deleteAndClearCookies("role_permisions");
 			
-		$(".enviar_input.sesion_si").click(function(){
+		$(".enviar_input.sesion_si").unbind('click').click(function(){
 			$.mobile.changePage( "#login-page");
 		});
 	},
@@ -1817,7 +2107,7 @@ var router=new $.mobile.Router({
 			console.log("the socket is not responding correctly");
 		}
 				
-		$(".enviar_input.sesion_si").click(function(){
+		$(".enviar_input.sesion_si").unbind('click').click(function(){
 			history.back();
 		});
 	},
@@ -1831,7 +2121,18 @@ var router=new $.mobile.Router({
 		
 		var params=router.getParams(match[1]);
 		var id=params.id;
-		
+		var id_subasta=id;
+
+		var socket = io.connect("72.29.87.162:8081");
+        socket.on('connect', function () {
+            console.log("connected to socket");
+        });    
+        socket.on("subasta-" + id_subasta, function (data) {
+             $(".t_t1").hide();
+             $(".t_t2").show();
+             $(".ofert-button").hide();
+        });
+        
 	  	var $thispage = $("#dialog-details");
 		$(".message").hide();
 		SUBASTRA.validateSession($thispage);
@@ -1846,12 +2147,24 @@ var router=new $.mobile.Router({
 				var response = JSON.parse(dataCheck);
 
 				$("#dialog-details div[data-role='content']").html(tmpl("detail_subasta_", response));
+				
+				if(response.estado == "1" ){
+                    
+                    $(".t_t1").hide();
+                    $(".t_t2").show();
+                    $(".ofert-button").hide();
+             
+                }else if(response.estado == "2" ){
+                    console.log("activo");
+                }else if(response.estado == "3" ){
+                    console.log("programado");
+                }
 					
 					
 				//functiones de tiempo
 					var str_time = response.fecha_fin_subasta + " " + response.hora_fin_subasta + "";
 					//console.log(str_time);
-					SUBASTRA.setTime("2",str_time,".time-rest span");
+					SUBASTRA.setTime("2",str_time,".time-rest .time_s1");
 				//fin funciones de tiempo
 				
 				var coordenada_inicial = response.coordenada_inicial.split(",");
@@ -1936,7 +2249,7 @@ var router=new $.mobile.Router({
 				        }
 				    
 				    
-				 $(".ofert-button").click(function(){
+				 $(".ofert-button").unbind('click').click(function(){
 				 	$.mobile.changePage( "#page-subasta?id=" + id, { transition: "slideup" } );
 				 });
 				 
@@ -1958,10 +2271,37 @@ var router=new $.mobile.Router({
 		var id = params.id;
 		var id_subasta = id;
 		
-		//empiezo el bind
 		interval = SUBASTRA.listen(id_subasta);
-		//interval_time = SUBASTRA.listenTime(id_subasta);
-		//empiezo el bind
+        
+        
+        var socket = io.connect("72.29.87.162:8081");
+        
+        //functiones del socket
+        socket.on('connect', function () {
+            console.log("connected to socket");
+        });    
+        
+        console.log("subasta-" + id_subasta);
+        
+        socket.on("subasta-" + id_subasta, function (data) {
+            
+            // if( $.mobile.activePage.attr("id").indexOf("page-subasta") != -1 ){
+                console.log("final");
+                
+                $(".area-p2").show();
+                $(".area-p1").hide();
+                $(".absolute-loader-box").addClass("pararanimacion");
+                $(".content-box").hide();
+                $(".delay-image").show();
+            
+                
+           // }else if( $.mobile.activePage.attr("id").indexOf("dialog-details") != -1 ){
+                //    console.log("dialog details");
+            // }
+            
+        });
+        //functiones del socket
+		
 		
 	  	var $thispage = $("#page-subasta");
 		$(".message").hide();
@@ -1975,6 +2315,7 @@ var router=new $.mobile.Router({
 			},
 			success: function (dataCheck) {
 			    
+			    
 				var response = JSON.parse(dataCheck);
 				console.log(response);
 				
@@ -1985,8 +2326,6 @@ var router=new $.mobile.Router({
 				}
 				
 				response.participants = participants;
-				console.log(response);
-				
 				
 				
 				//functiones de tiempo
@@ -1996,6 +2335,18 @@ var router=new $.mobile.Router({
 				
 
 				$thispage.find("div[data-role='content']").html(tmpl("detail_subasta_participe", response));
+				
+				if(response.estado == "1" ){
+				    $(".area-p2").show();
+                    $(".area-p1").hide();
+                    $(".absolute-loader-box").addClass("pararanimacion");
+                    $(".content-box").hide();
+                    $(".delay-image").show();
+				}else if(response.estado == "2" ){
+				    console.log("activo");
+				}else if(response.estado == "3" ){
+				    console.log("programado");
+				}
 				
 				
 				$("#pop-up-accept-participe").popup();
@@ -2285,10 +2636,15 @@ var router=new $.mobile.Router({
 			theme: 'z',
 			html: ""
 		});
+		
 		$('.back').unbind('click').click(function(e) {
 		    history.back();
 		});
 		
+		var socket = io.connect("72.29.87.162:8081");
+		socket.on("begin_subasta-user-" + SUBASTRA.getCookie("myid"), function (data) {
+           SUBASTRA.toast(data.message);
+        });
 		
 		$('.nav-item-filter a').unbind('click').click(function(e){
 			e.preventDefault();
@@ -2641,12 +2997,14 @@ var router=new $.mobile.Router({
 		
 		
 		
-		$('.ui-btn-text').click(function(){
+		$('.ui-btn-text').unbind('click').click(function(){
 			//$('.ui-popup-screen').click();
 			var val = $('input[name="precio"]').val();
 			window.location = "#page-list-subasta?filter="+val;
 			//console.log(val);
 		});
+		
+		
 		
 		$.ajax({
 			type: "POST",
@@ -2663,7 +3021,17 @@ var router=new $.mobile.Router({
 				    $(".content-each-subasta").append(tmpl("not_found_subasta", 0));
 				    $(".navar-filter.ui-navbar").hide();
 				}else{
+				    
 				    all_subastas.forEach(function(o,i){
+				        
+				        var socket = io.connect("72.29.87.162:8081");
+    			        socket.on("subasta-" + o.id, function (data) {
+                           var selector = $(".subs" + data.id_subasta);
+                           selector.find(".state-buttons").css("background","rgb(189, 187, 188)");
+                           selector.find(".lbl_status_response").text("FINALIZADA");
+                           selector.find(".edit-button").hide();
+                        });
+                        
     			        $(".content-each-subasta").append(tmpl("each_subasta", o));
     			    });   
     			    $(".navar-filter.ui-navbar").show();
@@ -3059,7 +3427,7 @@ var router=new $.mobile.Router({
 		
 		
 		
-		$('.ui-btn-text').click(function(){
+		$('.ui-btn-text').unbind('click').click(function(){
 			//$('.ui-popup-screen').click();
 			var val = $('input[name="precio"]').val();
 			window.location = "#page-list-subasta?filter="+val;
@@ -3077,8 +3445,24 @@ var router=new $.mobile.Router({
 				
 				$(".content-each-subasta").empty();
 				
+				
 				all_subastas.forEach(function(o,i){
-					//console.log(o);
+                        
+                    console.log(o);
+                    //activo el socket				
+    				    var socket = io.connect("72.29.87.162:8081");
+    			        socket.on("subasta-" + o.id, function (data) {
+                           
+                           console.log(data);
+                           var selector = $(".subs" + data.id_subasta);
+                           
+                           selector.find(".state-buttons").css("background","rgb(189, 187, 188)");
+                           selector.find(".lbl_status_response").text("FINALIZADA");
+                           selector.find(".edit-button").hide();
+                           
+                        });
+                    //activo el socket
+                    console.log(o);
 			        $(".content-each-subasta").append(tmpl("each_subasta_participe", o));
 			    });
     
@@ -3502,127 +3886,19 @@ var router=new $.mobile.Router({
 				}
 			});
 			
-		$('#cancel-user').click(function(e) {
+		$('#cancel-user').unbind('click').click(function(e) {
 		    history.back();
 		});
 	  
   },
-    loginpage: function(type,match,ui){
-    	
-    			
-		try{
-			SUBASTRA.clearTimer();	
-		}catch(e){
-			console.log("the socket is not responding correctly");
-		}
-		
-	
-	  //oculto todos los mensajes
-	  $(".message").hide();
-	  
-	  // reseteo el fomrulario
-      $("#login_container")[0].reset();
-      
-      $('.nav-list-links').show();
-      
-      var $thispage = $("#login-page");
-      
-      SUBASTRA.validateSession($thispage);
-	  
-	  /*
-	  	activo el evento submit del formulario lo quito con unbind porque como se vuelve a llamar 				entonces lo ejecuta 2 veces
-	  */
-	  $("#login_container").unbind("submit").submit(function(e){
-	  	e.preventDefault();
-		  var $username = $(this).find("#name").val();
-		  var $password = $(this).find("#pass").val();
-		  var $message = $(".message-notification[data-message=login]");
-		  $message.find(".message[type]").hide();
-		  	  
-		  if($username === "" || $password  === ""){
-			  $message.find(".message[type=3]").show();
-		  }else{
-			  	
-			  $message.find(".message[type=99]").show();
-				$.ajax({
-					type: "POST",
-					url: webserviceURL + "/login",
-					data: {
-						email:$username,
-						pass:$password
-					},
-					success: function (dataCheck) {
-						$message.find(".message[type]").hide();
-						var response = JSON.parse(dataCheck);
- 						
- 						//console.log(response);
- 						
-						if(response.message=="FAIL"){
-							$message.find(".message[type=1]").show();
-						}else if(response.message=="OK"){
-										
-							var $userId = response.userdata.id;
-							var response_uri = response.redirect_uri;
-							var rol_id = response.userdata.rol_id;
-							var estado_registro = response.userdata.estado_registro;
-							var role_permisions = response.userdata.permisions;
-							
-							if(estado_registro==5){
-								
-								 $.mobile.changePage( "#dialog-auntentication-admin", { role: "dialog" } );
-								 
-							}else{
-								
-								SUBASTRA.setCookie("myid",$userId,9999999);
-								SUBASTRA.setCookie("rol_id",rol_id,9999999);
-								SUBASTRA.setCookie("estado_registro",estado_registro,9999999);
-								SUBASTRA.setCookie("role_permisions",role_permisions,9999999);
-								SUBASTRA.setCookie("response_uri",response_uri,9999999);
-								
-								$.mobile.changePage( response_uri + "?referrer=login&iduser="+$userId, {
-								  transition: "slide",
-								  reverse: false
-								});
-									
-							}
-							
-						}else if(response.message=="CREDENTIALS_INCORRECT"){
-							$message.find(".message[type=2]").show();
-						}else if(response.message == "DEACTIVATE"){
-							$message.find(".message[type=6]").show();
-						}else if(response.message == "DEACTIVATE ADMIN"){
-							$message.find(".message[type=7]").show();
-						}
-
-					}
-				});
-		  }
-		  	
-	  });
-	  
-	  $('.option_home').click(function(){
-	  		var id = SUBASTRA.getCookie('myid');
-	  		var rol = SUBASTRA.getCookie('rol_id');
-	  		
-	  		if(rol == "1"){
-	  			$.mobile.changePage('#page-admin-menu',{role:"page"});
-	  		}else if(rol == "2"){
-	  			$.mobile.changePage('#page-profile?referrer=login&iduser='+id,{role:"page"});
-	  		}else if(rol == "3"){
-	  			$.mobile.changePage('#page-profile?referrer=login&iduser='+id,{role:"page"});
-	  		}
-	  });
-	  
-  },
     history_dialog: function(type,match,ui){
-    	
 	try{
 		SUBASTRA.clearTimer();	
 	}catch(e){
 		console.log("the socket is not responding correctly");
 	}
 	
-	  $(".message").hide();
+    $(".message").hide();
 	  
 	var params=router.getParams(match[1]);  
 	var $myid = params.iduser;
@@ -3633,49 +3909,82 @@ var router=new $.mobile.Router({
 		theme: 'z',
 		html: ""
 	});
-
-	  $.ajax({
-			type: "GET",
-			url: webserviceURL + "/loadhistory/" + $myid,
-			data: null,
-			success: function (dataCheck) {
-				var history = JSON.parse(dataCheck);
-				var $container = $("#history-list");
-					$container.empty();
-				
-				for(var i=0; i<history.length; i++){
-					$container.append( tmpl("history_tmpl_item", history[i]) );
-				}
-				
-				$container.find('li[data-role=collapsible]').collapsible();  
-				
-			$.mobile.loading( 'hide', {
-				text: '',
-				textVisible: true,
-				theme: 'z',
-				html: ""
-			});
-
-				
-			}
-		});
+	var tope;
+	var m = 174;
+    $.ajax({
+    	type: "GET",
+    	url: webserviceURL + "/loadhistory/" + $myid,
+    	data: null,
+    	success: function (dataCheck) {
+    		var history = JSON.parse(dataCheck);
+    		var $container = $("#history-list");
+    			$container.empty();
+    		
+    		for(var i=0; i<history.length; i++){
+    			$container.append( tmpl("history_tmpl_item", history[i]) );
+    		}
+    		$container.find('li[data-role=collapsible]').collapsible();  
+    		tope = parseInt($("#history-list").css('height'));
+    		$container.css('height','174px');
+    		m = 174;
+    		
+    	$.mobile.loading( 'hide', {
+    		text: '',
+    		textVisible: true,
+    		theme: 'z',
+    		html: ""
+    	});
+    
+    		
+    	}
+    });
+    
+    $('.more').unbind('click').click(function(){
+        m += 174;
+        if(m >= tope){
+            m = 174;
+            return;
+        }else{
+            var $container = $("#history-list");
+            $container.css('height',(m)+"px");
+            
+            if(m > tope - 174){
+                console.log(':)');
+            }
+        }
+    });
 	  
   },
     profile: function(type,match,ui){
-    			
 	try{
 		SUBASTRA.clearTimer();	
 	}catch(e){
 		console.log("the socket is not responding correctly");
 	}
 	
-
-
-	var $this_container = $("#page-profile");
-
-  $this_container.find(".value-coin").text("...");
-  $(".message").hide();
-
+	/*var socket = io.connect("72.29.87.162:8081");
+    socket.on('connect', function () {
+        console.log("Bienvenido a subastra");
+    });
+    
+    socket.on('test_socket', function (data) {
+        SUBASTRA.toast(data.message);
+        navigator.vibrate(3000);
+    });*/
+    
+    var socket = io.connect("72.29.87.162:8081");
+    socket.removeAllListeners("begin_subasta-user-" + SUBASTRA.getCookie("myid"));
+	socket.on("begin_subasta-user-" + SUBASTRA.getCookie("myid"), function (data) {
+	   var n = $(".s .number").text();
+	   $(".s .number").text(parseInt(n+1));
+       SUBASTRA.toast(data.message);
+    });
+    
+    var $this_container = $("#page-profile");
+    $this_container.find(".value-coin").text("...");
+    
+    $(".message").hide();
+    
 	SUBASTRA.validateSession($this_container);
     SUBASTRA.LoadNav($this_container);
 	
@@ -3692,7 +4001,6 @@ var router=new $.mobile.Router({
 		$.mobile.changePage('#page-view-profile?iduser='+id,{role:"page"});
 	});
 	  
-	 
 
     $(".histo_b").unbind("click").click(function(){
       $.mobile.changePage( "#dialog-history?iduser="+$myid, { role: "dialog" } );
@@ -3702,12 +4010,20 @@ var router=new $.mobile.Router({
       $.mobile.changePage( "#creditos-dialog?iduser="+$myid, { role: "dialog" } );
     });
 
-
     $('.profile-lbl').unbind('click').click(function(){
 		var id = $(this).attr('data-id');	
 		$.mobile.changePage('#page-view-profile?iduser='+id,{role:"page"});
 	});
-	  
+	
+	console.log($("a[bind='#page-notifications']"));
+
+    setTimeout(function(){ 
+        $this_container.find("a[bind='#page-notifications']").unbind("click").click(function(e){
+	    e.preventDefault();
+	     $.mobile.changePage( "#page-notifications?id="+$myid, { role: "dialog" } );
+	    });    
+    }, 1000);	
+	
 	$message.find(".message[type]").hide();
 
     $.ajax({
@@ -3720,6 +4036,19 @@ var router=new $.mobile.Router({
           var respuesta = JSON.parse(dataCheck);
 
           $this_container.find(".value-coin").text(respuesta.value);
+      }
+    });
+    
+    
+    $.ajax({
+        type: "POST",
+        url: webserviceURL + "/notifications/showc",
+        data: {
+          id_:$myid
+      },
+      success: function (dataCheck) {
+          var $number = dataCheck;
+          $(".s .number").text($number);
       }
     });
 
@@ -3767,7 +4096,7 @@ var router=new $.mobile.Router({
 						$label_name.text(response.nombre);
 					}
 					
-						 $("a[data-bind-event='profile']").click(function(e){
+						 $("a[data-bind-event='profile']").unbind('click').click(function(e){
 							e.preventDefault();
 
 							$.mobile.changePage( "#options-page?iduser="+$myid, {
@@ -3783,80 +4112,70 @@ var router=new $.mobile.Router({
 					}else if(response.estado_registro==3){
 						$this_container.find("div[data-role=footer] div[data-role=navbar]").show();
 					}
+					
+					
 				}
 			});
 	  
   },
     register: function(type,match,ui){
-    	
 	try{
 		SUBASTRA.clearTimer();	
-	}catch(e){
-		console.log("the socket is not responding correctly");
-	}
-		
+	}catch(e){console.log("the socket is not responding correctly");}
   	$(".message").hide();
-  	
   	var $thispage = $("#page-register");
-  	
   	SUBASTRA.validateSession($thispage);
-  		
-	    $("#register_container")[0].reset();
-	    $("#register_container").unbind("submit").submit(function(e){
-
-		  e.preventDefault();
-		  var $el = this;
-		  var $username = $(this).find("#name").val();
-		  var $password = $(this).find("#pass").val();
-		  var $confirm = $(this).find("#conf_pass").val();
-		  var $message = $(".message-notification[data-message=register]");
-		  var $role = $('input[name=role-user]:checked',"#register_container").val();
-		  
-		  $message.find(".message[type]").hide();
-		  if($username === "" || $password  === "" || $confirm  === ""){
-			  $message.find(".message[type=1]").show();
-		  }else{
-			  if(!SUBASTRA.validateEmail($username)){
-			  	$message.find(".message[type=3]").show();
-			  }else{
-				  if($password!=$confirm){
-					  $message.find(".message[type=2]").show();
-				  }else{
-					  if($password.length<6 && $confirm.length<6){
-					  	$message.find(".message[type=4]").show();
-					  }else{
-						
-						  $message.find(".message[type=99]").show();
-						  $.ajax({
-								type: "POST",
-								url: webserviceURL + "/registerbasic",
-								data: {
-									email:$username,
-									pass:$password,
-									role:$role,
-                                    type:1
-								},
-								success: function (dataCheck) {
-									
-									$message.find(".message[type]").hide();
-									var response = JSON.parse(dataCheck);
-									//console.log(response);
-									if(response.status==2){
-										$message.find(".message[type=8]").show();
-									}else if(response.status==1){
-										$message.find(".message[type=5]").show();
-										$($el)[0].reset();
-									}
-								}
-							});
-						  
-					  }
-				  }
-			  }
-		  }
-		  
-	  });
-	  
+    $("#register_container")[0].reset();
+    $("#register_container").unbind("submit").submit(function(e){
+        e.preventDefault();
+        var $el = this;
+        var $username = $(this).find("#name").val();
+        var $password = $(this).find("#pass").val();
+        var $confirm = $(this).find("#conf_pass").val();
+        var $message = $(".message-notification[data-message=register]");
+        var $role = $('input[name=role-user]:checked',"#register_container").val();
+    		  
+        $message.find(".message[type]").hide();
+        if($username === "" || $password  === "" || $confirm  === ""){
+          $message.find(".message[type=1]").show();
+        }else{
+          if(!SUBASTRA.validateEmail($username)){
+          	$message.find(".message[type=3]").show();
+          }else{
+        	  if($password!=$confirm){
+        		  $message.find(".message[type=2]").show();
+        	  }else{
+        		  if($password.length<6 && $confirm.length<6){
+        		  	$message.find(".message[type=4]").show();
+        		  }else{
+                    $message.find(".message[type=99]").show();
+                    $.ajax({
+                    	type: "POST",
+                    	url: webserviceURL + "/registerbasic",
+                    	data: {
+                    		email:$username,
+                    		pass:$password,
+                    		role:$role,
+                            type:1
+                    	},
+                    	success: function (dataCheck) {
+                    		$message.find(".message[type]").hide();
+                    		var response = JSON.parse(dataCheck);
+                    		if(response.status==2){
+                    			$message.find(".message[type=8]").show();
+                    		}else if(response.status==1){
+                    			$message.find(".message[type=5]").show();
+                    			$($el)[0].reset();
+                    		}
+                    	}
+                    });
+        			  
+        		  }
+        	  }
+          }
+        }
+    		  
+    });
   },
     register_user_admin: function(type,match,ui){
     			
@@ -4262,7 +4581,7 @@ var router=new $.mobile.Router({
                 });
             }
         });
-        $('#delete-user-registered').click(function(){
+        $('#delete-user-registered').unbind('click').click(function(){
         	var id = $('#user-id-a').val();
         	$.ajax({
 	            type: "POST",
@@ -4561,7 +4880,7 @@ var router=new $.mobile.Router({
         
         });
         
-        $('.enviar_input.sesion_no').click(function(e) {
+        $('.enviar_input.sesion_no').unbind('click').click(function(e) {
             history.back();
         });
         
@@ -4591,7 +4910,7 @@ var router=new $.mobile.Router({
                 }
             });
 
-		$('.enviar_input.sesion_no').click(function(e) {
+		$('.enviar_input.sesion_no').unbind('click').click(function(e) {
 		    history.back();
 		});
     	
@@ -4801,7 +5120,7 @@ var router=new $.mobile.Router({
 		}
 		
 		
-    	$('#submit_btna').click(function(){
+    	$('#submit_btna').unbind('click').click(function(){
     		var email = $('#email_activate').val();
     		var pwd = $('#pwd_activate').val();
     		
@@ -4883,7 +5202,7 @@ var router=new $.mobile.Router({
 		var $thispage = $("#page-create-subasta");
 		
 		//activo el evetno click de los checkbox
-		$thispage.find("#checkbox-programar").click(function(){
+		$thispage.find("#checkbox-programar").unbind('click').click(function(){
 		  if ($(this).is(":checked")) {
 		       $(".field-row-programar-si").hide();
 		   }else{
@@ -5614,7 +5933,7 @@ var router=new $.mobile.Router({
 			
 		$message.find(".message[type]").hide();
 			
-		$thispage.find("#create_subasta_container").submit(function(e){
+		$thispage.find("#create_subasta_container").unbind('submit').submit(function(e){
 			e.preventDefault();
 			
 			var $estado = null;				
@@ -5838,10 +6157,8 @@ function mostrarUsuarios(obj){
 		html: ""
 	});
 	
-    $(".token_aprobate").click(function(){
-    	
+    $(".token_aprobate").unbind('click').click(function(){
       $.mobile.changePage( "#page-notifications?id=" + $(this).attr("data-id") , { role: "dialog" } );
-    	
     });
     
 }

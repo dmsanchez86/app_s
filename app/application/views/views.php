@@ -4,6 +4,7 @@ include_once(ROOT . DS . 'application' . DS . "Controllers" . DS . "AdminControl
 include_once(ROOT . DS . 'application' . DS . "Controllers" . DS . "SubastaController.php");
 include_once(ROOT . DS . 'application' . DS . "Controllers" . DS . "ReferedController.php");
 include_once(ROOT . DS . 'application' . DS . "Controllers" . DS . "PagosController.php");
+include_once(ROOT . DS . 'application' . DS . "Controllers" . DS . "NotificationsController.php");
 
 $app->post(
     '/create/subasta','SubastaController:CreateSubasta'
@@ -25,6 +26,14 @@ $app->post(
     '/subasta/setWinner','SubastaController:SetWinnerSubasta'
 )->setParams(array($app));
 
+$app->post(
+    '/notifications/unread','NotificationsController:CheckNotifications'
+)->setParams(array($app));
+
+$app->post(
+    '/notifications/showc','NotificationsController:ShowCuantity'
+)->setParams(array($app));
+
 /************************************************/
 $app->post(
     '/bind/tipos_carga','SubastaController:BindTiposDeCarga'
@@ -44,6 +53,10 @@ $app->post(
 
 $app->get(
     '/bind/departamentos','SubastaController:BindDepartamentos'
+)->setParams(array($app));
+
+$app->get(
+    '/notification/end_subasta/:id','NotificationsController:requestEndSubasta'
 )->setParams(array($app));
 
 $app->get(
@@ -83,6 +96,10 @@ $app->post(
 
 $app->post(
     '/subasta/socket_servicetime','SubastaController:SocketServiceTime'
+)->setParams(array($app));
+
+$app->post(
+    '/notifications/show','NotificationsController:ShowNotifications'
 )->setParams(array($app));
 
 /************************************************/
@@ -292,6 +309,46 @@ $app->get('/page-config-coins-mod',function () use ($app) {
         echo "Precio de credito actualizado";
     }
 );
+
+
+$app->post('/page-califik',function () use ($app) {
+        $descripcion=$_POST['despregunta'];
+         $data  = item_calificacion::create(
+             array('id' => '',
+             'descripcion' => $descripcion)
+        );
+        $response = array(
+        		'message' => "se registro correctamente la pregunta",
+        		'status' => "1"
+		 );
+        echo json_encode($response);
+    }
+);
+$app->post(
+    '/allItemPreguntas','AdminController:allItemPreguntas'
+)->setParams(array($app));
+
+$app->post(
+    '/deletePregunta/:id','AdminController:deletePregunta'
+)->setParams(array($app));
+
+$app->post('/page-calificion',function () use ($app) {
+        $preguntas=$_POST['datos'];
+        $promedio=$_POST['promcalifica'];
+        
+        $mod_calificacion = usuario::find(15);
+        $mod_calificacion->calification=$preguntas;
+        $mod_calificacion->average_star=$promedio;
+        $mod_calificacion->save();
+        
+        $response = array(
+        		'message' => "se registro correctamente la calificacion",
+        		'status' => "1"
+		 );
+        echo json_encode($response);
+    }
+);
+
 
 $app->post('/post', function () {
         echo 'This is a POST route';

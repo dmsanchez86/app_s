@@ -300,5 +300,38 @@ class AdminController{
         echo json_encode($response);
         
     }
+    
+    # mostrar preguntas de bd
+    function allItemPreguntas(){
+        
+        $query = item_calificacion::all(array('conditions' => array('1 = 1')));
+        if(count($query)>0){
+          $data = array();
+          foreach($query as $tipos){
+            $data[] = $tipos->attributes();
+          }
+          $response = array(
+                'status' => "OK",
+                'data' => $data
+               );
+        }else{
+            $response = array(
+                  'status' => "NOT_FOUND"
+                 );
+        } 
+        echo json_encode($response);
+    }
+    
+    #eliminar pregunta
+    function deletePregunta($app,$id){
+        $query = item_calificacion::find($id);
+        $result  = $query->delete();
+        
+        if($result)
+            echo "OK";
+	    else
+	        echo "NOT";
+    }
+    
 }
 ?>

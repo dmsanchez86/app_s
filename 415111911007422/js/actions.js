@@ -116,17 +116,17 @@ if(cookieSessionId =="" && cookieRolePermisions =="" ){
       
       if($myrol=="3"){   
         $.mobile.changePage( "#page-profile" + "?referrer=login&iduser="+$userId, {
-                  transition: "slide",
+                  transition: "flip",
                   reverse: false
                 });
       }else if($myrol=="2"){
         $.mobile.changePage( "#page-profile" + "?referrer=login&iduser="+$userId, {
-                  transition: "slide",
+                  transition: "flip",
                   reverse: false
                 });
       }else if($myrol=="1"){
         $.mobile.changePage( "#page-admin-menu" + "?referrer=login&iduser="+$userId, {
-                  transition: "slide",
+                  transition: "flip",
                   reverse: false
                 });
       }
@@ -301,6 +301,28 @@ SUBASTRA.setTime = function(type,date_to,container){
 
 }
 
+SUBASTRA.toast = function(msx){
+  
+  $("<div class='ui-loader ui-overlay-shadow ui-body-e ui-corner-all'><h3>" + msx + "</h3></div>")
+	.css({ display: "block", 
+		opacity: 0.90, 
+		position: "fixed",
+		padding: "0px",
+		"text-align": "center",
+		"background": "rgb(237, 46, 61)",
+		"border": "1px solid white",
+		"border-radius": "14px",
+		"color": "#ffffff",
+		"font-size": "17px",
+		width: "270px",
+		left: ($(window).width() - 84)/2,
+		top: $(window).height()-100 })
+	  .appendTo( $.mobile.pageContainer ).delay( 1500 )
+    .fadeOut( 400, function(){
+		$(this).remove();
+	});
+	
+}
 
 SUBASTRA.setTimeDeprecated = function(type,date_to,container){
     
