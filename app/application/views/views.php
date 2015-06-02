@@ -55,9 +55,17 @@ $app->get(
     '/bind/departamentos','SubastaController:BindDepartamentos'
 )->setParams(array($app));
 
+
+//node request
 $app->get(
     '/notification/end_subasta/:id','NotificationsController:requestEndSubasta'
 )->setParams(array($app));
+
+$app->get(
+    '/notification/begin_subasta/:id','NotificationsController:requestBeginSubasta'
+)->setParams(array($app));
+//node request
+
 
 $app->get(
     '/bind/ciudades/:id','SubastaController:BindCiudades'

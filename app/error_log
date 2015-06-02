@@ -915,3 +915,22 @@
 [23-May-2015 03:45:01 America/New_York] PHP Fatal error:  Class 'SubastaController' not found in /home/subastrsds4/public_html/app/library/Slim/Route.php on line 171
 [23-May-2015 03:45:04 America/New_York] PHP Parse error:  syntax error, unexpected end of file, expecting ')' in /home/subastrsds4/public_html/app/application/Controllers/SubastaController.php on line 467
 [23-May-2015 03:45:04 America/New_York] PHP Parse error:  syntax error, unexpected end of file, expecting ')' in /home/subastrsds4/public_html/app/application/Controllers/SubastaController.php on line 481
+[29-May-2015 21:06:46 America/New_York] PHP Parse error:  syntax error, unexpected end of file, expecting ')' in /home/subastrsds4/public_html/app/application/Controllers/NotificationsController.php on line 105
+[29-May-2015 21:07:00 America/New_York] PHP Parse error:  syntax error, unexpected '(' in /home/subastrsds4/public_html/app/application/Controllers/NotificationsController.php on line 70
+[29-May-2015 21:07:16 America/New_York] PHP Fatal error:  Class 'NotificationsController' not found in /home/subastrsds4/public_html/app/library/Slim/Route.php on line 171
+[29-May-2015 21:07:35 America/New_York] PHP Fatal error:  Class 'NotificationsController' not found in /home/subastrsds4/public_html/app/library/Slim/Route.php on line 171
+[29-May-2015 21:09:09 America/New_York] PHP Fatal error:  Class 'NotificationsController' not found in /home/subastrsds4/public_html/app/library/Slim/Route.php on line 171
+[29-May-2015 21:09:39 America/New_York] PHP Fatal error:  Class 'NotificationsController' not found in /home/subastrsds4/public_html/app/library/Slim/Route.php on line 171
+[29-May-2015 21:15:08 America/New_York] PHP Fatal error:  Class 'NotificationsController' not found in /home/subastrsds4/public_html/app/library/Slim/Route.php on line 171
+[29-May-2015 21:25:43 America/New_York] PHP Parse error:  syntax error, unexpected end of file in /home/subastrsds4/public_html/app/application/Controllers/NotificationsController.php on line 117
+[29-May-2015 23:25:59 America/New_York] PHP Parse error:  syntax error, unexpected '$transportista' (T_VARIABLE), expecting ')' in /home/subastrsds4/public_html/app/application/Controllers/NotificationsController.php on line 177
+[29-May-2015 23:39:37 America/New_York] PHP Warning:  Uncaught exception 'ErrorException' with message 'Object of class departamento could not be converted to string' in /home/subastrsds4/public_html/app/application/Controllers/NotificationsController.php:195
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(4096, 'Object of class...', '/home/subastrsd...', 195, Array)
+#1 /home/subastrsds4/public_html/app/application/Controllers/NotificationsController.php(195): str_replace(Array, Array, '<!DOCTYPE html ...')
+#2 [internal function]: NotificationsController->requestEndSubasta(Object(Slim\Slim), '86')
+#3 /home/subastrsds4/public_html/app/library/Slim/Route.php(173): call_user_func_array(Array, Array)
+#4 [internal function]: Slim\Route->Slim\{closure}(Object(Slim\Slim), '86')
+#5 /home/subastrsds4/public_html/app/library/Slim/Route.php(462): call_user_func_array(Object(Closure), Array)
+#6 /home/subastrsds4/public_html/app/library/Slim/Slim.php(1326): Slim\Route->dispatch()
+#7 /home/subastrsds4/public_html/app/library/Slim/Middleware/Flash.php(85): Slim\Sl in /home/subastrsds4/public_html/app/application/Controllers/NotificationsController.php on line 195

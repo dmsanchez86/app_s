@@ -65,7 +65,8 @@
 		<script type="text/javascript" src="js/libs/countdown.js"></script>
 		<script type="text/javascript" src="js/libs/moment-countdown.js"></script>
 		<!--time -->
-		
+		<link rel="stylesheet" href="css/jquery.notific8.min.css" media="screen">
+		<script src="js/jquery.notific8.min.js"></script>
 		
 		
     </head>
@@ -511,6 +512,14 @@
 				<div class="profile-caption-lbl">
 					<div class="profile-lbl">
 						PERFIL
+					</div>
+				</div>
+				<div class="server-hour">
+					<div class="hour-server-col-1">
+						<img src="img/Clock-icon.png" class="clock-image">HORA DEL SERVIDOR
+					</div>
+					<div class="hour-server-col-2">
+						<span>12:30:00</span>
 					</div>
 				</div>
 				<div class="proffesion-caption-lbl">
@@ -1910,16 +1919,47 @@
             </div>
             <div class="content-each-subasta" id="list-subasta"></div>
         </div>
-		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> 
-			<div data-role="navbar">
-				<ul>
-					<li><a class="subastra-icon-home" href="#">&nbsp;</a></li>
-					<li><a class="subastra-icon-lupe" href="#">&nbsp;</a></li>
-					<li><a class="subastra-icon-world" href="#">&nbsp;</a></li>
-					<li><a class="subastra-icon-person" href="#">&nbsp;</a></li>
-				</ul>
-			</div><!-- /navbar -->
+
+        <div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false">
+		    <div class="navar_type" nav-type="2" nav-role="empresa" style="display:none">
+		        <div data-role="navbar">
+					<ul>
+						<li><a class="ulink_action subastra-icon-home" bind="#page-profile" href="#">&nbsp;</a></li>
+						<li><a class="ulink_action subastra-icon-hammer-add" bind="#page-create-subasta" href="">&nbsp;</a></li>
+						<li><a class="ulink_action subastra-list-icon" bind="#page-list-subasta" href="">&nbsp;</a></li>
+						<li><a class="ulink_action n-ico" bind="#page-notifications" href="#">
+							
+							<div class="s">
+								<img src="img/world.png">
+								<span class="number">?</span>
+							</div>
+							
+						</a></li>
+						<li><a class="ulink_action settings-ico" bind="#options-page" href="#">&nbsp;</a></li>
+					</ul>
+				</div><!-- /navbar -->
+			</div>
+			<div class="navar_type" nav-type="3" nav-role="transporter" style="display:none">
+				<div data-role="navbar">
+					<ul>
+						<li><a class="ulink_action subastra-icon-home" bind="#page-profile" href="">&nbsp;</a></li>
+						<li><a class="ulink_action subastra-list-icon" bind="#page-list-subasta-participe" href="#">&nbsp;</a></li>
+						<li><a class="ulink_action n-ico" bind="#page-notifications" href="#">
+							
+							<div class="s">
+								<img src="img/world.png">
+								<span class="number">?</span>
+							</div>
+							
+						</a></li>
+						<li><a class="ulink_action settings-ico" bind="#options-page" href="#">&nbsp;</a></li>
+					</ul>
+				</div><!-- /navbar -->
+			</div>
 		</div>
+
+
+
 	</div>   
     
     <!--
@@ -2407,6 +2447,16 @@
 		        		<span class="menu-label">CONFIGURACION GENERAL</span>
 		        	</a>
 		        </li>
+		        <li>
+		        	<a href="#page-admin-subasta" class="new-menu item-admin adminhammer menu-item-admin-" >
+		        		<span class="menu-label">SUBASTAS</span>
+		        	</a>
+		        </li>
+		        <li>
+		        	<a href="#page-monitor" class="new-menu item-admin monitor menu-item-admin-" >
+		        		<span class="menu-label">MONITOR</span>
+		        	</a>
+		        </li>
 	        </nav>
         </div>
 		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> 
@@ -2511,6 +2561,46 @@
 		        		<span class="menu-label">TIPOS DE CARGA</span>
 		        	</a>
 		        </li>
+	        </nav>
+        </div>
+		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"></div>
+	</div>
+
+	<!--
+        Nombre de la Pagina: Pagina de la seccion de menu de administracion
+        SLUG: page-admin-user
+    -->
+	<div data-role="page" id="page-admin-subasta">
+		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
+			<a href="#page-admin-menu" class="icon-home back_link">&nbsp;</a>
+			<h1>CONFIGURACI&Oacute;N GENERAL</h1>
+			<a href="#" class="icon-options option_link">&nbsp;</a>
+		</div>
+		<div class="loader-wrapper-page" style="display:block">
+			<div class="message error" type="1" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>No has Iniciado Sesion intenta volver al inicio.</p>
+			</div>
+			<div class="message info" type="2" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>Cargando...</p>
+			</div>
+			<div class="message error" type="3" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>No estas autorizado para ver esta pagina, Lo lamentamos</p>
+			</div>
+			<div class="message warning" type="4" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>Ya iniciaste Sesion Intenta Regresar al panel Principal <a href="#" class="option_home">volver</a></p>
+			</div>
+        </div>
+		<div data-role="content" style="display:none">  
+			<nav class="menu-admin">
+		        <li>
+		        	<a href="#page-califik" class="new-menu item-admin admincheck menu-item-admin-" >
+		        		<span class="menu-label">EDITAR CALIFICACIONES</span>
+		        	</a>
+		        </li> 
 	        </nav>
         </div>
 		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"></div>
@@ -3450,7 +3540,7 @@
         </div>
     </script>
     <script type="text/html" id="each_subasta">
-		<div class="each-subasta subs<%= id %>">
+		<div class="each-subasta subs<%= id %>">s
             <div class="ui-grid-a">
                 <div class="ui-block-a">
                     <div class="content-date">
@@ -3470,6 +3560,10 @@
                         <div class="label" id="valor-label">Valor</div>
                         <div class="data-title" to="valor-label">
                             $ <%= presupuesto_envio %>
+                        </div>
+                        <div class="label" id="secons-label">Inicia en</div>
+                        <div class="data-title" to="secons-label">
+                            14 Segundos
                         </div>
                     </div>
                 </div>

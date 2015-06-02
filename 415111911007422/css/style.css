@@ -1688,6 +1688,42 @@ span.lbl_status_response {
   position: relative;
 }
 
+.admincheck{
+  background: url("../img/check_icon.png");
+  background-color: rgb(237, 46, 61);
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3), 0 17px 17px 0 rgba(0, 0, 0, 0.15);        
+  min-height: 260px;
+  cursor: pointer;
+  position: relative;
+}
+
+.adminhammer{
+  background: url("../img/hammer_admin_menu.png");
+  background-color: rgb(237, 46, 61);
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3), 0 17px 17px 0 rgba(0, 0, 0, 0.15);        
+  min-height: 260px;
+  cursor: pointer;
+  position: relative;
+}
+
+.monitor{
+  background: url("../img/monitor.png");
+  background-color: rgb(237, 46, 61);
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3), 0 17px 17px 0 rgba(0, 0, 0, 0.15);        
+  min-height: 260px;
+  cursor: pointer;
+  position: relative;
+}
+
 .adminuseradd{
   background: url("../img/user-add-icon.png");
   background-color: rgb(237, 46, 61);
@@ -1985,6 +2021,49 @@ span.reffered-name {
   /* background-image: linear-gradient(135deg, #B1B6BE 0%,#FFF 100%); */
   /* background-repeat: no-repeat; */
   background-position: center;
+}
+.server-hour {
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 9px;
+    text-align: center;
+}
+.clock-image {
+    width: 21px;
+    margin-right: 6px;
+}
+
+.hour-server-col-1 {
+    width: 50%;
+    font-size: 23px;
+    float: left;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+
+.hour-server-col-2 {
+    width: 50%;
+    float: left;
+}
+
+.hour-server-col-2 span {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+p.tt {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+    color: rgb(237, 46, 61);
+}
+
+p.c {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
 }
 @-webkit-keyframes load8 {
   0% {

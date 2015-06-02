@@ -303,7 +303,7 @@ SUBASTRA.setTime = function(type,date_to,container){
 
 SUBASTRA.toast = function(msx){
   
-  $("<div class='ui-loader ui-overlay-shadow ui-body-e ui-corner-all'><h3>" + msx + "</h3></div>")
+  /*$("<div class='ui-loader ui-overlay-shadow ui-body-e ui-corner-all'><h3>" + msx + "</h3></div>")
 	.css({ display: "block", 
 		opacity: 0.90, 
 		position: "fixed",
@@ -320,8 +320,22 @@ SUBASTRA.toast = function(msx){
 	  .appendTo( $.mobile.pageContainer ).delay( 1500 )
     .fadeOut( 400, function(){
 		$(this).remove();
-	});
-	
+	});*/
+
+  $.notific8('<p class="tt">AVISO</p><p class="c">' + msx + '</p>', {
+        theme: 'smoke',
+        horizontalEdge: 'bottom',
+        icon: 'globe-world',
+        life: 5000
+  });
+
+  try{
+    navigator.vibrate(1000);
+	}
+  catch(e){
+    console.log("vibrate not support");
+  }
+  
 }
 
 SUBASTRA.setTimeDeprecated = function(type,date_to,container){
