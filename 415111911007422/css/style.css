@@ -54,8 +54,11 @@ a.icon-options.ui-link.ui-btn-right.ui-btn.ui-shadow.ui-corner-all{
 }
 
 .nav-list-links {
-    width: 200px;
+    width: 450px;
     margin: 13px auto;
+    padding: 0 .3rem;
+    max-width: 100%;
+    word-break: break-all;
 }
 
 .value-coin {

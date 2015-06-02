@@ -23,7 +23,9 @@ var router=new $.mobile.Router({
       /**********CADA PAGINA*********\
     /***********************************/
   "#login-page": {handler: "loginpage", events: "s" }, //pagina principal
+  "#page-terms": {handler: "page_terms", events: "s" }, 
   "#page-register": {handler: "register", events: "s" }, 
+  "#page-report-subasta": {handler: "page_report_subasta", events: "s" }, 
   "#page-profile": {handler: "profile", events: "s" },
   "#dialog-history": {handler: "history_dialog", events: "s" },
   "#creditos-dialog": {handler: "creditos_dialog", events: "s" },
@@ -64,7 +66,21 @@ var router=new $.mobile.Router({
   "#dialog-desactivate-per-user":{handler:"dialog_desactivate_per_user",events:"s"},
   "#dialog-reactivate-per-user":{handler:"dialog_reactivate_per_user",events:"s"}
 },{
-
+    page_report_subasta:function(type,match,ui){
+        
+        try{
+          SUBASTRA.clearTimer();  
+        }catch(e){
+          console.log("the socket is not responding correctly");
+        }
+        
+        var $thispage = $("#page-report-subasta");
+        SUBASTRA.validateSession($thispage);
+        
+    },
+    page_terms:function(type,match,ui){
+        
+    },
     page_admin_subasta: function(type,match,ui){
 
         try{
@@ -3643,6 +3659,10 @@ var router=new $.mobile.Router({
 		    history.back();
 		});
 		
+		$('.submit-intendencia').unbind('click').click(function(){
+		    window.open('http://www.sic.gov.co/');
+		});
+		
 		var params=router.getParams(match[1]); 
 		var ref = params.ref;
 		
@@ -6235,9 +6255,10 @@ var router=new $.mobile.Router({
     },
 }, { 
   defaultHandler: function(type, ui, page) {
-    console.log("Default handler called due to unknown route (" 
-      + type + ", " + ui + ", " + page + ")"
-    );
+    console.log("Default handler called due to unknown route");
+    console.log(type);
+    console.log(ui);
+    console.log(page);
   },
   defaultHandlerEvents: "s",
   defaultArgsRe: true
