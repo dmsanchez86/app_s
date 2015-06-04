@@ -28,6 +28,7 @@ var router=new $.mobile.Router({
   "#page-report-subasta": {handler: "page_report_subasta", events: "s" }, 
   "#page-profile": {handler: "profile", events: "s" },
   "#dialog-history": {handler: "history_dialog", events: "s" },
+  "#subastas-history": {handler: "subastas_history", events: "s" },
   "#creditos-dialog": {handler: "creditos_dialog", events: "s" },
   "#unit-measure-page": {handler: "unit_measure_page", events: "s" },
   "#type-charge-page": {handler: "type_charge_page", events: "s" },
@@ -66,6 +67,84 @@ var router=new $.mobile.Router({
   "#dialog-desactivate-per-user":{handler:"dialog_desactivate_per_user",events:"s"},
   "#dialog-reactivate-per-user":{handler:"dialog_reactivate_per_user",events:"s"}
 },{
+    subastas_history:function(type,match,ui){
+    
+        try{
+          SUBASTRA.clearTimer();  
+        }catch(e){
+          console.log("the socket is not responding correctly");
+        }
+        
+        var $thispage = $("#subastas-history");
+        SUBASTRA.validateSession($thispage);
+        
+        
+        $thispage.find(".filter_warning").click(function(e){
+            e.preventDefault();
+            
+            $('#pop-up-subasta-filter-status').popup('open');
+            
+            (function(){
+				var mypopup = $("#pop-up-subasta-filter-status");
+				mypopup.find(".ui-header").css("background","rgb(237, 46, 61)");	
+				mypopup.css("border","1px solid rgb(237, 46, 61)");	
+				mypopup.find(".ui-title").text("ESTADO");
+				mypopup.find(".panel-mensaje-particpacion p").html("Hubo un error! porque no intentas nuevamente");
+				mypopup.find(".panel-mensaje-particpacion .btn_sbmit.ok_btn").hide();
+				mypopup.find(".panel-mensaje-particpacion .btn_sbmit.cancel_btn ").text("Regresar");
+				
+				mypopup.find(".panel-mensaje-particpacion .btn_sbmit.cancel_btn ").unbind("click").click(function(){
+					mypopup.popup("hide");						
+				});
+				
+			})();
+											
+            
+		
+        });
+        
+        
+        
+        $.mobile.loading( 'show', {
+					text: 'Cargando',
+					textVisible: true,
+					theme: 'z',
+					html: ""
+		});
+				
+        $.ajax({
+			type: "POST",
+			url: webserviceURL + "/subasta/list",
+			data: null,
+			success: function (dataCheck) {
+				var all_subastas = JSON.parse(dataCheck);
+				
+				$thispage.find(".content-each-subasta").empty();
+				
+				if(all_subastas.length==0){
+				    $thispage.find(".content-each-subasta").append(tmpl("not_found_subasta", 0));
+				    $thispage.find(".navar-filter.ui-navbar").hide();
+				}else{
+				    
+				    all_subastas.forEach(function(o,i){
+    			        $thispage.find(".content-each-subasta").append(tmpl("each_subasta_history", o));
+    			    });
+    			    
+				}
+				
+				$.mobile.loading( 'hide', {
+					text: 'Cargando',
+					textVisible: true,
+					theme: 'z',
+					html: ""
+				});
+			}
+		});
+		
+		
+        
+        
+    },
     page_report_subasta:function(type,match,ui){
         
         try{
@@ -2186,6 +2265,10 @@ var router=new $.mobile.Router({
              $(".ofert-button").hide();
         });
         
+        $('.back').unbind('click').click(function(){
+            history.back();
+        });
+        
 	  	var $thispage = $("#dialog-details");
 		$(".message").hide();
 		SUBASTRA.validateSession($thispage);
@@ -2320,6 +2403,10 @@ var router=new $.mobile.Router({
 			console.log("the socket is not responding correctly");
 		}
 		
+		$('.back').unbind('click').click(function(){
+            history.back(); 
+        }); 
+		
 		var params=router.getParams(match[1]);  
 		var id = params.id;
 		var id_subasta = id;
@@ -2355,7 +2442,6 @@ var router=new $.mobile.Router({
         });
         //functiones del socket
 		
-		
 	  	var $thispage = $("#page-subasta");
 		$(".message").hide();
 		SUBASTRA.validateSession($thispage);
@@ -2388,6 +2474,10 @@ var router=new $.mobile.Router({
 				
 
 				$thispage.find("div[data-role='content']").html(tmpl("detail_subasta_participe", response));
+				
+				$('#btn_offer').unbind('click').click(function(){
+                    $('.put-price')[0].focus();
+                }); 
 				
 				if(response.estado == "1" ){
 				    $(".area-p2").show();
@@ -2666,8 +2756,6 @@ var router=new $.mobile.Router({
 				
 			}
 		});
-		
-		
 	},
 	page_list_subasta:function(type,match,ui){
 				
@@ -4739,7 +4827,7 @@ var router=new $.mobile.Router({
 	try{
 		var $referrer = params.referrer;
 	}catch(e){
-		var $referrer = "#page-history";
+		var $thispage = "#page-history";
 		console.log("params is undefined");
 	}
 	
@@ -4762,7 +4850,7 @@ var router=new $.mobile.Router({
             data: null,
             success: function (dataCheck) {
                 var respuesta = JSON.parse(dataCheck);
-                //console.log(respuesta);
+                // console.log(dataCheck);
                 var salida = "";
                 for(var i = 0; i < respuesta.length; i++){
                 	salida += "<option value='"+respuesta[i].id+"'>"+respuesta[i].nombre+" (" + respuesta[i].correo_electronico + ") </option>";
@@ -5333,6 +5421,10 @@ var router=new $.mobile.Router({
 		   }else{
 		       $(".field-row-programar-si").show();
 		   }
+		});
+		
+		$('.back').unbind('click').click(function(){
+		    history.back();
 		});
 		
     	//invoco los calendarios de las fechas

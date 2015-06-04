@@ -108,7 +108,7 @@
         Nombre de la Pagina: Pagina del Login 
         SLUG: login-page
     -->
-	<div data-role="page" id="login-page" data-theme='b'>
+	<div data-role="page" id="login-page" data-title="Login" data-theme='b'>
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
 			<!--<a href="page.html" class="icon-home">&nbsp;</a>-->
 			<h1>&nbsp;</h1>
@@ -190,7 +190,7 @@
         Nombre de la Pagina: Pagina de Términos y Condiciones 
         SLUG: login-page
     -->
-	<div data-role="page" id="page-terms" data-theme='b'>
+	<div data-role="page" id="page-terms" data-title="Términos y Condiciones" data-theme='b'>
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
 			<!--<a href="page.html" class="icon-home">&nbsp;</a>-->
 			<h1>&nbsp;</h1>
@@ -293,12 +293,12 @@
         Nombre de la Pagina: Pagina del tipo de carga 
         SLUG: type-charge-page
     -->
-	<div data-role="page" id="type-charge-page" data-theme='b'>
+	<div data-role="page" id="type-charge-page" data-title="Tipos de Carga" data-theme='b'>
 
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
-			<!--<a href="page.html" class="icon-home">&nbsp;</a>-->
+			<a href="#page-admin-general" class="icon-home">&nbsp;</a>
 			<h1>&nbsp;</h1>
-			<!--<a href="#options-page" class="icon-options">&nbsp;</a>-->
+			<a href="#options-page?referrer=page-admin-menu" class="icon-options">&nbsp;</a>
 		</div>
 		
 		<div class="loader-wrapper-page" style="display:block">
@@ -403,7 +403,7 @@
 
 		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> 
 			<div class="nav-list-links">
-				<a href="#page-register">REGISTRARSE</a>&nbsp;|&nbsp;<a href="#page-dudes">DUDAS</a>
+				<!--<a href="#page-register">REGISTRARSE</a>&nbsp;|&nbsp;<a href="#page-dudes">DUDAS</a>-->
 			</div>
 		</div>
 
@@ -413,12 +413,12 @@
         Nombre de la Pagina: Pagina de unidad de medidas 
         SLUG: unit-measure-page
     -->
-	<div data-role="page" id="unit-measure-page" data-theme='b'>
+	<div data-role="page" id="unit-measure-page" data-title="Unidades de Medida" data-theme='b'>
 
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
-			<!--<a href="page.html" class="icon-home">&nbsp;</a>-->
+			<a href="#page-admin-general" class="icon-home">&nbsp;</a>
 			<h1>&nbsp;</h1>
-			<!--<a href="#options-page" class="icon-options">&nbsp;</a>-->
+			<a href="#options-page?referrer=page-admin-menu" class="icon-options">&nbsp;</a>
 		</div>
 		
 		<div class="loader-wrapper-page" style="display:block">
@@ -523,7 +523,7 @@
 
 		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> 
 			<div class="nav-list-links">
-				<a href="#page-register">REGISTRARSE</a>&nbsp;|&nbsp;<a href="#page-dudes">DUDAS</a>
+				<!--<a href="#page-register">REGISTRARSE</a>&nbsp;|&nbsp;<a href="#page-dudes">DUDAS</a>-->
 			</div>
 		</div>
 
@@ -533,11 +533,11 @@
         Nombre de la Pagina: Pagina del Perfil 
         SLUG: page-profile
     -->
-	<div data-role="page" id="page-profile">
+	<div data-role="page" id="page-profile" data-title="Perfil">
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
-			<a href="#login-page" class="option_home"></a>
+			<!--<a href="#page-admin-general" class="icon-home">&nbsp;</a>-->
 			<h1>&nbsp;</h1>
-			<a href="#options-page" class="icon-options" data-bind-event="profile">&nbsp;</a>
+			<!--<a href="#options-page" class="icon-options">&nbsp;</a>-->
 		</div>
 		<div class="loader-wrapper-page" style="display:block">
 			<div class="message error" type="1" style="display:none">
@@ -1201,9 +1201,9 @@
     -->
 	<div data-role="page" id="page-notifications" >
 		<div data-role="header" data-theme="d" data-position="inline" data-tap-toggle="false">
-			<a href="#login-page" class="option_home"></a>
+			<!--<a href="#login-page" class="option_home"></a>-->
 			<h1>Notificaciones</h1>
-			<a href="#login-page" class="icon-options">&nbsp;</a>
+			<!--<a href="#login-page" class="icon-options">&nbsp;</a>-->
 		</div>
 		<div data-role="content">
 			<section class="ui-grid-solo" data-role="fieldcontain">
@@ -1394,10 +1394,10 @@
         Nombre de la Pagina: Pagina de la seccion de creacion de la subasta
         SLUG: page-register
     -->
-	<div data-role="page" id="page-create-subasta">
+	<div data-role="page" id="page-create-subasta" data-title="Crear Subasta">
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
-			<a href="#login-page" class="icon-home">&nbsp;</a>
-			<h1>&nbsp;</h1>
+			<a href="#" class="icon-home back">&nbsp;</a>
+			<h1>CREAR SUBASTA</h1>
 			<a style="display:none" href="#login-page" class="icon-options">&nbsp;</a>
 		</div>
 		<div class="loader-wrapper-page" style="display:block">
@@ -1437,7 +1437,7 @@
                   <a href="#page-list-subasta" data-role="button" data-inline="true" data-theme="c">Aceptar</a>     
                 </div>
             </div>
-			<h1 style="text-align:center">CREAR SUBASTA</h1>
+            <BR>
 			<form id="create_subasta_container">
 				<div class="generales-section">
 				    <h1 class="section-title-s">Datos Generales</h1>
@@ -1788,11 +1788,11 @@
         Nombre de la Pagina: Pagina de la seccion de detalle de configuracion de la subasta
         SLUG: 
     -->
-	<div data-role="page" id="page-subasta">
+	<div data-role="page" id="page-subasta" data-title="Subasta">
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
-			<a href="#login-page" class="icon-home">&nbsp;</a>
-			<h1>ARROZ DE PURA SEPA</h1>
-			<a href="#login-page" class="icon-options">&nbsp;</a>
+			<a href="#" class="icon-home back">&nbsp;</a>
+			<h1>OFERTA SUBASTA</h1>
+			<a href="#options-page" class="icon-options">&nbsp;</a>
 		</div>
 		<div class="loader-wrapper-page" style="display:block">
 			<div class="message error" type="1" style="display:none">
@@ -1815,12 +1815,12 @@
 		<div data-role="content" style="display:none"></div>
 		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> 
 			<div data-role="navbar">
-				<ul>
-					<li><a class="subastra-icon-home" href="#">&nbsp;</a></li>
-					<li><a class="subastra-icon-lupe" href="#">&nbsp;</a></li>
-					<li><a class="subastra-icon-world" href="#">&nbsp;</a></li>
-					<li><a class="subastra-icon-person" href="#">&nbsp;</a></li>
-				</ul>
+				<!--<ul>-->
+				<!--	<li><a class="subastra-icon-home" href="#">&nbsp;</a></li>-->
+				<!--	<li><a class="subastra-icon-lupe" href="#">&nbsp;</a></li>-->
+				<!--	<li><a class="subastra-icon-world" href="#">&nbsp;</a></li>-->
+				<!--	<li><a class="subastra-icon-person" href="#">&nbsp;</a></li>-->
+				<!--</ul>-->
 			</div><!-- /navbar -->
 		</div>
 	</div>   
@@ -1829,11 +1829,11 @@
         Nombre de la Pagina: Pagina de la seccion de lista de subastas
         SLUG: page-list-subasta
     -->        
-	<div data-role="page" id="page-list-subasta">
+	<div data-role="page" id="page-list-subasta" data-title="Lista de Subastas">
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
 			<a href="#" class="icon-home back">&nbsp;</a>
-			<h1>ARROZ DE PURA PAPA</h1>
-			<a href="#options-page" class="icon-options">&nbsp;</a>
+			<h1>LISTA DE SUBASTAS</h1>
+			<!--<a href="#options-page" class="icon-options">&nbsp;</a>-->
 		</div>
 		<div class="loader-wrapper-page" style="display:block">
 			<div class="message error" type="1" style="display:none">
@@ -1959,6 +1959,7 @@
                 </div>
             </div>
             <!-- FILTROS DE POP UP-->
+            <br>
             <div data-role="navbar" class="navar-filter">
               <ul>
                 <li class="nav-item-filter filter-calendar">
@@ -1984,20 +1985,20 @@
         <div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false">
 		    <div class="navar_type" nav-type="2" nav-role="empresa" style="display:none">
 		        <div data-role="navbar">
-					<ul>
-						<li><a class="ulink_action subastra-icon-home" bind="#page-profile" href="#">&nbsp;</a></li>
-						<li><a class="ulink_action subastra-icon-hammer-add" bind="#page-create-subasta" href="">&nbsp;</a></li>
-						<li><a class="ulink_action subastra-list-icon" bind="#page-list-subasta" href="">&nbsp;</a></li>
-						<li><a class="ulink_action n-ico" bind="#page-notifications" href="#">
+					<!--<ul>-->
+					<!--	<li><a class="ulink_action subastra-icon-home" bind="#page-profile" href="#">&nbsp;</a></li>-->
+					<!--	<li><a class="ulink_action subastra-icon-hammer-add" bind="#page-create-subasta" href="">&nbsp;</a></li>-->
+					<!--	<li><a class="ulink_action subastra-list-icon" bind="#page-list-subasta" href="">&nbsp;</a></li>-->
+					<!--	<li><a class="ulink_action n-ico" bind="#page-notifications" href="#">-->
 							
-							<div class="s">
-								<img src="img/world.png">
-								<span class="number">?</span>
-							</div>
+					<!--		<div class="s">-->
+					<!--			<img src="img/world.png">-->
+					<!--			<span class="number">?</span>-->
+					<!--		</div>-->
 							
-						</a></li>
-						<li><a class="ulink_action settings-ico" bind="#options-page" href="#">&nbsp;</a></li>
-					</ul>
+					<!--	</a></li>-->
+					<!--	<li><a class="ulink_action settings-ico" bind="#options-page" href="#">&nbsp;</a></li>-->
+					<!--</ul>-->
 				</div><!-- /navbar -->
 			</div>
 			<div class="navar_type" nav-type="3" nav-role="transporter" style="display:none">
@@ -2019,18 +2020,16 @@
 			</div>
 		</div>
 
-
-
 	</div>   
     
     <!--
         Nombre de la Pagina: Pagina de la seccion de participar en subastas
         SLUG: page-list-subasta-participe
     -->        
-	<div data-role="page" id="page-list-subasta-participe">
+	<div data-role="page" id="page-list-subasta-participe" data-title="Lista de Subastas">
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
 			<a href="#" class="icon-home back">&nbsp;</a>
-			<h1>ARROZ DE PURA PAPA</h1>
+			<h1>LISTA SUBASTAS</h1>
 			<a href="#options-page" class="icon-options">&nbsp;</a>
 		</div>
 		<div class="loader-wrapper-page" style="display:block">
@@ -2157,6 +2156,7 @@
                 </div>
             </div>
             <!-- FILTROS DE POP UP-->
+            <br>
             <div data-role="navbar" class="navar-filter">
               <ul>
                 <li class="nav-item-filter filter-calendar">
@@ -2257,9 +2257,9 @@
     -->
 	<div data-role="page" id="page-config-coins">
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
-			<a href="#login-page" class="icon-home">&nbsp;</a>
+			<a href="#page-admin-general" class="icon-home">&nbsp;</a>
 			<h1>HISTORIAL</h1>
-			<a href="#login-page" class="icon-options">&nbsp;</a>
+			<a href="#options-page?referrer=page-admin-menu" class="icon-options">&nbsp;</a>
 		</div>
 		<div class="loader-wrapper-page" style="display:block">
 			<div class="message error" type="1" style="display:none">
@@ -2330,12 +2330,12 @@
         </div>
         <div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> 
 			<div data-role="navbar">
-				<ul>
-					<li><a class="subastra-icon-home" href="#">&nbsp;</a></li>
-					<li><a class="subastra-icon-lupe" href="#">&nbsp;</a></li>
-					<li><a class="subastra-icon-world" href="#">&nbsp;</a></li>
-					<li><a class="subastra-icon-person" href="#">&nbsp;</a></li>
-				</ul>
+				<!--<ul>-->
+				<!--	<li><a class="subastra-icon-home" href="#">&nbsp;</a></li>-->
+				<!--	<li><a class="subastra-icon-lupe" href="#">&nbsp;</a></li>-->
+				<!--	<li><a class="subastra-icon-world" href="#">&nbsp;</a></li>-->
+				<!--	<li><a class="subastra-icon-person" href="#">&nbsp;</a></li>-->
+				<!--</ul>-->
 			</div><!-- /navbar -->
 		</div>
 	</div>   
@@ -2706,6 +2706,130 @@
         </div>
 		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"></div>
 	</div>
+	<!--
+        Nombre de la Pagina: Pagina de la seccion de menu de administracion
+        SLUG: subastas-history
+    -->
+	<div data-role="page" id="subastas-history">
+		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
+			<a href="#page-admin-menu" class="icon-home back_link">&nbsp;</a>
+			<h1>CONFIGURACI&Oacute;N GENERAL</h1>
+			<a href="#" class="icon-options option_link">&nbsp;</a>
+		</div>
+		<div class="loader-wrapper-page" style="display:block">
+			<div class="message error" type="1" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>No has Iniciado Sesion intenta volver al inicio.</p>
+			</div>
+			<div class="message info" type="2" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>Cargando...</p>
+			</div>
+			<div class="message error" type="3" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>No estas autorizado para ver esta pagina, Lo lamentamos</p>
+			</div>
+			<div class="message warning" type="4" style="display:none">
+				<i class="fa fa-clock-o"></i>
+				<p>Ya iniciaste Sesion Intenta Regresar al panel Principal <a href="#" class="option_home">volver</a></p>
+			</div>
+        </div>
+		<div data-role="content" style="display:none"> 
+		    
+		    
+		    <div data-role="popup" data-transition="flip" id="pop-up-subasta-filter-status" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all pop-up-warning-empty-filter">
+				<div data-role="header" data-theme="a" class="ui-corner-top">
+				  <h1>FIltro 1</h1>
+				</div>
+				<div data-role="content" style="display:none">  
+					hola
+				</div>
+			</div>		    
+		    
+		    <!--
+		    <div data-role="popup" data-transition="flip" id="pop-up-subasta-filter-factory" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all pop-up-warning-empty-filter">
+				<div data-role="header" data-theme="a" class="ui-corner-top">
+				  <h1>FIltro 2</h1>
+				</div>
+			</div>		    
+		    
+		    <div data-role="popup" data-transition="flip" id="pop-up-subasta-filter-factory" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all pop-up-warning-empty-filter">
+				<div data-role="header" data-theme="a" class="ui-corner-top">
+				  <h1>FIltro 3</h1>
+				</div>
+			</div>	
+			
+		    <div data-role="popup" data-transition="flip" id="pop-up-subasta-filter-factory" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all pop-up-warning-empty-filter">
+				<div data-role="header" data-theme="a" class="ui-corner-top">
+				  <h1>FIltro 4</h1>
+				</div>
+			</div>-->
+			
+			
+		    <div class="nav_filer_history">
+            	<div class="nav_filter_su"><img src="img/Factory-icon.png" /></div>
+            	<div class="nav_filter_su filter_warning"><img src="img/Danger-icon.png" /></div>
+            	<div class="nav_filter_su"><img src="img/Clock-Forward-icon.png" /></div>
+            	<div class="nav_filter_su"><img src="img/Business-Mens-icon.png" /></div>
+            </div>
+            
+            <div class="preview-filter">
+	            
+	            <h3 style="text-align:center"> RESULTADOS DE BUSQUEDA</h3>
+	            
+	            <div class="fila-fila-1">
+		            <div class="filter-results-col">
+		            	<span>EMPRESA:</span>
+		            </div>
+		            
+		            <div class="filter-results-col">
+		            	<span>--EMPRESA--</span>
+		            </div>
+	            </div>	            
+	            <div class="fila-fila-1">
+		            <div class="filter-results-col">
+		            	<span>ESTADO:</span>
+		            </div>
+		            
+		            <div class="filter-results-col">
+		            	<span>--ESTADO--</span>
+		            </div>
+	            </div>	            
+	            <div class="fila-fila-1">
+		            <div class="filter-results-col">
+		            	<span>TIEMPO:</span>
+		            </div>
+		            
+		            <div class="filter-results-col">
+		            	<span>--TIEMPO--</span>
+		            </div>
+	            </div>	            
+	            <div class="fila-fila-1">
+		            <div class="filter-results-col">
+		            	<span>PARTICIPANTES:</span>
+		            </div>
+		            
+		            <div class="filter-results-col">
+		            	<span>--PARTICIPANTES--</span>
+		            </div>
+	            </div>	
+	            
+            </div>
+            
+            <div class="role_filter">
+            	sdasdasdas
+            	das
+            	d
+            	ad
+            	as
+            	d
+            	
+            </div>
+            
+			<div class="content-each-subasta" id="list-subasta"></div>
+        </div>
+		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"></div>
+	</div>
     
     <!--
         Nombre de la Pagina: Pagina de la seccion de pagina de dudas
@@ -2914,11 +3038,11 @@
         SLUG: dialog-details
     -->   
 
-	<div data-role="page" id="dialog-details" >
+	<div data-role="page" id="dialog-details" data-title="Detalle de la Subasta">
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
-			<a href="page.html" class="icon-home">&nbsp;</a>
-			<h1>INICIO SESIÓN</h1>
-			<a href="page.html" class="icon-options">&nbsp;</a>
+			<a href="#" class="icon-home back">&nbsp;</a>
+			<h1>DETALLE SUBASTA</h1>
+			<a href="#options-page" class="icon-options">&nbsp;</a>
 		</div>
 		<div class="loader-wrapper-page" style="display:block">
 			<div class="message error" type="1" style="display:none">
@@ -2941,12 +3065,12 @@
 		<div data-role="content" style="display:none"></div>
 		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> 
 			<div data-role="navbar">
-				<ul>
-					<li><a class="subastra-icon-home" href="#">&nbsp;</a></li>
-					<li><a class="subastra-icon-lupe" href="#">&nbsp;</a></li>
-					<li><a class="subastra-icon-world" href="#">&nbsp;</a></li>
-					<li><a class="subastra-icon-person" href="#">&nbsp;</a></li>
-				</ul>
+				<!--<ul>-->
+				<!--	<li><a class="subastra-icon-home" href="#">&nbsp;</a></li>-->
+				<!--	<li><a class="subastra-icon-lupe" href="#">&nbsp;</a></li>-->
+				<!--	<li><a class="subastra-icon-world" href="#">&nbsp;</a></li>-->
+				<!--	<li><a class="subastra-icon-person" href="#">&nbsp;</a></li>-->
+				<!--</ul>-->
 			</div><!-- /navbar -->
 		</div>
 	</div>
@@ -3057,6 +3181,58 @@
 			</div><!-- /navbar -->
 		</div>
 	</div> 
+    
+    <!--
+        Nombre de la Pagina: Página del Demo  Administrador
+        SLUG: page-demo-admin
+    --> 
+    
+    <div data-role="page" id="page-demo-admin">
+        <div class="mask">
+            <div class="mask__deep"></div>
+            <div class="view_image" view="1" end="10">
+                <div class="view_1">
+                    <div class="circle circle__one">Comparte<br>SUBASTRA</div>
+                    <div class="circle circle__two">SUBASTRA <sub><small><small><small>EN</small></small></small></sub><br>FACEBOOK</div>
+                </div>
+                <div class="view_2">
+                    <div class="circle circle__one">Menú<br>Principal<br></div>
+                </div>
+                <div class="view_3">
+                    <div class="circle circle__two">Botón<br>Ayuda<br></div>
+                </div>
+                <div class="view_4">
+                    <div class="circle circle__one">Cerrar<br>Cuenta<br></div>
+                </div>
+                <div class="view_5">
+                    <div class="circle circle__one">Preguntas<br>Frecuentes<br></div>
+                    <div class="circle circle__two">Llene Sus<br>Datos<br>Para Obtener<br>Respuesta</div>
+                </div>
+                <div class="view_6">
+                    <div class="circle circle__one">Cambiar<br>Foto Perfil<br></div>
+                    <div class="circle circle__two">Nombre<br>Transportista<br></div>
+                </div>
+                <div class="view_7">
+                    <div class="circle circle__one">Historial<br>Transportista<br></div>
+                </div>
+                <div class="view_8">
+                    <div class="circle circle__two">Subastas<br>Del Día<br></div>
+                </div>
+                <div class="view_9">
+                    <div class="circle circle__one">Ofertar<br>Subasta<br></div>
+                    <div class="circle circle__two">Datos<br>Subasta<br></div>
+                </div>
+                <div class="view_10">
+                    <div class="circle circle__one">Sección<br>Ofertas<br></div>
+                </div>
+            </div>
+            <div class="controls">
+                <div class="close"></div>
+                <div class="prev"></div>
+                <div class="next"></div>
+            </div>
+        </div>
+    </div>
     
     <!--
         Nombre de la Pagina: Página del Demo
@@ -3227,11 +3403,11 @@
         Nombre de la página: Registro Usuario por parte del administrador
         SLUg: page-register-user-admin
     -->
-    <div data-role="page" id="page-califik" data-theme='b'>
+    <div data-role="page" id="page-califik" data-title="Preguntas Frecuentes" data-theme='b'>
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
-			<!--<a href="page.html" class="icon-home">&nbsp;</a>-->
+			<a href="#page-admin-subasta" class="icon-home">&nbsp;</a>
 			<h1>&nbsp;</h1>
-			<!--<a href="#options-page" class="icon-options">&nbsp;</a>-->
+			<a href="#options-page?referrer=page-admin-general" class="icon-options">&nbsp;</a>
 		</div>
 		
 		<div class="loader-wrapper-page" style="display:block">
@@ -3712,6 +3888,79 @@
                 
             </div>
         </div>
+    </script>    
+    <script type="text/html" id="each_subasta_history">
+		<div class="each-subasta subs<%= id %>">
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <div class="content-date">
+                        <h4 class="x"> <%= titulo_opcional %></h4>
+                        <div class="label" id="origen-label">origen</div>
+                        <div class="data-title" to="origen-label">
+                            <%= ciudad_recoleccion_carga %>
+                        </div>
+                        <div class="label" id="destino-label">Destino</div>
+                        <div class="data-title" to="destino-label">
+                            <%= ciudad_entrega_carga %>
+                        </div>
+                        <div class="label" id="peso-label">Peso</div>
+                        <div class="data-title" to="peso-label">
+                            <%= cantidad %> <%= unidad_medida %>
+                        </div>
+                        <div class="label" id="valor-label">Valor</div>
+                        <div class="data-title" to="valor-label">
+                            $ <%= presupuesto_envio %>
+                        </div>
+                        <div class="label" id="secons-label">Inicia en</div>
+                        <div class="data-title" to="secons-label">
+                            14 Segundos
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <div class="image-each">
+                    	<img src="img/cart.png" class="ui-responsive-image">    
+                    </div>
+                </div>
+               
+                <div class="state-buttons" style="background:<% if(estado=="3"){ %> rgb(237, 46, 61); <% }else if(estado=="2"){ %> rgb(99, 170, 81); <% }else if(estado=="1"){ %> rgb(189, 187, 188); <% } %>" >
+                    <div class="ui-grid-a">
+                        <div class="ui-block-a"><span class="lbl_status">Estado:</span></div>
+                        <div class="ui-block-b"><span class="lbl_status_response">
+                        <% if(estado=="3"){ %> PROGRAMADA <% }else if(estado=="2"){ %> CORRIENDO <% }else if(estado=="1"){ %> FINALIZADA <% } %>
+                        </span></div>
+                    </div>
+                </div>
+                
+                <% if(estado=="1"){ %>
+                	
+                	<div class="edit-button">
+                    	<a class="button-submit" href="#page-subasta-results?idsubasta=<%= id %>">
+                        	ESTADO
+                    	</a>
+                	</div>
+                
+                <% }else if(estado=="2"){ %>
+                	
+                	<div class="edit-button">
+                    	<a class="button-submit" href="#page-edit-subasta?idsubasta=<%= id %>">
+                        	ESTADO
+                    	</a>
+                	</div>
+                	
+                <% }else if(estado=="3"){ %>
+                	
+                	<div class="edit-button">
+                    	<a class="button-submit" href="#page-edit-subasta?idsubasta=<%= id %>">
+                        	EDITAR
+                    	</a>
+                	</div>
+                	
+                <% } %>
+                
+                
+            </div>
+        </div>
     </script>
     <script type="text/html" id="each_subasta_participe">
 		<div class="each-subasta subs<%= id %>">
@@ -3829,7 +4078,8 @@
                 </div>
             </div>
             <div class="details-summary">
-                <div class="content">
+            	<div class="label" style="text-align: center; color: #ED2E3D; font-weight: bold; margin-top: 1rem">Descripción</div>
+                <div class="content" style="font-weight: 400;">
 	                <%= descripcion_carga %>
                 </div>
             </div>
@@ -3925,8 +4175,9 @@
             <div class="table table-participants">
             	<% if(participants.length==0){  %>
             		<span class="empty-participants">
-            			no hay partipantes en esta secci&oacute;n, se el primero :)
+            			no hay partipantes en esta secci&oacute;n, se el primero ↓
             		</span>
+            		<div><button id="btn_offer" type="button" class="ui-btn ui-input-btn ui-corner-all ui-shadow">Ingresar Oferta</button></div>
             	<% }else{ %>
             		<% var newsort = participants.sort(function(a,b) { return parseFloat(a.amount) - parseFloat(b.amount) } );
                             	%>
@@ -4291,19 +4542,19 @@
     <!-- plantillas not found -->
     <script type="text/html" id="not_found_user">
         <div class="not-found-alert">
-            <img src="http://subastra.com/415111911007422/img/alert-icon.png" class="not-found-image">
+            <img src="http://subastra-liderdesarrollo.c9.io/415111911007422/img/alert-icon.png" class="not-found-image">
             <p> no se encontraron usuarios con ese criterio de busqueda </p>
         </div>
     </script>
     <script type="text/html" id="not_found_subasta">
         <div class="not-found-alert subasta_alert">
-            <img src="http://subastra.com/415111911007422/img/alert-icon.png" class="not-found-image">
+            <img src="http://subastra-liderdesarrollo.c9.io/415111911007422/img/alert-icon.png" class="not-found-image">
             <p> no se encontraron subastas con ese criterio de busqueda </p>
         </div>
     </script>
     <script type="text/html" id="not_found_referred_link">
         <div class="not-found-alert subasta_alert">
-            <img src="http://subastra.com/415111911007422/img/alert-icon.png" class="not-found-image">
+            <img src="http://subastra-liderdesarrollo.c9.io/415111911007422/img/alert-icon.png" class="not-found-image">
             <p> no se encontro el usuario asociado, o el link no existe. </p>
         </div>
     </script>

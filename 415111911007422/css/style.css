@@ -65,12 +65,14 @@ a.icon-options.ui-link.ui-btn-right.ui-btn.ui-shadow.ui-corner-all{
   color: rgb(237, 46, 61);
   font-size: 89px;
   position: absolute;
-  top: 53px;
-  right: 99px;
+  top: 18%;
+  right: 21%;
   letter-spacing: -14px;
   font-weight: bold;
 }
-
+@media (max-width: 460px){
+    .value-coin{font-size: 50px;right: 24%;font-weight: bolder;}
+}
 .nav-list-links .ui-link {
     padding: 3px;
     color: #ffffff;
@@ -495,7 +497,7 @@ section.oferted-list{
     border-radius: 50%;
 }
 .content-box{
-    margin: 50px 1px 2px 1px;
+    margin: 40px 1px 2px 1px;
     text-align: center;
 }   
 .content-box p{
@@ -523,7 +525,9 @@ section.oferted-list{
 .label{
     font-size: 11px;
     line-height: 0.9;
+    font-size:.85rem;
 }
+.label + .content-data{color: #323232;font-weight: 400;}
 .content-date{
     padding: 5px;
 }
@@ -639,7 +643,7 @@ section.oferted-list{
         SLUG: page-history
 */
 .field-select-content{
-    width: 60%;
+    width: 90%;
     margin: 0 auto;
 }
 #select-history-button{
@@ -727,19 +731,17 @@ section.oferted-list{
      cursor: pointer;
  }
  @media(max-width:480px){
-     .view-profile-button {width: 60%;}
+     .view-profile-button {width: 95%;}
  }
  .label-profile{
     font-size: 16px;
-    float: left;
     border-radius: 4px;
-    margin: 0;
-    width: 89%;
-    margin-right: 7px;
+    margin: 0 auto;
+    width: 90%;
     border-left: 1px solid rgb(237, 46, 61);
       
     color: rgb(249, 249, 249);
-  font-weight: 300;
+      font-weight: 300;
  
     padding: 0px;
     background: rgb(237, 46, 61);
@@ -1054,7 +1056,7 @@ padding: 0;
     padding-top: 15px;
 }
 .content-detail-subasta{
-    width: 50%;
+    width: 60%;
     margin: 0 auto;
 }
 .title-subasta{
@@ -1069,21 +1071,28 @@ padding: 0;
     overflow: hidden;
     font-weight: bold;
     color: rgb(237, 46, 61);
-    display: inline-block;
+    display: block;
     padding-bottom: 5px;
+    text-align: center;
 }
 .details-summary{
-    border-top: 1px solid rgb(236, 235, 236);
+    /*border-top: 1px solid rgb(236, 235, 236);*/
     padding-top: 5px;
+    width: 60%;
+    margin: 0 auto;
+}
+@media(max-width:340px){
+    .content-detail-subasta,.details-summary{width: 85%;}
 }
 .details-summary .content{
-    text-align: justify;
+    text-align: center;
     width: 80%;
     margin: 0 auto;
-    overflow: auto;
+    overflow: hidden;
     padding-right: 10px;
     max-height: 120px;
 }
+.details-summary .content:first-letter{text-transform: uppercase;}
 /* 
         Nombre de la Pagina: Pagina de la seccion de ganador de la subasta
         SLUG: dialog-win
@@ -1826,7 +1835,7 @@ a.btns_list {
 }
 
 .view-profile-buttons {
-    width: 75%;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -1946,6 +1955,8 @@ span.reffered-name {
   font-size: 23px;
   text-align: center;
 }
+
+.t_t1 .time_s1{color: #323232;font-weight: 400;}
 
 .ti_s {
     float: left;
@@ -2068,6 +2079,66 @@ p.c {
     font-size: 16px;
     font-weight: bold;
 }
+
+.nav_filter_su {
+    width: 24%;
+    background: rgb(237, 46, 61);
+    float: left;
+    height: 80px;
+    border: 1px solid white;
+    cursor: pointer;
+    text-align: center;
+}
+
+.nav_filer_history {
+    float: left;
+    width: 100%;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.nav_filter_su:hover {
+    background: rgb(189, 187, 188);
+}
+
+#subastas-history #list-subasta {
+  float: left;
+  width: 100%;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+.nav_filter_su img {
+    width: 46%;
+    text-align: center;
+    margin-top: 6px;
+}
+
+.preview-filter {
+    float: left;
+    width: 55%;
+    padding: 1.5rem;   
+    height: 124px;
+    box-shadow: 0 1px 2px #aaa;   background: white;   margin: 0 1px 10px;   border-radius: 3px;   -webkit-user-select: none;   -webkit-animation: fly-in-from-left .5s 1s ease both;   transform-origin: top left;
+}
+
+.fila-fila-1 {
+    width: 100%;
+    float: left;
+}
+
+.filter-results-col {
+    width: 50%;
+    float: left;
+    /* text-align: center; */
+}
+
+.role_filter {
+    float: left;   
+    width: 27%;   padding: 1.5rem;   box-shadow: 0 1px 2px #aaa;   background: white;   height: 124px;
+    margin: 0 1px 10px;   border-radius: 3px;   -webkit-user-select: none;   -webkit-animation: fly-in-from-left .5s 1s ease both;   transform-origin: top left;
+}
+
 @-webkit-keyframes load8 {
   0% {
     -webkit-transform: rotate(0deg);
@@ -2088,3 +2159,5 @@ p.c {
     transform: rotate(360deg);
   }
 }
+.ui-page-theme-b .ui-btn.ui-btn-active{color: white;}
+.ui-page-theme-b .ui-btn:hover{color: rgb(237, 46, 61);}
