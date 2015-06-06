@@ -36,7 +36,7 @@
     	
         <!-- importo actions donde esta toda la logica de la aplicacion -->
     	<script type="text/javascript" src="js/actions.js"></script>
-    	<script type="text/javascript" src="js/demo.js"></script>
+    	<!--<script type="text/javascript" src="js/demo.js"></script>-->
     	
         <!-- importo routes donde esta todas las rutas de la aplicacion -->
     	<script type="text/javascript" src="js/routes.js"></script>
@@ -1210,7 +1210,7 @@
 				<div class="ui-block-a">   
 					<div class="block-list">
 						<ul data-role="listview">
-						  <li><a href="#" class="auth_user">APROBAR AUTENTICIDAD</a></li>
+						 <!-- <li><a href="#" class="auth_user">APROBAR AUTENTICIDAD</a></li>-->
 						</ul>
 					</div>		
 					<div class="block-submit">
@@ -1254,7 +1254,7 @@
 			  <li class="list-separator"><span>CUENTA</span></li>
 			  <li><a class="options_links edit_profile" href="#">Editar Perfil</a></li>	
 			  <li><a class="options_links change_pass" href="#">Cambiar Contrase&ntilde;a</a></li>
-			  <li><a href="#page-demo" data-transition="flip" >DEMO</a></li>
+			  <li><a href="#page-demo" id="link_demo" data-transition="flip" >DEMO</a></li>
 			  <li><a href="#page-dudes?ref=validate" class="options_links report_issue" data-transition="slidedown">Ayuda / Reportar Un Problema</a></li>
 			  <li><a href="#dialog-desactivate" class="options_links deactivate_account" data-transition="flow">Desactivar Cuenta</a></li>
 			  <li><a class="options_links view_referred_page" href="#">Ver mi enlace De Referido</a></li>
@@ -1591,9 +1591,9 @@
         Nombre de la Pagina: Pagina para modificar una subasta
         SLUG: page-edit-subasta
     -->
-	<div data-role="page" id="page-edit-subasta">
+	<div data-role="page" id="page-edit-subasta" data-title="Editar Subasta">
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
-			<a href="#login-page" class="icon-home">&nbsp;</a>
+			<a href="#" class="icon-home back">&nbsp;</a>
 			<h1>&nbsp;</h1>
 			<a style="display:none" href="#login-page" class="icon-options">&nbsp;</a>
 		</div>
@@ -1985,20 +1985,20 @@
         <div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false">
 		    <div class="navar_type" nav-type="2" nav-role="empresa" style="display:none">
 		        <div data-role="navbar">
-					<!--<ul>-->
-					<!--	<li><a class="ulink_action subastra-icon-home" bind="#page-profile" href="#">&nbsp;</a></li>-->
-					<!--	<li><a class="ulink_action subastra-icon-hammer-add" bind="#page-create-subasta" href="">&nbsp;</a></li>-->
-					<!--	<li><a class="ulink_action subastra-list-icon" bind="#page-list-subasta" href="">&nbsp;</a></li>-->
-					<!--	<li><a class="ulink_action n-ico" bind="#page-notifications" href="#">-->
+					<ul>
+						<li><a class="ulink_action subastra-icon-home" bind="#page-profile" href="#">&nbsp;</a></li>
+						<li><a class="ulink_action subastra-icon-hammer-add" bind="#page-create-subasta" href="">&nbsp;</a></li>
+						<li><a class="ulink_action subastra-list-icon" bind="#page-list-subasta" href="">&nbsp;</a></li>
+						<li><a class="ulink_action n-ico" bind="#page-notifications" href="#">
 							
-					<!--		<div class="s">-->
-					<!--			<img src="img/world.png">-->
-					<!--			<span class="number">?</span>-->
-					<!--		</div>-->
+							<div class="s">
+								<img src="img/world.png">
+								<span class="number">?</span>
+							</div>
 							
-					<!--	</a></li>-->
-					<!--	<li><a class="ulink_action settings-ico" bind="#options-page" href="#">&nbsp;</a></li>-->
-					<!--</ul>-->
+						</a></li>
+						<li><a class="ulink_action settings-ico" bind="#options-page" href="#">&nbsp;</a></li>
+					</ul>
 				</div><!-- /navbar -->
 			</div>
 			<div class="navar_type" nav-type="3" nav-role="transporter" style="display:none">
@@ -2009,7 +2009,7 @@
 						<li><a class="ulink_action n-ico" bind="#page-notifications" href="#">
 							
 							<div class="s">
-								<img src="img/world.png">
+							<img src="img/world.png">
 								<span class="number">?</span>
 							</div>
 							
@@ -2514,7 +2514,7 @@
 		        	</a>
 		        </li>
 		        <li>
-		        	<a href="#page-monitor" class="new-menu item-admin monitor menu-item-admin-" >
+		        	<a href="#subastas-history" class="new-menu item-admin monitor menu-item-admin-" >
 		        		<span class="menu-label">MONITOR</span>
 		        	</a>
 		        </li>
@@ -2742,7 +2742,26 @@
 				  <h1>FIltro 1</h1>
 				</div>
 				<div data-role="content" style="display:none">  
-					hola
+					<select class="filter_st">
+						<option value="2"> CORRIENDO </option>
+						<option value="3"> PROGRAMADA </option>
+						<option value="1"> FINALIZADA </option>
+					</select>
+					<input type="button" class="send_ok" value="ACEPTAR"/>
+				</div>
+			</div>
+			
+			
+		    <div data-role="popup" data-transition="flip" id="pop-up-subasta-filter-factory" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all pop-up-warning-empty-filter">
+				<div data-role="header" data-theme="a" class="ui-corner-top">
+				  <h1>FIltro 1</h1>
+				</div>
+				<div data-role="content" style="display:none">  
+					<select class="ffilter_st">
+						<option value="23"> empresa </option>
+						<option value="25"> Mauricio </option>
+					</select>
+					<input type="button" class="send_ok" value="ACEPTAR"/>
 				</div>
 			</div>		    
 		    
@@ -2767,13 +2786,13 @@
 			
 			
 		    <div class="nav_filer_history">
-            	<div class="nav_filter_su"><img src="img/Factory-icon.png" /></div>
+            	<div class="nav_filter_su filter_factory"><img src="img/Factory-icon.png" /></div>
             	<div class="nav_filter_su filter_warning"><img src="img/Danger-icon.png" /></div>
-            	<div class="nav_filter_su"><img src="img/Clock-Forward-icon.png" /></div>
-            	<div class="nav_filter_su"><img src="img/Business-Mens-icon.png" /></div>
+            	<div class="nav_filter_su" style="background:rgb(189, 187, 188);"><img src="img/Clock-Forward-icon.png" /></div>
+            	<div class="nav_filter_su" style="background:rgb(189, 187, 188);"><img src="img/Business-Mens-icon.png" /></div>
             </div>
             
-            <div class="preview-filter">
+            <!--<div class="preview-filter">
 	            
 	            <h3 style="text-align:center"> RESULTADOS DE BUSQUEDA</h3>
 	            
@@ -2817,14 +2836,11 @@
             </div>
             
             <div class="role_filter">
-            	sdasdasdas
-            	das
-            	d
-            	ad
-            	as
-            	d
-            	
-            </div>
+            	<h3>Campos a mostrar</h3>
+           		<p><input type="radio" name=""/> Nombre</p>
+           		<p><input type="checkbox" name=""/> Tipo de Carga</p>
+           		<p><input type="checkbox" name=""/> Participantes</p>
+            </div>-->
             
 			<div class="content-each-subasta" id="list-subasta"></div>
         </div>
@@ -3196,34 +3212,131 @@
                     <div class="circle circle__two">SUBASTRA <sub><small><small><small>EN</small></small></small></sub><br>FACEBOOK</div>
                 </div>
                 <div class="view_2">
-                    <div class="circle circle__one">Menú<br>Principal<br></div>
+                    <div class="circle circle__one">Menú<br>Principal<br>Administrador</div>
                 </div>
                 <div class="view_3">
-                    <div class="circle circle__two">Botón<br>Ayuda<br></div>
+                    <div class="circle circle__two">Gestión<br>de<br>Usuarios</div>
                 </div>
                 <div class="view_4">
-                    <div class="circle circle__one">Cerrar<br>Cuenta<br></div>
+                    <div class="circle circle__one">Registrar<br>Usuario<br></div>
                 </div>
                 <div class="view_5">
-                    <div class="circle circle__one">Preguntas<br>Frecuentes<br></div>
-                    <div class="circle circle__two">Llene Sus<br>Datos<br>Para Obtener<br>Respuesta</div>
+                    <div class="circle circle__one">Filtro<br>De<br>Usuarios</div>
+                    <div class="circle circle__two">Lista<br>Donde<br>Muestra<br>Los Usuarios</div>
                 </div>
                 <div class="view_6">
-                    <div class="circle circle__one">Cambiar<br>Foto Perfil<br></div>
-                    <div class="circle circle__two">Nombre<br>Transportista<br></div>
+                    <div class="circle circle__one">Información<br>Usuario<br></div>
+                    <div class="circle circle__two">Editar |<br>Desactivar |<br>Usuario</div>
                 </div>
                 <div class="view_7">
-                    <div class="circle circle__one">Historial<br>Transportista<br></div>
+                    <div class="circle circle__one">Historial<br>Administrador<br></div>
                 </div>
                 <div class="view_8">
-                    <div class="circle circle__two">Subastas<br>Del Día<br></div>
+                    <div class="circle circle__two">Agregar<br>Unidad<br>De Medida</div>
                 </div>
                 <div class="view_9">
-                    <div class="circle circle__one">Ofertar<br>Subasta<br></div>
-                    <div class="circle circle__two">Datos<br>Subasta<br></div>
+                    <div class="circle circle__two">Agregar<br>Tipo<br>De Carga</div>
                 </div>
                 <div class="view_10">
-                    <div class="circle circle__one">Sección<br>Ofertas<br></div>
+                    <div class="circle circle__two">Agregar<br>Pregunta<br>Frecuente</div>
+                </div>
+            </div>
+            <div class="controls">
+                <div class="close"></div>
+                <div class="prev"></div>
+                <div class="next"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!--
+        Nombre de la Pagina: Página del Demo  Empresa
+        SLUG: page-demo-company
+    --> 
+    
+    <div data-role="page" id="page-demo-company">
+        <div class="mask">
+            <div class="mask__deep"></div>
+            <div class="view_image" view="1" end="12">
+                <div class="view_1">
+                    <div class="circle circle__one">Comparte<br>SUBASTRA</div>
+                    <div class="circle circle__two">SUBASTRA <sub><small><small><small>EN</small></small></small></sub><br>FACEBOOK</div>
+                </div>
+                <div class="view_2">
+                    <div class="circle circle__one">Perfil<br>Principal<br>Empresa</div>
+                </div>
+                <div class="view_3">
+                    <div class="circle circle__two">Datos<br>Para Crear<br>Una Subasta</div>
+                </div>
+                <div class="view_4">
+                    <div class="circle circle__one">Datos De<br>La Subasta<br></div>
+                </div>
+                <div class="view_5">
+                    <div class="circle circle__one">Coordenadas<br>Subasta<br></div>
+                    <div class="circle circle__two">Mapa De<br>La Ruta<br>De La<br>Subasta</div>
+                </div>
+                <div class="view_6">
+                    <div class="circle circle__one">Filtros De<br>Las Subasta<br></div>
+                    <div class="circle circle__two">Detalle De<br>Una Subasta<br></div>
+                </div>
+                <div class="view_7">
+                    <div class="circle circle__one">Filtro<br>Por Fecha<br></div>
+                </div>
+                <div class="view_8">
+                    <div class="circle circle__two">Historial<br>De La Empresa<br></div>
+                </div>
+                <div class="view_9">
+                    <!--<div class="circle circle__one">Ofertar<br>Subasta<br></div>-->
+                    <div class="circle circle__two">Editar Una<br>Subasta<br></div>
+                </div>
+                <div class="view_10">
+                    <div class="circle circle__one">Datos De<br>La Edición<br>Subasta</div>
+                </div>
+                <div class="view_11">
+                    <div class="circle circle__one">Datos De<br>La Edición<br>Subasta</div>
+                </div>
+                <div class="view_12">
+                    <div class="circle circle__one">Resultados de<br>Una Subasta<br></div>
+                </div>
+            </div>
+            <div class="controls">
+                <div class="close"></div>
+                <div class="prev"></div>
+                <div class="next"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!--
+        Nombre de la Pagina: Página del Demo Transportista
+        SLUG: page-demo-carrier
+    --> 
+    
+    <div data-role="page" id="page-demo-carrier">
+        <div class="mask">
+            <div class="mask__deep"></div>
+            <div class="view_image" view="1" end="6">
+                <div class="view_1">
+                    <div class="circle circle__one">Comparte<br>SUBASTRA</div>
+                    <div class="circle circle__two">SUBASTRA <sub><small><small><small>EN</small></small></small></sub><br>FACEBOOK</div>
+                </div>
+                <div class="view_2">
+                    <div class="circle circle__one">Perfil De<br>Un Transportista<br></div>
+                </div>
+                <div class="view_3">
+                    <div class="circle circle__one">Ofertar Una<br>Subasta<br></div>
+                    <div class="circle circle__two">Lista De<br>Las Subastas<br></div>
+                </div>
+                <div class="view_4">
+                    <div class="circle circle__one">Detalle De<br>La Subasta<br></div>
+                </div>
+                <div class="view_5">
+                    <div class="circle circle__one">Tiempo<br>Restande De<br>La Subasta</div>
+                    <div class="circle circle__two">Ofertar<br>Monto<br>Para La<br>Subasta</div>
+                </div>
+                <div class="view_6">
+                    <div class="circle circle__one">Precio<br>Por Credito<br></div>
+                    <div class="circle circle__two">Medio<br>Pago<br></div>
                 </div>
             </div>
             <div class="controls">
@@ -3240,50 +3353,6 @@
     --> 
     
     <div data-role="page" id="page-demo">
-        <div class="mask">
-            <div class="mask__deep"></div>
-            <div class="view_image" view="1" end="10">
-                <div class="view_1">
-                    <div class="circle circle__one">Comparte<br>SUBASTRA</div>
-                    <div class="circle circle__two">SUBASTRA <sub><small><small><small>EN</small></small></small></sub><br>FACEBOOK</div>
-                </div>
-                <div class="view_2">
-                    <div class="circle circle__one">Menú<br>Principal<br></div>
-                </div>
-                <div class="view_3">
-                    <div class="circle circle__two">Botón<br>Ayuda<br></div>
-                </div>
-                <div class="view_4">
-                    <div class="circle circle__one">Cerrar<br>Cuenta<br></div>
-                </div>
-                <div class="view_5">
-                    <div class="circle circle__one">Preguntas<br>Frecuentes<br></div>
-                    <div class="circle circle__two">Llene Sus<br>Datos<br>Para Obtener<br>Respuesta</div>
-                </div>
-                <div class="view_6">
-                    <div class="circle circle__one">Cambiar<br>Foto Perfil<br></div>
-                    <div class="circle circle__two">Nombre<br>Transportista<br></div>
-                </div>
-                <div class="view_7">
-                    <div class="circle circle__one">Historial<br>Transportista<br></div>
-                </div>
-                <div class="view_8">
-                    <div class="circle circle__two">Subastas<br>Del Día<br></div>
-                </div>
-                <div class="view_9">
-                    <div class="circle circle__one">Ofertar<br>Subasta<br></div>
-                    <div class="circle circle__two">Datos<br>Subasta<br></div>
-                </div>
-                <div class="view_10">
-                    <div class="circle circle__one">Sección<br>Ofertas<br></div>
-                </div>
-            </div>
-            <div class="controls">
-                <div class="close"></div>
-                <div class="prev"></div>
-                <div class="next"></div>
-            </div>
-        </div>
     </div>
     
     <!--
@@ -3584,10 +3653,10 @@
 	<!--
 		Página para hacer la calificación de usuarios	
 	-->
-	<div data-role="page" id="page-subasta-results" data-theme='b'>
+	<div data-role="page" id="page-subasta-results" data-title="Resultados" data-theme='b'>
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
-			<!--<a href="page.html" class="icon-home">&nbsp;</a>-->
-			<h1>&nbsp;</h1>
+			<a href="#" class="icon-home back">&nbsp;</a>
+			<h1>RESULTADOS</h1>
 			<!--<a href="#options-page" class="icon-options">&nbsp;</a>-->
 		</div>
 		
@@ -3617,7 +3686,7 @@
 
 		<div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> 
 			<div class="nav-list-links">
-				<a href="#page-register">REGISTRARSE</a>&nbsp;|&nbsp;<a href="#page-dudes">DUDAS</a>
+				<!--<a href="#page-register">REGISTRARSE</a>&nbsp;|&nbsp;<a href="#page-dudes">DUDAS</a>-->
 			</div>
 		</div>
 	</div>
@@ -3728,7 +3797,7 @@
         </li>
 	</script>
     <script type="text/html" id="each_user">
-         <div class="each-user">
+         <div class="each-user us__<%= id %>">
              <div class="notification_pane" style="display:none">
              	<ul>
              		<li><a href="#" data-rel-id="<%= id %>" class="aprobate_auth">Aprobar Autenticidad</a></li>
@@ -3817,7 +3886,7 @@
         </div>
     </script>
     <script type="text/html" id="each_subasta">
-		<div class="each-subasta subs<%= id %>">s
+		<div class="each-subasta subs<%= id %>">
             <div class="ui-grid-a">
                 <div class="ui-block-a">
                     <div class="content-date">
@@ -4380,7 +4449,7 @@
 			
 	<div class="container_subasta">
 		<div class="header_s">
-			<h1> - RESULTADOS - </h1>
+			<br>
 		</div>
 		<div class="content-s">
 			
@@ -4471,7 +4540,7 @@
 					<div class="con_s">
 						<%= hora_inicio_subasta %>
 					</div>
-				</div>	
+				</div>
 			
 			</div>
 			
@@ -4495,6 +4564,32 @@
 					</div>
 				</div>
 			
+			</div>	
+			
+			<div class="rounded-title">
+			
+				<div class="rr_fil">
+					<div class="ti_s">
+						PRESUPUESTO
+					</div>
+					<div class="con_s">
+						<%= presupuesto_envio %>
+					</div>
+				</div>	
+			
+			</div>
+			
+			<div class="rounded-title">
+			
+				<div class="rr_fil">
+					<div class="ti_s">
+						DESCRIPCIÓN
+					</div>
+					<div class="con_s">
+						<%= descripcion_carga %>
+					</div>
+				</div>	
+			
 			</div>
 			
 			<div class="title-sup">PARTICIPANTES</div>
@@ -4507,7 +4602,10 @@
 				</div>
 			<% }else{ %>
 				<% participants.forEach(function(o){ %>
-					
+					<div class="rowp">
+						<div class="colp">Transportista <%= o.id_user %></div>
+						<div class="colp"><%= o.amount %></div>
+					</div>
 				<% }); %>
 			<% } %>
 			
@@ -4519,10 +4617,34 @@
 			
 	</script>
 	<script type="text/html" id="items_notification">
+	
+		<div data-role="popup" data-transition="flip" id="pop-up-aprobate-user" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all pop-up-warning-empty-filter">
+			
+			<div data-role="header" data-theme="a" class="ui-corner-top">
+			  <h1>Esta Seguro de Realizar la Oferta?</h1>
+			</div>
+			<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+				<div class="load-pane" style="display:none">
+					<img src="img/spin2loader.gif" class="loader2">
+				</div>
+			  <fieldset class="ui-grid-a panel-mensaje-particpacion">
+			  	<p>va a participar en la oferta por un valor de $ <span class="price-label-participe"></span> es correcto ?</p>
+				<div class="ui-block-a">
+					<a data-rel="back" data-value="cancel" class="btn_sbmit cancel_btn" data-role="button" data-theme="c">Cancelar</button></a
+					>
+				</div>
+				<div class="ui-block-b">
+					<a class="btn_sbmit ok_btn" data-value="ok" data-role="button" data-theme="c">Aceptar</button></a>	   
+				</div>
+				</fieldset>   
+			</div>
+		
+		</div>	
+
 		<ul data-role="listview" data-theme="c" data-dividertheme="d">
 		
 		<% _response.forEach(function(obx){ %>
-            <li>
+            <li action-type="<%= obx.action %>" react-data='<%= JSON.stringify(obx.author) %>' >
 				<label style="padding: 15px 0px 0px 0px !important;margin: 0px -22px 0px 0px !important;border-width: 0px 0px 0px 0px !important;height: 23px;float: left;width: 47px;" data-corners="false">
 					
 					<fieldset data-role="controlgroup" style="height:0px !important">
@@ -4539,6 +4661,13 @@
 	</script>
 	<!-- End plantillas-->
 	
+    <!-- plantillas not found -->
+    <script type="text/html" id="not_found_notification">
+        <div class="not-found-alert">
+            <img src="http://subastra-liderdesarrollo.c9.io/415111911007422/img/alert-icon.png" class="not-found-image">
+            <p>Ups! no se encontraron Notificaciones </p>
+        </div>
+    </script>    
     <!-- plantillas not found -->
     <script type="text/html" id="not_found_user">
         <div class="not-found-alert">

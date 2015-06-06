@@ -303,25 +303,6 @@ SUBASTRA.setTime = function(type,date_to,container){
 
 SUBASTRA.toast = function(msx){
   
-  /*$("<div class='ui-loader ui-overlay-shadow ui-body-e ui-corner-all'><h3>" + msx + "</h3></div>")
-	.css({ display: "block", 
-		opacity: 0.90, 
-		position: "fixed",
-		padding: "0px",
-		"text-align": "center",
-		"background": "rgb(237, 46, 61)",
-		"border": "1px solid white",
-		"border-radius": "14px",
-		"color": "#ffffff",
-		"font-size": "17px",
-		width: "270px",
-		left: ($(window).width() - 84)/2,
-		top: $(window).height()-100 })
-	  .appendTo( $.mobile.pageContainer ).delay( 1500 )
-    .fadeOut( 400, function(){
-		$(this).remove();
-	});*/
-
   $.notific8('<p class="tt">AVISO</p><p class="c">' + msx + '</p>', {
         theme: 'smoke',
         horizontalEdge: 'bottom',
@@ -335,6 +316,28 @@ SUBASTRA.toast = function(msx){
   catch(e){
     console.log("vibrate not support");
   }
+  
+  //notificaciones de chrome
+    if (!Notification) {
+      alert('Desktop notifications not available in your browser. Try Chromium.'); 
+      return;
+    }
+  
+    if (Notification.permission !== "granted"){
+      Notification.requestPermission();
+    }else {
+      var notification = new Notification('Subastra', {
+        icon: 'http://subastra.com/BACKUPS%20Y%20OTRAS%20COSAS/415111911007422/img/logo-subastra.png',
+        body: msx,
+      });
+  
+      /*notification.onclick = function () {
+        window.open("http://stackoverflow.com/a/13328397/1269037");      
+      };*/
+  
+    }
+    
+  //notificaciones de chrome
   
 }
 
