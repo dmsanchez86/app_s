@@ -69,39 +69,60 @@
 		<script src="js/jquery.notific8.min.js"></script>
 		
 		
+		
     </head>
 <body>
     <!--
+
     Paginas:
-    see http://ejohn.org/blog/javascript-micro-templating/
-            - login-page
-            - page-profile
-            - dialog-history
-            - dialog-desactivate
-            - options-page
-            - page-register
-            - page-subasta
-            - page-list-subasta
-            - page-history
-            - page-list-users
-            - page-config-coins
-            - page-view-profile
-            - page-admin-menu
-            - page-admin-users
-            - page-dudes
-            - dialog-validate
-            - dialog-validate
-            - dialog-inactivity
-            - dialog-details
-            - page-win
-            - page-alert-message
-            - page-demo
-            - page-register-user-admin
-            - page-update-user-admin
-            - page-delete-user-admin
-            - page-all-user-admin
-            - dialog-auntentication-admin
-            - dialog-close-sesion
+		#page-terms
+		#rp
+		#type-charge-page
+		#unit-measure-page
+		#page-profile
+		#dialog-history
+		#creditos-dialog
+		#dialog-reffered
+		#dialog-change-pass
+		#dialog-active-account
+		#dialog-desactivate
+		#dialog-desactivate-per-user
+		#dialog-reactivate-per-user
+		#dialog-auntentication-admin
+		#dialog-edit-register
+		#dialog-aprobate-edit-register
+		#page-notifications
+		#options-page
+		#page-register
+		#page-create-subasta
+		#page-edit-subasta
+		#page-subasta
+		#page-list-subasta
+		#page-list-subasta-participe
+		#page-history
+		#page-config-coins
+		#page-view-profile
+		#page-admin-menu
+		#page-report-subasta
+		#page-admin-user
+		#page-admin-general
+		#page-admin-subasta
+		#subastas-history
+		#page-dudes
+		#dialog-validate
+		#dialog-inactivity
+		#dialog-details
+		#page-win
+		#page-alert-message
+		#page-demo-admin
+		#page-demo-company
+		#page-demo-carrier
+		#page-demo
+		#page-register-user-admin
+		#page-califik
+		#page-calificion
+		#page-subasta-results
+		#page-all-user-admin
     --> 
     
     <!--
@@ -132,10 +153,24 @@
 				<p>Ya iniciaste Sesion Intenta Regresar al panel Principal <a href="#" class="option_home">volver</a></p>
 			</div>
         </div>
+        <div class="broswer">
+        	<h1>Para su mejor funcionamiento, le recomendamos que utilice el navegador <a href="https://www.google.es/chrome/browser/desktop/index.html" target="_blank" text="Chrome">Chrome</a> o <a href="https://www.mozilla.org/es-ES/firefox/new/" target="_blank" text="Firefox">Firefox</a></h1>
+        	<span class="close">x</span>
+        </div>
+        <div class="help">?</div>
 		<div data-role="content" style="display:none;">   
+			
+			<!--mensaje en manteninuebti -->
+			<div style="background:rgba(237, 46, 61, 0.6);clear: both;padding: 7px 7px 7px 75px;min-height: 45px;margin: 7px 0px 7px 0px;text-shadow: 1px 1px 1px rgba(0,0,0,0.2);position: relative;">
+				<i style="display: block; position: absolute;left: 7px;top: 7px;height: 100%;font-size: 45px;line-height: 45px;width: 65px;text-align: center;-webkit-animation: messagepop 1s 2; -moz-animation: messagepop 1s 2;-o-animation: messagepop 1s 2;-ms-animation: messagepop 1s 2;animation: messagepop 1s 2;animation-delay: 1s;-webkit-animation-delay: 1s;-moz-animation-delay: 1s;-o-animation-delay: 1s;-ms-animation-delay: 1s;" class="fa fa-warning"></i>
+				<p><b>NOTA:</b>La plataforma de subasta, se encuentra en modo mantenimiento, por si se presenta algun inconveniente luego de esta fecha, reportar bugs a nuestro formulario de  <a href="#page-dudes" style="color: rgb(0, 100, 255);font-weight: bold;" class="ui-link">quejas y sugerencias</a> </p>
+			</div>
+			<!--mensaje en manteninuebti -->
+			
 			<div class="section-logo-image">
 				<img src="img/logo-subastra.png">
 			</div>
+			
 			<fieldset class="ui-grid-solo" data-role="fieldcontain">
 				<div class="ui-block-a">
 					<form id="login_container" class="full-container-form inpu">
@@ -219,7 +254,7 @@
 			<div class="section-logo-image">
 				<img src="img/logo-subastra.png">
 			</div>
-			<p style="padding: .8rem;<text-align:justify></text-align:justify>">Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+			<p style="padding: .8rem;text-align:justify">Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
 			sed diam nonummy nibh euismod tincidunt ut laoreet dolore
 			magna aliquam erat volutpat. Ut wisi enim ad minim veniam,
 			quis nostrud exerci tation ullamcorper suscipit lobortis nisl
@@ -1331,9 +1366,9 @@
                             <fieldset data-role="controlgroup" data-type="horizontal">
                                 <legend>Registrarse como:</legend>                            
                                     <input type="radio" class="ui-user-control role-user-user" name="role-user" id="role-user-user" value="3" checked="checked"/>
-                                    <label for="role-user-user" style="padding: .25em;">USUARIO</label>                        
+                                    <label for="role-user-user" style="padding: .25em;">TRANSPORTISTA</label>                        
                                     <input type="radio" class="ui-user-control role-user-empresa" name="role-user" id="role-user-empresa" value="2"  />
-                                    <label for="role-user-empresa" style="padding: .25em;">EMPRESA</label>
+                                    <label for="role-user-empresa" style="padding: .25em;">EMPRESARIO</label>
                             </fieldset>
                         </div>
 						<div class="section-form section-form-sbmit">
@@ -2298,17 +2333,79 @@
 						</div>
 					</fieldset>   
 				</div>
+			</div>         	
+			
+			<div data-role="popup" data-transition="flip" id="pop-up-default-coin" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all pop-up-warning-empty-filter">
+				<div data-role="header" data-theme="a" class="ui-corner-top">
+				  <h1>Esta Seguro de Realizar el ajuste?</h1>
+				</div>
+				<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+					<div class="load-pane" style="display:none">
+						<img src="img/spin2loader.gif" class="loader2">
+					</div>
+				  	<fieldset class="ui-grid-a panel-mensaje-creditos">
+						<div class="ui-block-a">
+							<a data-rel="back" data-value="cancel" class="btn_sbmit cancel_btn" data-role="button" data-theme="c">Cancelar</button></a
+							>
+						</div>
+						<div class="ui-block-b">
+							<a class="btn_sbmit ok_btn" data-value="ok" data-role="button" data-theme="c">Aceptar</button></a>	   
+						</div>
+					</fieldset>   
+				</div>
 			</div>
+            
             <div class="field-summary">
-                <div class="label-summary">Precio por Credito</div>
-                <input type="text" name="price_per_credit" id="price_per_credit" class="price_per_credit" />
-                <div class="note_config">
-                    <span>NOTA</span>
-                    al modificar este valor se cambiaran todos
-                    los valores de la subasta
-                </div><br><br>
-                <input type="button" class="ui-user-control md-pcredito" name="md-pcredito" id="md-pcredito" value="ACTUALIZAR PRECIO DE CREDITO">
+            	
+            	<div class="section-title section-credit-config">
+					
+					<div class="s-title"><span>CONFIGURACION CRÉDITOS DEL SISTEMA</span></div>
+					
+		            <div class="label-summary">Precio por Credito</div>
+	                <input type="text" name="price_per_credit" id="price_per_credit" class="price_per_credit" />
+	                
+	                <div class="note_config">
+	                    <span>NOTA</span>
+	                    al modificar este valor se cambiaran todos
+	                    los valores de la subasta
+	                </div>
+	                
+	                <input type="button" class="ui-user-control md-pcredito" name="md-pcredito" id="md-pcredito" value="ACTUALIZAR PRECIO DE CREDITO">
+	                
+            	</div>
+            	
+            	<div class="section-title section-manual-config-coin">
+					
+					<div class="s-title"><span>CONFIGURACION CRÉDITOS INICIALES</span></div>
+					
+					<div class="note_config">
+	                    <span>NOTA</span>
+	                    Toda persona que se registre quedara
+	                    vinculada con esta cantidad de creditos
+	                </div>
+	                
+			           <div class="table_row">
+			           		<form id="submit-default-coin">
+				           		<div class="col-coin-auto">
+				           			<div class="label-inx">EMPRESA</div>
+				           			<div class="form-inx">
+				           				<input type="text" class="form_inx_e" placeholder="Creditos Iniciales"/>
+				           			</div>
+				           		</div>
+				           		<div class="col-coin-auto">
+				           			<div class="label-inx">TRANSPORTISTA</div>
+				           			<div class="form-inx">
+				           				<input type="text" class="form_inx_t" placeholder="Creditos Iniciales"/>
+				           			</div>
+				           		</div>
+				           
+				           		<input type="submit" class="ui-user-control" name="" id="" value="ACTUALIZAR VALORES">
+	                   		</form>
+	                   </div>
+            	</div>
+
             </div>
+            <!--
             <div class="header-nivel">NIVELES</div>
             <ul class="nivel-turn">
                 <li>
@@ -2327,6 +2424,7 @@
                     <span class="price_rule">$ 3.000</span>
                 </li>
             </ul>
+            -->
         </div>
         <div data-role="footer" data-position="fixed" data-theme='b' data-tap-toggle="false"> 
 			<div data-role="navbar">
@@ -2405,7 +2503,7 @@
 				    <a href="#" class="add_vehicle">+</a>
 				    <a href="#" class="remove_vehicle">-</a>
                 </div>
-                <div data-role="fieldcontain" class="field-role">
+                <div data-role="fieldcontain" class="field-f-copperativa field-role field-f-rol">
                     <fieldset data-role="controlgroup" data-type="horizontal">
                         <legend>Pertenece a una cooperativa:</legend>
                             <input type="radio" class="ui-user-control cooperativa-yes-user" name="cooperativa-user" id="cooperativa-yes-user" value="yes" checked="checked" />
@@ -3403,9 +3501,9 @@
                     <fieldset data-role="controlgroup" data-type="horizontal">
                         <legend>Registrarse como:</legend>                            
                             <input type="radio" class="ui-user-control role-user-user" name="role-user" id="role-user-user" value="3" checked="checked"/>
-                            <label for="role-user-user" style="padding: .25em;">USUARIO</label>
+                            <label class="label_icon" for="role-user-user" style="padding: .25em;">TRANSPORTISTA</label>
                             <input type="radio" class="ui-user-control role-user-empresa" name="role-user" id="role-user-empresa" value="2"  />
-                            <label for="role-user-empresa" style="padding: .25em;">EMPRESA</label>
+                            <label class="label_icon" for="role-user-empresa" style="padding: .25em;">EMPRESA</label>
                     </fieldset>
                 </div>
                 <fieldset class="ui-grid-solo block-user" style="display:block">
@@ -4356,7 +4454,7 @@
 					<i class="fa fa-exclamation-circle"></i>
 					<p>
 					    Registro Exitoso :D las instrucciones se enviaron al correo electr&oacute;nico.
-					    <br><a href="/#">Regresar</a>
+					    <br><a href="#login-page">Ir al inicio</a>
 					</p>
 				</div>
 				<div class="message error" type="6" style="display:none">

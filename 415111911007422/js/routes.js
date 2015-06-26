@@ -557,9 +557,27 @@ var router=new $.mobile.Router({
         	console.log("the socket is not responding correctly");
         }
         
-        if (Notification.permission !== "granted"){
-            Notification.requestPermission();
+        $('.broswer a').removeClass('ui-link');
+        
+        $('.help').unbind('click').click(function(){
+            $('.broswer').fadeIn(800);
+            return;
+        });
+        
+        $('.broswer .close').unbind('click').click(function(){
+            $('.broswer').fadeOut(800);
+            return;
+        });
+        
+        if(localStorage.getItem('message') == null || localStorage.getItem('message') == undefined){
+            $('.broswer').fadeIn(1000);
+            localStorage.setItem('message',true);
         }
+        
+        
+       /* if (Notification.permission !== "granted"){
+            Notification.requestPermission();
+        }*/
     
         //oculto todos los mensajes
         $(".message").hide();
@@ -629,7 +647,6 @@ var router=new $.mobile.Router({
   },
     page_win:function(type,match,ui){
     
-        console.log("hola");
     },
     unit_measure_page:function(type,match,ui){
         var $thispage = $("#unit-measure-page");
@@ -957,6 +974,8 @@ var router=new $.mobile.Router({
             success: function (dataCheck) {
                 var response = JSON.parse(dataCheck);
                 
+                console.log(response);
+                
                 var parseData = {
                     _response: response    
                 };
@@ -987,7 +1006,11 @@ var router=new $.mobile.Router({
                             var metadata = JSON.parse(JSON.parse($el.attr("react-data")));   
                             
                             $('#pop-up-aprobate-user').popup('open');
-                           
+                            
+                            var mypopup = $("#pop-up-aprobate-user");
+                            mypopup.find(".panel-mensaje-particpacion .btn_sbmit.ok_btn").show();
+    						mypopup.find(".panel-mensaje-particpacion .btn_sbmit.cancel_btn ").text("Regresar");
+    												
                                 (function(){
                                 	var mypopup = $("#pop-up-aprobate-user");
                                 	mypopup.find(".ui-header").css("background","rgb(237, 46, 61)");	
@@ -2587,6 +2610,9 @@ var router=new $.mobile.Router({
 		$(".message").hide();
 		SUBASTRA.validateSession($thispage);
 		
+		
+		//cargo los datos
+		//cargo los datos
 		$.ajax({
 			type: "GET",
 			url: webserviceURL + "/page-config-coins",
@@ -2595,6 +2621,72 @@ var router=new $.mobile.Router({
 			    $(".price_per_credit").val(dataCheck);
 			}
     	});	
+    	
+    	$.ajax({
+			type: "POST",
+			url: webserviceURL + "/load-default-coin",
+			data: null,
+			success: function (dataCheck) {
+			    var data = JSON.parse(dataCheck);
+			    console.log(data);
+			    $("input.form_inx_e").val(data.coin_empresary);
+			    $("input.form_inx_t").val(data.coin_transporter);
+			}
+        });	
+		//cargo los datos
+		//cargo los datos        	
+    	
+    	$("#submit-default-coin").unbind("submit").submit(function(e){
+    	    e.preventDefault();
+    	    var that = this;
+    	    $("#pop-up-default-coin").popup("open");
+    		(function(){
+				var mypopup = $("#pop-up-default-coin");
+				mypopup.find(".ui-header").css("background","rgb(237, 46, 61)");	
+				mypopup.css("border","1px solid rgb(237, 46, 61)");	
+				mypopup.find(".ui-title").text("Esta Seguro de Realizar el ajuste?");
+				mypopup.find(".ui-title").css({"color":"#fff","padding-top":"8px"});
+			})();
+			
+			$(".btn_sbmit.ok_btn").unbind('click').click(function(){
+			    
+			    $.mobile.loading( 'show', {
+            		text: 'Cargando',
+            		textVisible: true,
+            		theme: 'z',
+            		html: ""
+            	});
+	
+			    var $coin_t = $(that).find(".form_inx_t").val();
+        	    var $coin_e = $(that).find(".form_inx_e").val();
+        	    
+        	    $.ajax({
+        			type: "POST",
+        			url: webserviceURL + "/default-coin",
+        			data: {
+        			    coin_t: $coin_t,
+        			    coin_e: $coin_e
+        			},
+        			success: function (dataCheck) {
+        			    
+        			    $.mobile.loading( 'hide', {
+                    		text: 'Cargando',
+                    		textVisible: true,
+                    		theme: 'z',
+                    		html: ""
+                    	});
+            	        
+            			$.mobile.changePage( "#page-config-coins");
+             
+    		
+        			}
+            	});	
+        	
+			});
+    	    
+    	    
+    	    
+    	});
     	
     	$("#md-pcredito").unbind('click').click(function(){
     		var nuevo_precio = $(".price_per_credit").val();
@@ -3077,7 +3169,7 @@ var router=new $.mobile.Router({
 									},
 									success: function (dataCheck) {
 										
-										//console.log(dataCheck);
+										console.log(dataCheck);
 										
 										$thispage.find(".load-pane").hide();
 										
@@ -3158,6 +3250,23 @@ var router=new $.mobile.Router({
 												
 											})();
 											
+											
+										}else if(dataCheck=="NEW_PARTICIPANT"){
+											
+											(function(){
+												var mypopup = $("#pop-up-accept-participe");
+												mypopup.find(".ui-header").css("background","rgb(237, 46, 61)");	
+												mypopup.css("border","1px solid rgb(237, 46, 61)");	
+												mypopup.find(".ui-title").text("ESTADO");
+												mypopup.find(".panel-mensaje-particpacion p").html("Eres un uusario Nuevo");
+												mypopup.find(".panel-mensaje-particpacion .btn_sbmit.ok_btn").hide();
+												mypopup.find(".panel-mensaje-particpacion .btn_sbmit.cancel_btn ").text("Regresar");
+												
+												mypopup.find(".panel-mensaje-particpacion .btn_sbmit.cancel_btn ").unbind("click").click(function(){
+													mypopup.popup("hide");						
+												});
+												
+											})();
 											
 										}
 										
@@ -4245,6 +4354,7 @@ var router=new $.mobile.Router({
 				success: function (dataCheck) {
 				    
 					var response = JSON.parse(dataCheck);
+					console.log(response);
 					
 					if(response.estado_registro==2){
 						$thispage.find("div[data-role=footer] div[data-role=navbar]").hide();
@@ -4253,11 +4363,16 @@ var router=new $.mobile.Router({
 					}
 
 					var rol_id = response.rol_id;
-
+                    
 
 					if(rol_id == 1 || rol_id == 2){
 					    
+					    if(rol_id == 1){
 					        $(".list-vehicle-hide").hide();
+					    }else if(rol_id == 2){
+					        $(".list-vehicle-hide").hide();
+					        $(".field-f-copperativa").hide();
+					    }
 
 					}else{
 					    
@@ -4368,17 +4483,17 @@ var router=new $.mobile.Router({
 						 var $cc_user = $(this).find("#cc-user").val();
 						  
 						  //corregirme porfavor
-						 if($date!==""){
-							var alldate = $date.split("/");
-						  	 $date = alldate[2]+"-"+alldate[0]+"-"+alldate[1];	 
-						 }
-						  
+						 
 						 var $items = $(this).find(".vehicles-items fieldset");
 						 var vehiclevalidate = true;
 						 
 						 
 						  if($role=="empresa"){
 						     vehiclevalidate=true;
+						     
+						     $cooperativa=false;
+						     $cooperativa_name = "";
+						     
 						  }else if($role=="transportista"){
 						    
 						     if($items.length==0){
@@ -4517,6 +4632,7 @@ var router=new $.mobile.Router({
 										}
 									}
 								});
+								
 				
 						  }else{
 						  	$message.find(".message[type]").hide();
@@ -5008,7 +5124,21 @@ var router=new $.mobile.Router({
                 	html: ""
                 });
                 
-				  $.ajax({
+                console.log({
+							 nombre : $name,
+							 apellido : $apellido,
+							 rol : $rolem,
+							 correo : $username,
+							 telefono : $phone,
+							 cedula : $cc_user,
+							 nit : $nit,
+							 fecha : $date,
+							 coop : $cooperativa_name,
+							 contrasenia : $pass_change,
+							 vehicles: JSON.stringify(vehicledata)
+						});
+                
+				 /* $.ajax({
 						type: "POST",
 						url: webserviceURL + "/register/new/user",
 						data: {
@@ -5045,7 +5175,7 @@ var router=new $.mobile.Router({
 								$message.find(".message[type=3]").show();
 							}
 						}
-					});
+					});*/
 					
 					
 					//console.log("HA HECHO UNA INSERCION");
@@ -6829,9 +6959,6 @@ var router=new $.mobile.Router({
 }, { 
   defaultHandler: function(type, ui, page) {
     console.log("Default handler called due to unknown route");
-    //console.log(type);
-    //console.log(ui);
-    //console.log(page);
   },
   defaultHandlerEvents: "s",
   defaultArgsRe: true
@@ -6913,8 +7040,7 @@ function limpiar(){
     $('#nivel-user-u').val('');
     $('#phone-user-u').val('');
 }
-function format(input)
-{
+function format(input){
     var num = input.value.replace(/\./g,'');
     if(!isNaN(num)){
         num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
